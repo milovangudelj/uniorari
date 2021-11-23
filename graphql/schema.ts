@@ -1,9 +1,10 @@
 import { makeSchema } from "nexus";
 import { join } from "path";
 import * as types from "./types";
+import { DateTime } from "./types/DateTime";
 
 export const schema = makeSchema({
-	types,
+	types: { DateTime, ...types },
 	outputs: {
 		typegen: join(
 			process.cwd(),

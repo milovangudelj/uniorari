@@ -26,19 +26,11 @@ type Aula {
   nome: String!
 }
 
-type CDL {
-  corsi: [Corso!]!
-  gruppi: [Gruppo!]!
-  id: ID!
-  nome: String!
-  scuola: String!
-}
-
 type Corso {
-  cdl: [CDL!]!
   docenti: [Docente!]!
   gruppi: [Gruppo!]!
   id: ID!
+  lauree: [Laurea!]!
   nome: String!
   studenti: [User!]!
 }
@@ -60,12 +52,20 @@ type Docente {
 
 type Gruppo {
   adc: Int
-  cdl: [CDL!]!
   corsi: [Corso!]!
   docenti: [Docente!]!
   id: ID!
+  laurea: [Laurea!]!
   lezioni: [Lezione!]!
   nome: String!
+}
+
+type Laurea {
+  corsi: [Corso!]!
+  gruppi: [Gruppo!]!
+  id: ID!
+  nome: String!
+  scuola: String!
 }
 
 type Lezione {
@@ -81,8 +81,6 @@ type Lezione {
 }
 
 type Query {
-  CDL(idCDL: String!): CDL
-  CDLs: [CDL!]!
   aula(idAula: String!): Aula
   aule: [Aula!]!
   corsi: [Corso!]!
@@ -91,6 +89,8 @@ type Query {
   docenti: [Docente!]!
   gruppi: [Gruppo!]!
   gruppo(idGruppo: String!): Gruppo
+  laurea(idLaurea: String!): Laurea
+  lauree: [Laurea!]!
   lezione(idLezione: String!): Lezione
   lezioni: [Lezione!]!
 }

@@ -33,7 +33,7 @@ model Corso {
 
   // Relations
   docenti  Docente[]
-  cdl      CDL[]
+  lauree   Laurea[]
   gruppi   Gruppo[]
   studenti User[]
 
@@ -47,16 +47,16 @@ model Gruppo {
   adc  Int?
 
   // Relations
-  docenti Docente[]
-  idCdl   String
-  cdl     CDL       @relation(fields: [idCdl], references: [id])
-  corsi   Corso[]
-  lezioni Lezione[]
+  docenti  Docente[]
+  idLaurea String
+  laurea   Laurea    @relation(fields: [idLaurea], references: [id])
+  corsi    Corso[]
+  lezioni  Lezione[]
 
   @@map("gruppi")
 }
 
-model CDL {
+model Laurea {
   // Scalars
   id     String @id @default(cuid())
   nome   String

@@ -1,5 +1,5 @@
 import { objectType, extendType, list, nonNull, stringArg } from "nexus";
-import { Docente, CDL, Corso, Lezione } from ".";
+import { Docente, Laurea, Corso, Lezione } from ".";
 
 export const Gruppo = objectType({
 	name: "Gruppo",
@@ -19,8 +19,8 @@ export const Gruppo = objectType({
 					.docenti();
 			},
 		});
-		t.nonNull.list.field("cdl", {
-			type: nonNull(CDL),
+		t.nonNull.list.field("laurea", {
+			type: nonNull(Laurea),
 			async resolve(parent, _args, ctx) {
 				return await ctx.prisma.gruppo
 					.findUnique({
@@ -28,7 +28,7 @@ export const Gruppo = objectType({
 							id: parent.id,
 						},
 					})
-					.cdl();
+					.laurea();
 			},
 		});
 		t.nonNull.list.field("corsi", {
@@ -73,7 +73,7 @@ export const gruppoSingolo = extendType({
 					},
 					include: {
 						docenti: true,
-						cdl: true,
+						laurea: true,
 						corsi: true,
 						lezioni: true,
 					},
@@ -92,7 +92,7 @@ export const gruppi = extendType({
 				return await ctx.prisma.gruppo.findMany({
 					include: {
 						docenti: true,
-						cdl: true,
+						laurea: true,
 						corsi: true,
 						lezioni: true,
 					},

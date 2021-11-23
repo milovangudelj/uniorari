@@ -1,5 +1,4 @@
-import { objectType, nonNull, asNexusMethod } from "nexus";
-import { GraphQLDateTime } from "graphql-scalars";
+import { objectType, nonNull } from "nexus";
 import { User } from ".";
 
 export const Session = objectType({
@@ -9,7 +8,7 @@ export const Session = objectType({
 		t.nonNull.string("sessionToken");
 		t.nonNull.string("userId");
 		t.nonNull.field("expires", {
-			type: asNexusMethod(GraphQLDateTime, "date"),
+			type: "DateTime",
 		});
 		t.nonNull.field("user", {
 			type: nonNull(User),

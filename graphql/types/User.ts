@@ -1,5 +1,4 @@
-import { asNexusMethod, idArg, objectType } from "nexus";
-import { GraphQLDateTime } from "graphql-scalars";
+import { objectType } from "nexus";
 import { Corso, Account, Session } from ".";
 
 export const User = objectType({
@@ -10,7 +9,7 @@ export const User = objectType({
 		t.string("surname");
 		t.string("email");
 		t.field("emailVerified", {
-			type: asNexusMethod(GraphQLDateTime, "date"),
+			type: "DateTime",
 		});
 		t.string("image");
 		t.nonNull.list.field("corsi", {

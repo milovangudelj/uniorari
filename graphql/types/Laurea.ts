@@ -1,8 +1,8 @@
 import { objectType, extendType, list, nonNull, stringArg } from "nexus";
 import { Corso, Gruppo } from ".";
 
-export const CDL = objectType({
-	name: "CDL",
+export const Laurea = objectType({
+	name: "Laurea",
 	definition(t) {
 		t.nonNull.id("id");
 		t.nonNull.string("nome");
@@ -10,7 +10,7 @@ export const CDL = objectType({
 		t.nonNull.list.field("corsi", {
 			type: nonNull(Corso),
 			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.cDL
+				return await ctx.prisma.laurea
 					.findUnique({
 						where: {
 							id: parent.id,
@@ -22,7 +22,7 @@ export const CDL = objectType({
 		t.nonNull.list.field("gruppi", {
 			type: nonNull(Gruppo),
 			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.cDL
+				return await ctx.prisma.laurea
 					.findUnique({
 						where: {
 							id: parent.id,
@@ -34,18 +34,18 @@ export const CDL = objectType({
 	},
 });
 
-export const CDLSingolo = extendType({
+export const singolaLaurea = extendType({
 	type: "Query",
 	definition(t) {
-		t.field("CDL", {
-			type: CDL,
+		t.field("laurea", {
+			type: Laurea,
 			args: {
-				idCDL: nonNull(stringArg()),
+				idLaurea: nonNull(stringArg()),
 			},
 			async resolve(_parent, args, ctx) {
-				return await ctx.prisma.cDL.findUnique({
+				return await ctx.prisma.laurea.findUnique({
 					where: {
-						id: args.idCDL,
+						id: args.idLaurea,
 					},
 					include: {
 						corsi: true,
@@ -57,13 +57,13 @@ export const CDLSingolo = extendType({
 	},
 });
 
-export const CDLs = extendType({
+export const lauree = extendType({
 	type: "Query",
 	definition(t) {
-		t.nonNull.list.field("CDLs", {
-			type: nonNull(CDL),
+		t.nonNull.list.field("lauree", {
+			type: nonNull(Laurea),
 			async resolve(_parent, _args, ctx) {
-				return await ctx.prisma.cDL.findMany({
+				return await ctx.prisma.laurea.findMany({
 					include: {
 						corsi: true,
 						gruppi: true,
