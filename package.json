@@ -6,8 +6,9 @@
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
-		"prisma-generate-client": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate",
-		"prisma-migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
+		"vercel-build": "npm run prisma:generate && npm run prisma:migrate && next build",
+		"prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate",
+		"prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.4.17",
