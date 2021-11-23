@@ -2,14 +2,115 @@
 ### Do not make changes to this file directly
 
 
-type Docente {
-  cognome: String
-  email: String
+type Account {
+  access_token: String
+  expires_at: Int
   id: ID!
+  id_token: String
+  provider: String!
+  providerAccountId: String!
+  refresh_token: String
+  scope: String
+  session_state: String
+  token_type: String
+  type: String!
+  user: User!
+  userId: String!
+}
+
+type Aula {
+  id: ID!
+  indirizzo: String
+  lezioni: [Lezione]!
+  link: String
   nome: String!
 }
 
+type CDL {
+  corsi: [Corso!]!
+  gruppi: [Gruppo!]!
+  id: ID!
+  nome: String!
+  scuola: String!
+}
+
+type Corso {
+  cdl: [CDL!]!
+  docenti: [Docente!]!
+  gruppi: [Gruppo!]!
+  id: ID!
+  nome: String!
+  studenti: [User!]!
+}
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+type Docente {
+  cognome: String
+  corsi: [Corso]!
+  email: String
+  gruppi: [Gruppo]!
+  id: ID!
+  lezioni: [Lezione]!
+  nome: String!
+}
+
+type Gruppo {
+  adc: Int
+  cdl: [CDL!]!
+  corsi: [Corso!]!
+  docenti: [Docente!]!
+  id: ID!
+  lezioni: [Lezione!]!
+  nome: String!
+}
+
+type Lezione {
+  aule: [Aula!]!
+  docenti: [Docente!]!
+  durata: Int!
+  fine: String!
+  giorno: Int!
+  gruppi: [Gruppo!]!
+  id: ID!
+  inizio: String!
+  ora: Int!
+}
+
 type Query {
+  CDL(idCDL: String!): CDL
+  CDLs: [CDL!]!
+  aula(idAula: String!): Aula
+  aule: [Aula!]!
+  corsi: [Corso!]!
+  corso(idCorso: String!): Corso
   docente(idDocente: String!): Docente
   docenti: [Docente!]!
+  gruppi: [Gruppo!]!
+  gruppo(idGruppo: String!): Gruppo
+  lezione(idLezione: String!): Lezione
+  lezioni: [Lezione!]!
+}
+
+type Session {
+  expires: DateTime!
+  id: ID!
+  sessionToken: String!
+  user: User!
+  userId: String!
+}
+
+type User {
+  accounts: [Account]!
+  corsi: [Corso]!
+  email: String
+  emailVerified: DateTime
+  id: ID!
+  image: String
+  name: String
+  sessions: [Session]!
+  surname: String
 }
