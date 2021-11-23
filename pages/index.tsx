@@ -1,6 +1,8 @@
+import { signIn, signOut, useSession } from "next-auth/react";
 import Head from "next/head";
 
 export default function Home() {
+	const { data: session, status } = useSession();
 	return (
 		<div className="">
 			<Head>
@@ -33,7 +35,22 @@ export default function Home() {
 				<meta name="theme-color" content="#ffffff" />
 			</Head>
 
-			<h1>Nothing to see here... yet.</h1>
+			{session && (
+				<main>
+					<div>
+						You are logged in as {session.user.email}. <br />
+						<button onClick={() => signOut()}>Log Out</button>
+					</div>
+				</main>
+			)}
+			{!session && (
+				<main>
+					<div>
+						You are not logged in. <br />
+						<button onClick={() => signIn()}>Log In</button>
+					</div>
+				</main>
+			)}
 		</div>
 	);
 }

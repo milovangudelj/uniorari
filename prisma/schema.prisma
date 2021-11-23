@@ -30,11 +30,11 @@ model Corso {
   // Scalars
   id     String @id @default(cuid())
   nome   String
-  cdl    String
   scuola String
 
   // Relations
   docenti  Docente[]
+  cdl      CDL[]
   gruppi   Gruppo[]
   studenti User[]
 
@@ -49,11 +49,22 @@ model Gruppo {
 
   // Relations
   docenti Docente[]
-  idCorso String
-  corso   Corso     @relation(fields: [idCorso], references: [id])
+  idCdl   String
+  cdl     CDL       @relation(fields: [idCdl], references: [id])
+  corsi   Corso[]
   lezioni Lezione[]
 
   @@map("gruppi")
+}
+
+model CDL {
+  // Scalars
+  id   String @id @default(cuid())
+  nome String
+
+  // Relations
+  corsi  Corso[]
+  gruppi Gruppo[]
 }
 
 model Lezione {
