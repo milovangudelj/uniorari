@@ -3,6 +3,7 @@ import Head from "next/head";
 
 export default function Home() {
 	const { data: session, status } = useSession();
+
 	return (
 		<div className="">
 			<Head>
@@ -34,23 +35,7 @@ export default function Home() {
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#ffffff" />
 			</Head>
-
-			{session && (
-				<main>
-					<div>
-						You are logged in as {session.user.email}. <br />
-						<button onClick={() => signOut()}>Log Out</button>
-					</div>
-				</main>
-			)}
-			{!session && (
-				<main>
-					<div>
-						You are not logged in. <br />
-						<button onClick={() => signIn()}>Log In</button>
-					</div>
-				</main>
-			)}
+			Home
 		</div>
 	);
 }
