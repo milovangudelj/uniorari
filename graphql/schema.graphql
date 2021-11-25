@@ -55,7 +55,7 @@ type Gruppo {
   corsi: [Corso!]!
   docenti: [Docente!]!
   id: ID!
-  laurea: [Laurea!]!
+  laurea: Laurea!
   lezioni: [Lezione!]!
   nome: String!
 }

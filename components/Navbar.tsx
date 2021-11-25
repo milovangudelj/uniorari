@@ -70,8 +70,8 @@ const ProfileMenu = ({ user }) => {
 		<div className="group self-center relative flex justify-end">
 			<img
 				src={user.image || "/profile-placeholder.png"}
-				alt={user.name}
-				title={user.name}
+				alt={user.name || user.email}
+				title={user.name || user.email}
 				className="rounded-full w-7"
 			/>
 			<div className="hidden group-hover:block absolute top-full">

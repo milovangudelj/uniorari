@@ -19,7 +19,7 @@ export const Gruppo = objectType({
 					.docenti();
 			},
 		});
-		t.nonNull.list.field("laurea", {
+		t.nonNull.field("laurea", {
 			type: nonNull(Laurea),
 			async resolve(parent, _args, ctx) {
 				return await ctx.prisma.gruppo
