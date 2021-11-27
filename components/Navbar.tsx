@@ -28,7 +28,7 @@ export const Navbar = () => {
 	}, [session, status]);
 
 	return (
-		<div className="w-full border-b border-grey-100 flex justify-center">
+		<div className="w-full bg-white border-b border-grey-100 flex justify-center">
 			<header className="max-w-7xl w-full flex items-baseline p-2">
 				<Link href="/">
 					<a className="text-headline-l font-medium mr-8">UniOrari</a>
@@ -75,25 +75,25 @@ const ProfileMenu = ({ user }) => {
 				className="rounded-full w-7"
 			/>
 			<div className="hidden group-hover:block absolute top-full">
-				<div className="mt-1 rounded-lg w-max bg-grey-50 border border-grey-100">
+				<div className="mt-1 rounded-lg w-max bg-white border border-grey-100">
 					<ul className="text-body-m">
 						<li className="border-b border-grey-100 py-1">
 							<Link href="#">
-								<a className="inline-block w-full py-1 px-2 hover:bg-primary-50">
+								<a className="inline-block w-full py-1 px-2 hover:bg-grey-50">
 									I miei corsi
 								</a>
 							</Link>
 						</li>
 						<li className="border-b border-grey-100 py-1">
 							<Link href="#">
-								<a className="inline-block w-full py-1 px-2 hover:bg-primary-50">
+								<a className="inline-block w-full py-1 px-2 hover:bg-grey-50">
 									Impostazioni
 								</a>
 							</Link>
 						</li>
 						<li className="border-b border-grey-100 py-1">
 							<Link href="#">
-								<a className="inline-block w-full py-1 px-2 hover:bg-primary-50">
+								<a className="inline-block w-full py-1 px-2 hover:bg-grey-50">
 									Tema
 								</a>
 							</Link>
@@ -101,7 +101,7 @@ const ProfileMenu = ({ user }) => {
 						<li className="py-1">
 							<button
 								onClick={() => signOut()}
-								className="inline-block w-full text-left py-1 px-2 hover:bg-primary-50"
+								className="inline-block w-full text-left py-1 px-2 hover:bg-grey-50"
 							>
 								Log Out
 							</button>
