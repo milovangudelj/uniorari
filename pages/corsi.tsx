@@ -20,7 +20,7 @@ const Corsi = ({ fallback }) => {
 const Corso = ({ corso }) => {
 	return (
 		<div>
-			<div className="min-w-60 h-min bg-grey-100 border border-grey-400 rounded-lg p-4">
+			<div className="min-w-60 h-min bg-white shadow rounded-lg p-4">
 				<h2 className="text-headline-m text-on-surface-he mb-2">
 					{corso.nome}
 				</h2>
@@ -46,8 +46,8 @@ const Corso = ({ corso }) => {
 					<span className="text-label-l font-medium text-on-surface-he">
 						Orario
 					</span>
-					<table className="w-full mt-2 table-auto bg-grey-50 overflow-hidden border-separate border-spacing-0 border border-primary-900 rounded-lg">
-						<thead className="text-left bg-primary-100 text-primary-900">
+					<table className="w-full mt-2 table-auto overflow-hidden border-separate border-spacing-0 border border-primary-900 rounded-lg">
+						<thead className="text-left bg-primary-50 text-primary-900">
 							<tr>
 								<th className="py-1 px-2 border-r border-b border-primary-900 font-normal">
 									Giorno
@@ -93,21 +93,21 @@ const Lezione = ({ lezione, last = false }) => {
 			<td
 				className={`py-3 px-2 border-r ${
 					!last && "border-b"
-				} border-grey-400`}
+				} border-grey-300`}
 			>
 				{lezione ? days[lezione.giorno] : "-"}
 			</td>
 			<td
 				className={`py-3 px-2 border-r ${
 					!last && "border-b"
-				} border-grey-400`}
+				} border-grey-300`}
 			>
 				{lezione ? lezione.inizio + " - " + lezione.fine : "-"}
 			</td>
 			<td
 				className={`py-3 px-2 ${
 					!last && "border-b"
-				} border-grey-400 flex flex-col`}
+				} border-grey-300 flex flex-col`}
 			>
 				<span>{lezione ? lezione.aule[0].nome : "-"}</span>
 				<a

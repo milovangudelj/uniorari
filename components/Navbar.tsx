@@ -2,6 +2,8 @@ import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Button } from ".";
+import { ProfilePic } from "./ProfilePic";
 
 const pages = [
 	{
@@ -54,11 +56,9 @@ export const Navbar = () => {
 				{user ? (
 					<ProfileMenu user={user} />
 				) : (
-					<Link href="/login">
-						<a className="self-center bg-accent-400 py-2 px-4 rounded-lg text-label-l">
-							Log In
-						</a>
-					</Link>
+					<Button className="self-center" variant="accent">
+						<Link href="/login">Log In</Link>
+					</Button>
 				)}
 			</header>
 		</div>
@@ -68,14 +68,20 @@ export const Navbar = () => {
 const ProfileMenu = ({ user }) => {
 	return (
 		<div className="group self-center relative flex justify-end">
-			<img
-				src={user.image || "/profile-placeholder.png"}
-				alt={user.name || user.email}
-				title={user.name || user.email}
-				className="rounded-full w-7"
-			/>
+			{user.image ? (
+				<ProfilePic
+					src={user.image}
+					alt={user.name || user.email}
+					title={user.name || user.email}
+				/>
+			) : (
+				<ProfilePic
+					title={user.name || user.email}
+					letter={user.name?.charAt(0) || user.email?.charAt(0)}
+				/>
+			)}
 			<div className="hidden group-hover:block absolute top-full">
-				<div className="mt-1 rounded-lg w-max bg-white border border-grey-100">
+				<div className="mt-1 rounded-lg w-max bg-white border border-grey-100 elevation-1">
 					<ul className="text-body-m">
 						<li className="border-b border-grey-100 py-1">
 							<Link href="#">

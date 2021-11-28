@@ -6,78 +6,107 @@ import {
 	getSession,
 	getCsrfToken,
 } from "next-auth/react";
+import { Button } from "../components";
 
 export default function SignIn({ providers, csrfToken }) {
 	const { error } = useRouter().query;
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-grey-50">
-			{error && <SignInError error={error} />}
-			<div className="min-w-200 w-full max-w-400 p-2 rounded-lg">
-				<h1 className="text-display-s mb-2">Accedi</h1>
-				<p className="text-body-l text-on-surface-me mb-10">
-					Accedi per vedere il tuo calendario
-				</p>
-				<div>
-					{Object.values(providers).map((provider: any) => {
-						if (provider.name === "Email") {
-							return;
-						}
-						return provider.name === "Google" ? (
-							<GoogleButton
-								key={provider.name}
-								providerId={provider.id}
-								providerName={provider.name}
-							/>
-						) : (
-							<div key={provider.name}>
-								<button onClick={() => signIn(provider.id)}>
-									Sign in with {provider.name}
-								</button>
-							</div>
-						);
-					})}
-				</div>
-				<div className="w-full flex my-10 items-center">
-					<div className="h-px w-full bg-on-surface-le"></div>
-					<span className="text-body-m inline-block flex-none text-on-surface-le mx-2">
-						oppure
-					</span>
-					<div className="h-px w-full bg-on-surface-le"></div>
-				</div>
-				<form method="post" action="/api/auth/signin/email">
+		<div className="h-screen w-screen flex">
+			<div className="flex items-center justify-center h-full w-1/2 bg-grey-50">
+				{error && <SignInError error={error} />}
+				<div className="min-w-200 w-full max-w-400 p-2 rounded-lg">
+					<h1 className="text-display-s mb-2">Accedi</h1>
+					<p className="text-body-l text-on-surface-me mb-10">
+						Accedi per vedere il tuo calendario
+					</p>
 					<div>
-						<input
-							name="csrfToken"
-							type="hidden"
-							defaultValue={csrfToken}
-						/>
-						<label htmlFor="email" className="text-body-l">
-							Email<span className="text-accent-500">*</span>
-						</label>
-						<div className="mt-2">
-							<input
-								type="email"
-								id="email"
-								name="email"
-								placeholder="email@example.com"
-								autoComplete="off"
-								className="text-body-m py-3 px-4 rounded-lg border border-on-surface-he bg-transparent w-full leading-5"
-							/>
-						</div>
+						{Object.values(providers).map((provider: any) => {
+							if (provider.name === "Email") {
+								return;
+							}
+							return provider.name === "Google" ? (
+								<GoogleButton
+									key={provider.name}
+									providerId={provider.id}
+									providerName={provider.name}
+								/>
+							) : (
+								<div key={provider.name}>
+									<button onClick={() => signIn(provider.id)}>
+										Sign in with {provider.name}
+									</button>
+								</div>
+							);
+						})}
 					</div>
-					<button
-						type="submit"
-						className="text-body-l bg-accent-400 mt-10 py-2 px-4 rounded-lg w-full"
-					>
-						<span>Accedi</span>
-					</button>
-				</form>
-				<div className="text-body-l mt-3">
-					Non hai un account?{` `}
-					<a href="/signup" className="text-primary-500">
-						Creane uno gratuito
-					</a>
+					<div className="w-full flex my-10 items-center">
+						<div className="h-px w-full bg-on-surface-le"></div>
+						<span className="text-body-m inline-block flex-none text-on-surface-le mx-2">
+							oppure
+						</span>
+						<div className="h-px w-full bg-on-surface-le"></div>
+					</div>
+					<form method="post" action="/api/auth/signin/email">
+						<div>
+							<input
+								name="csrfToken"
+								type="hidden"
+								defaultValue={csrfToken}
+							/>
+							<label htmlFor="email" className="text-body-l">
+								Email<span className="text-accent-500">*</span>
+							</label>
+							<div className="mt-2">
+								<input
+									type="email"
+									id="email"
+									name="email"
+									placeholder="email@example.com"
+									autoComplete="off"
+									className="text-body-m py-3 px-4 rounded-lg border border-on-surface-he bg-transparent w-full leading-5"
+								/>
+							</div>
+						</div>
+						<Button
+							type="submit"
+							variant="accent"
+							className="w-full mt-10"
+						>
+							Accedi
+						</Button>
+					</form>
+					<div className="text-body-l mt-3">
+						Non hai un account?{` `}
+						<a href="/signup" className="text-primary-500">
+							Creane uno gratuito
+						</a>
+					</div>
 				</div>
+			</div>
+			<div className="h-full w-1/2 relative">
+				<img
+					className="h-full w-full"
+					src="https://source.unsplash.com/random/?calendar"
+					alt="Unsplash image"
+				/>
+				<a
+					href="https://unsplash.com"
+					className="absolute bottom-4 right-4"
+					title="Courtesy of Usplash"
+				>
+					<svg
+						width="24"
+						height="24"
+						viewBox="0 0 32 32"
+						xmlns="http://www.w3.org/2000/svg"
+					>
+						<path
+							d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"
+							fill="#000000"
+							fill-rule="nonzero"
+						/>
+					</svg>
+				</a>
 			</div>
 		</div>
 	);
@@ -86,9 +115,10 @@ export default function SignIn({ providers, csrfToken }) {
 const GoogleButton = ({ providerId, providerName }) => {
 	return (
 		<div>
-			<button
+			<Button
 				onClick={() => signIn(providerId)}
-				className="text-sm font-roboto font-medium text-white uppercase flex justify-center items-center w-full rounded-lg px-2 h-10 bg-google-darkBg"
+				external
+				className="w-full text-sm font-roboto font-medium text-white uppercase flex justify-center items-center rounded-lg px-2 h-10 bg-google-darkBg shadow-none hover:shadow-google focus:bg-google-darkBgFocus focus:shadow-none transition"
 			>
 				<span className="mr-5 bg-white rounded-full p-1">
 					<svg
@@ -121,7 +151,7 @@ const GoogleButton = ({ providerId, providerName }) => {
 					</svg>
 				</span>
 				Accedi con {providerName}
-			</button>
+			</Button>
 		</div>
 	);
 };
@@ -143,7 +173,7 @@ const errors = {
 const SignInError = ({ error }) => {
 	const errorMessage = error && (errors[error] ?? errors.default);
 	return (
-		<div className="absolute top-28 py-2 px-4 bg-error-50 text-error-900 border border-error-900 rounded-lg text-label-l">
+		<div className="absolute top-28 py-2 px-4 bg-error-50 text-error-700 border border-error-700 rounded-lg text-label-l">
 			{errorMessage}
 		</div>
 	);

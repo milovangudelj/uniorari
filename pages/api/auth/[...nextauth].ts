@@ -27,6 +27,7 @@ export default NextAuth({
 	pages: {
 		signIn: "/login",
 		error: "/login",
+		verifyRequest: "/verify-request",
 	},
 	secret: process.env.NEXTAUTH_SECRET,
 });
