@@ -4,6 +4,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import prisma from "../../../lib/prisma";
+import customVerificationRequest from "../../../lib/sendVerificationRequest";
 
 export default NextAuth({
 	adapter: PrismaAdapter(prisma),
@@ -18,6 +19,7 @@ export default NextAuth({
 				},
 			},
 			from: process.env.EMAIL_FROM,
+			sendVerificationRequest: customVerificationRequest,
 		}),
 		GoogleProvider({
 			clientId: process.env.GOOGLE_CLIENT_ID,

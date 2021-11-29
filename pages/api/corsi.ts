@@ -26,7 +26,7 @@ const queryCorsi = gql`
 		}
 	}
 `;
-
+ 
 export default async function handler(req, res) {
 	const { data, loading, error } = await apolloClient.query({
 		query: queryCorsi,
