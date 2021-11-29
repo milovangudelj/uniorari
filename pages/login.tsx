@@ -40,11 +40,11 @@ export default function SignIn({ providers, csrfToken }) {
 						})}
 					</div>
 					<div className="w-full flex my-10 items-center">
-						<div className="h-px w-full bg-on-surface-le"></div>
-						<span className="text-body-m inline-block flex-none text-on-surface-le mx-2">
+						<div className="h-px w-full bg-grey-300"></div>
+						<span className="text-body-m inline-block flex-none text-grey-500 mx-2">
 							oppure
 						</span>
-						<div className="h-px w-full bg-on-surface-le"></div>
+						<div className="h-px w-full bg-grey-300"></div>
 					</div>
 					<form method="post" action="/api/auth/signin/email">
 						<div>
@@ -63,13 +63,13 @@ export default function SignIn({ providers, csrfToken }) {
 									name="email"
 									placeholder="email@example.com"
 									autoComplete="off"
-									className="text-body-m py-3 px-4 rounded-lg border border-on-surface-he bg-transparent w-full leading-5"
+									className="outline-none text-body-m py-3 px-4 rounded-lg border border-grey-200 bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5"
 								/>
 							</div>
 						</div>
 						<Button
 							type="submit"
-							variant="accent"
+							variant="primary"
 							className="w-full mt-10"
 						>
 							Accedi
@@ -77,7 +77,10 @@ export default function SignIn({ providers, csrfToken }) {
 					</form>
 					<div className="text-body-l mt-3">
 						Non hai un account?{` `}
-						<a href="/signup" className="text-primary-500">
+						<a
+							href="/signup"
+							className="text-accent-500 hover:text-accent-400 transition"
+						>
 							Creane uno gratuito
 						</a>
 					</div>
@@ -91,19 +94,19 @@ export default function SignIn({ providers, csrfToken }) {
 				/>
 				<a
 					href="https://unsplash.com"
-					className="absolute bottom-4 right-4"
+					className="absolute bottom-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded"
 					title="Courtesy of Usplash"
 				>
 					<svg
-						width="24"
-						height="24"
+						width="16"
+						height="16"
 						viewBox="0 0 32 32"
 						xmlns="http://www.w3.org/2000/svg"
 					>
 						<path
 							d="M10 9V0h12v9H10zm12 5h10v18H0V14h10v9h12v-9z"
 							fill="#000000"
-							fill-rule="nonzero"
+							fillRule="nonzero"
 						/>
 					</svg>
 				</a>
