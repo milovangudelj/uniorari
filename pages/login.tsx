@@ -86,12 +86,7 @@ export default function SignIn({ providers, csrfToken }) {
 					</div>
 				</div>
 			</div>
-			<div className="h-full w-1/2 relative">
-				<img
-					className="h-full w-full"
-					src="https://source.unsplash.com/random/?calendar"
-					alt="Unsplash image"
-				/>
+			<div className="h-full w-1/2 relative justify-center overflow-hidden bg-unsplash-random bg-center bg-cover">
 				<a
 					href="https://unsplash.com"
 					className="absolute bottom-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded"

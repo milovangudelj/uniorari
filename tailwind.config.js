@@ -87,6 +87,10 @@ module.exports = {
 					darkBgFocus: "#3367D6",
 				},
 			},
+			backgroundImage: {
+				"unsplash-random":
+					"url('https://source.unsplash.com/random/?calendar')",
+			},
 			fontSize: {
 				"display-l": "3.5625rem",
 				"display-m": "2.8125rem",

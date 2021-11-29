@@ -56,7 +56,7 @@ export const Navbar = () => {
 				{user ? (
 					<ProfileMenu user={user} />
 				) : (
-					<Button className="self-center" variant="accent">
+					<Button className="self-center" variant="primary">
 						<Link href="/login">Log In</Link>
 					</Button>
 				)}
