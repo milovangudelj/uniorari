@@ -10,7 +10,7 @@
     border-spacing: 0;
   }
 
-  .elevation-1 {
+  /* .elevation-1 {
     @apply shadow-sm;
   }
   .elevation-2 {
@@ -81,5 +81,5 @@
   }
   .elevation-24 {
     @apply shadow-24;
-  }
+  } */
 }
