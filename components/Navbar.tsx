@@ -30,10 +30,15 @@ export const Navbar = () => {
 	}, [session, status]);
 
 	return (
-		<div className="w-full bg-white border-b border-grey-100 flex justify-center">
-			<header className="max-w-7xl w-full flex items-baseline p-2">
+		<div className="w-full bg-white border-b border-grey-100 flex justify-center sticky top-0">
+			<header className="max-w-7xl w-full flex items-center px-2 py-3">
 				<Link href="/">
-					<a className="text-headline-l font-medium mr-8">UniOrari</a>
+					<img
+						src="/logo.svg"
+						alt="Logo UniOrari"
+						title="UniOrari"
+						className="mr-8 cursor-pointer"
+					/>
 				</Link>
 				<nav className="mr-auto">
 					<ul className="flex text-body-l">
@@ -42,9 +47,9 @@ export const Navbar = () => {
 								key={idx}
 								className={`pr-4 ${
 									router.pathname === page.link
-										? "text-primary-500"
-										: "text-on-surface-he"
-								}`}
+										? "text-accent-500 hover:text-accent-700"
+										: "text-on-surface-me hover:text-on-surface-he"
+								} transition`}
 							>
 								<Link href={page.link}>
 									<a>{page.name}</a>
@@ -56,7 +61,7 @@ export const Navbar = () => {
 				{user ? (
 					<ProfileMenu user={user} />
 				) : (
-					<Button className="self-center" variant="primary">
+					<Button variant="primary">
 						<Link href="/login">Log In</Link>
 					</Button>
 				)}

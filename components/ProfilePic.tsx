@@ -4,7 +4,7 @@ export const ProfilePic = (props) => {
 			src={props.src}
 			alt={props.alt}
 			title={props.title}
-			className="rounded-full w-7 h-7"
+			className="rounded-full w-8 h-8 border border-grey-100"
 		/>
 	) : (
 		<div
