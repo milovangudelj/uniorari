@@ -8,6 +8,7 @@
 		"lint": "next lint",
 		"vercel-build": "yarn prisma:generate && next build",
 		"prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate",
+		"prisma:push": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma db push",
 		"prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
 	},
 	"dependencies": {

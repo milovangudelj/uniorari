@@ -11,11 +11,5 @@ export default async function handler(req, res) {
 
 	const data = await response.json();
 
-	console.log(
-		process.env.NODE_ENV === "development"
-			? process.env.TEST_RECAPTCHA_SECRET
-			: process.env.RECAPTCHA_SECRET
-	);
-
 	res.status(200).json(data);
 }
