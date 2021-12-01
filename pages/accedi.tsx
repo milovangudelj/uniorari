@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import {
 	getProviders,
@@ -176,12 +177,11 @@ export default function SignIn({ providers, csrfToken }) {
 					</form>
 					<div className="text-body-m text-on-surface-he absolute top-8 left-8">
 						Non hai un account?{` `}
-						<a
-							href="/iscriviti"
-							className="text-accent-500 hover:text-accent-400 transition"
-						>
-							Iscriviti
-						</a>
+						<Link href="/iscriviti">
+							<a className="text-accent-500 hover:text-accent-400 transition">
+								Iscriviti
+							</a>
+						</Link>
 					</div>
 					<div className="text-label-s text-on-surface-le mt-2">
 						This site is protected by reCAPTCHA and the Google{" "}

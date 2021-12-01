@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import Head from "next/head";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import {
 	getProviders,
@@ -242,12 +243,11 @@ const SignUp = ({ providers, csrfToken }) => {
 					</form>
 					<div className="text-body-m text-on-surface-he absolute top-8 left-8">
 						Hai già un account?{` `}
-						<a
-							href="/accedi"
-							className="text-accent-500 hover:text-accent-400 transition"
-						>
-							Accedi
-						</a>
+						<Link href="/accedi">
+							<a className="text-accent-500 hover:text-accent-400 transition">
+								Accedi
+							</a>
+						</Link>
 					</div>
 					<div className="text-label-s text-on-surface-le mt-2">
 						This site is protected by reCAPTCHA and the Google{" "}
