@@ -6,7 +6,7 @@ export const User = objectType({
 	definition(t) {
 		t.nonNull.id("id");
 		t.string("name");
-		t.string("surname");
+		t.string("username");
 		t.string("email");
 		t.field("emailVerified", {
 			type: "DateTime",
@@ -57,13 +57,22 @@ export const utenteSingolo = extendType({
 		t.field("utente", {
 			type: User,
 			args: {
-				emailUtente: nonNull(stringArg()),
+				emailUtente: stringArg(),
+				usernameUtente: stringArg(),
 			},
 			async resolve(_parent, args, ctx) {
+				if (!args.emailUtente && !args.usernameUtente)
+					throw "You need to provide at least one argument.";
+
+				let where = args.emailUtente
+					? {
+							email: args.emailUtente,
+					  }
+					: {
+							username: args.usernameUtente,
+					  };
 				return await ctx.prisma.user.findUnique({
-					where: {
-						email: args.emailUtente,
-					},
+					where,
 					include: {
 						corsi: true,
 					},

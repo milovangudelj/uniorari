@@ -43,7 +43,7 @@ const schema = yup
 				20,
 				"L'username deve avere una lunghezza compresa tra 8 e 20 caratteri"
 			)
-			.matches(/^\w+$/, {
+			.matches(/^\w.+$/, {
 				message: "L'username non può contenere nessun carattere speciale",
 			}),
 		email: yup
@@ -53,13 +53,38 @@ const schema = yup
 	})
 	.required();
 
-const queryUtente = gql`
-	query Utente($emailUtente: String!) {
+const queryEmailUtente = gql`
+	query emailUtente($emailUtente: String!) {
 		utente(emailUtente: $emailUtente) {
-			name
+			email
 		}
 	}
 `;
+
+const queryUsernameUtente = gql`
+	query Utente($usernameUtente: String!) {
+		utente(usernameUtente: $usernameUtente) {
+			username
+		}
+	}
+`;
+
+const exists = async (emailUtente, usernameUtente) => {
+	const res1 = await apolloClient.query({
+		query: queryEmailUtente,
+		variables: { emailUtente },
+	});
+
+	const res2 = await apolloClient.query({
+		query: queryUsernameUtente,
+		variables: { usernameUtente },
+	});
+
+	return {
+		email: res1.data.utente !== null && !res1.error,
+		username: res2.data.utente !== null && !res2.error,
+	};
+};
 
 const SignUp = ({ providers, csrfToken }) => {
 	const router = useRouter();
@@ -85,23 +110,29 @@ const SignUp = ({ providers, csrfToken }) => {
 		).json();
 
 		if (success) {
-			const { data, loading, error } = await apolloClient.query({
-				query: queryUtente,
-				variables: { emailUtente: formData.email },
-			});
+			let uesrLookup = await exists(formData.email, formData.username);
 
-			if (data.utente !== null) {
+			if (uesrLookup.email) {
 				setError("email", {
 					type: "manual",
 					message: "Questa mail è già associata a un'altro account",
 				});
-				return;
 			}
 
-			await signIn("email", {
-				email: formData.email,
-				csrfToken: formData.csrfToken,
-			});
+			if (uesrLookup.username) {
+				setError("username", {
+					type: "manual",
+					message: "Questo username è già in uso da a un'altro account",
+				});
+			}
+
+			if (!uesrLookup.email && !uesrLookup.username)
+				await signIn("email", {
+					name: formData.name,
+					username: formData.username,
+					email: formData.email,
+					csrfToken: formData.csrfToken,
+				});
 		}
 	};
 

@@ -93,7 +93,7 @@ type Query {
   lauree: [Laurea!]!
   lezione(idLezione: String!): Lezione
   lezioni: [Lezione!]!
-  utente(emailUtente: String!): User
+  utente(emailUtente: String, usernameUtente: String): User
 }
 
 type Session {
@@ -113,5 +113,5 @@ type User {
   image: String
   name: String
   sessions: [Session]!
-  surname: String
+  username: String
 }
