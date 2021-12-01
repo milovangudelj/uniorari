@@ -62,7 +62,7 @@ export const Navbar = () => {
 					<ProfileMenu user={user} />
 				) : (
 					<Button variant="primary">
-						<Link href="/login">Log In</Link>
+						<Link href="/accedi">Accedi</Link>
 					</Button>
 				)}
 			</header>

@@ -1,4 +1,5 @@
-import React from "react";
+import { useState, useRef } from "react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import {
 	getProviders,
@@ -6,13 +7,90 @@ import {
 	getSession,
 	getCsrfToken,
 } from "next-auth/react";
+import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import * as yup from "yup";
+import { useForm } from "react-hook-form";
+import ReCAPTCHA from "react-google-recaptcha";
+import { gql } from "@apollo/client";
+
+import apolloClient from "../lib/apollo";
 import { Button } from "../components";
 
+const path =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:3000"
+		: "https://uniorari.it";
+
+const schema = yup
+	.object({
+		csrfToken: yup.string().required(),
+		email: yup
+			.string()
+			.email("Inserisci un indirizzo email valido")
+			.required("Questo campo è obbligatorio"),
+	})
+	.required();
+
+const queryUtente = gql`
+	query Utente($emailUtente: String!) {
+		utente(emailUtente: $emailUtente) {
+			name
+		}
+	}
+`;
+
 export default function SignIn({ providers, csrfToken }) {
-	const { error } = useRouter().query;
+	const router = useRouter();
+	const { error } = router.query;
+
+	const recaptchaRef = useRef(null);
+
+	const {
+		register,
+		handleSubmit,
+		setError,
+		watch,
+		formState: { errors },
+	} = useForm({
+		resolver: yupResolver(schema),
+	});
+
+	const onSubmitWithReCAPTCHA = async (formData) => {
+		const token = await recaptchaRef.current.executeAsync();
+
+		const { success } = await (
+			await fetch(`${path}/api/verifyCaptcha?token=${token}`)
+		).json();
+
+		if (success) {
+			const { data, loading, error } = await apolloClient.query({
+				query: queryUtente,
+				variables: { emailUtente: formData.email },
+			});
+
+			if (error || data.utente === null) {
+				setError("email", {
+					type: "manual",
+					message:
+						"Questa mail non è associata a nessun account. Iscriviti prima di accedere.",
+				});
+				return;
+			}
+
+			await signIn("email", {
+				email: formData.email,
+				csrfToken: formData.csrfToken,
+			});
+		}
+	};
+
 	return (
 		<div className="h-screen w-screen flex">
-			<div className="flex items-center justify-center h-full w-1/2 bg-grey-50">
+			<Head>
+				<title>Log In | UniOrari</title>
+				<meta name="description" content="Orari delle lezioni" />
+			</Head>
+			<div className="flex items-center justify-center h-full w-1/2 bg-grey-50 relative">
 				{error && <SignInError error={error} />}
 				<div className="min-w-200 w-full max-w-400 p-2 rounded-lg">
 					<h1 className="text-display-s mb-2">Accedi</h1>
@@ -46,12 +124,13 @@ export default function SignIn({ providers, csrfToken }) {
 						</span>
 						<div className="h-px w-full bg-grey-300"></div>
 					</div>
-					<form method="post" action="/api/auth/signin/email">
+					<form onSubmit={handleSubmit(onSubmitWithReCAPTCHA)} noValidate>
 						<div>
 							<input
 								name="csrfToken"
 								type="hidden"
 								defaultValue={csrfToken}
+								{...register("csrfToken")}
 							/>
 							<label htmlFor="email" className="text-body-l">
 								Email<span className="text-accent-500">*</span>
@@ -63,8 +142,18 @@ export default function SignIn({ providers, csrfToken }) {
 									name="email"
 									placeholder="email@example.com"
 									autoComplete="off"
-									className="outline-none text-body-m py-3 px-4 rounded-lg border border-grey-200 bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5"
+									{...register("email")}
+									className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
+										errors.email
+											? "border-error-500"
+											: "border-grey-200"
+									} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
 								/>
+								{errors.email && (
+									<span className="text-label-l text-error-500">
+										{errors.email.message}
+									</span>
+								)}
 							</div>
 						</div>
 						<Button
@@ -74,15 +163,42 @@ export default function SignIn({ providers, csrfToken }) {
 						>
 							Accedi
 						</Button>
+						<ReCAPTCHA
+							ref={recaptchaRef}
+							size="invisible"
+							className="hidden"
+							sitekey={
+								process.env.NODE_ENV === "development"
+									? "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" // Google test key
+									: "6LcbumsdAAAAAEhh7TJKEtWMx-qGXug5zEvTHSAZ" // My site key
+							}
+						/>
 					</form>
-					<div className="text-body-l mt-3">
+					<div className="text-body-m text-on-surface-he absolute top-8 left-8">
 						Non hai un account?{` `}
 						<a
-							href="/signup"
+							href="/iscriviti"
 							className="text-accent-500 hover:text-accent-400 transition"
 						>
-							Creane uno gratuito
+							Iscriviti
 						</a>
+					</div>
+					<div className="text-label-s text-on-surface-le mt-2">
+						This site is protected by reCAPTCHA and the Google{" "}
+						<a
+							href="https://policies.google.com/privacy"
+							className="text-primary-500"
+						>
+							Privacy Policy
+						</a>{" "}
+						and{" "}
+						<a
+							href="https://policies.google.com/terms"
+							className="text-primary-500"
+						>
+							Terms of Service
+						</a>{" "}
+						apply.
 					</div>
 				</div>
 			</div>

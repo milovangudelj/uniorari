@@ -5,7 +5,11 @@ import { Navbar, Footer } from ".";
 
 export const Layout = (props) => {
 	const { pathname } = useRouter();
-	const [excPaths, setExcPaths] = useState(["/login", "/verify-request"]);
+	const [excPaths, setExcPaths] = useState([
+		"/accedi",
+		"/iscriviti",
+		"/verify-request",
+	]);
 	const [show, setShow] = useState(false);
 
 	useEffect(() => {

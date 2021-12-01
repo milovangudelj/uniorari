@@ -93,6 +93,7 @@ type Query {
   lauree: [Laurea!]!
   lezione(idLezione: String!): Lezione
   lezioni: [Lezione!]!
+  utente(emailUtente: String!): User
 }
 
 type Session {

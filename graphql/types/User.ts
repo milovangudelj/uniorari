@@ -1,4 +1,4 @@
-import { objectType } from "nexus";
+import { extendType, nonNull, objectType, stringArg } from "nexus";
 import { Corso, Account, Session } from ".";
 
 export const User = objectType({
@@ -46,6 +46,28 @@ export const User = objectType({
 						},
 					})
 					.sessions();
+			},
+		});
+	},
+});
+
+export const utenteSingolo = extendType({
+	type: "Query",
+	definition(t) {
+		t.field("utente", {
+			type: User,
+			args: {
+				emailUtente: nonNull(stringArg()),
+			},
+			async resolve(_parent, args, ctx) {
+				return await ctx.prisma.user.findUnique({
+					where: {
+						email: args.emailUtente,
+					},
+					include: {
+						corsi: true,
+					},
+				});
 			},
 		});
 	},
