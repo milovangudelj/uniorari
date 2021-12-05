@@ -13,10 +13,12 @@ datasource db {
 
 model Docente {
   // Scalars
-  id      String  @id @default(cuid())
-  nome    String
-  cognome String?
-  email   String? @unique
+  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  nome      String
+  cognome   String?
+  email     String?  @unique
 
   // Relations
   corsi   Corso[]
@@ -28,27 +30,31 @@ model Docente {
 
 model Corso {
   // Scalars
-  id   String @id @default(cuid())
-  nome String
+  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  nome      String
 
   // Relations
   docenti  Docente[]
   lauree   Laurea[]
   gruppi   Gruppo[]
-  studenti User[]
+  // studenti String[] // Previously User[]
 
   @@map("corsi")
 }
 
 model Gruppo {
   // Scalars
-  id   String @id @default(cuid())
-  nome String
-  adc  Int?
+  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  nome      String
+  adc       Int?
 
   // Relations
   docenti  Docente[]
-  idLaurea String
+  idLaurea String    @db.Uuid
   laurea   Laurea    @relation(fields: [idLaurea], references: [id])
   corsi    Corso[]
   lezioni  Lezione[]
@@ -58,23 +64,29 @@ model Gruppo {
 
 model Laurea {
   // Scalars
-  id     String @id @default(cuid())
-  nome   String
-  scuola String
+  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  nome      String
+  scuola    String
 
   // Relations
   corsi  Corso[]
   gruppi Gruppo[]
+
+  @@map("lauree")
 }
 
 model Lezione {
   // Scalars
-  id     String @id @default(cuid())
-  giorno Int
-  ora    Int
-  inizio String
-  fine   String
-  durata Int
+  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
+  giorno    Int
+  ora       Int
+  inizio    String
+  fine      String
+  durata    Int
 
   // Relations
   docenti Docente[]
@@ -86,7 +98,9 @@ model Lezione {
 
 model Aula {
   // Scalars
-  id        String  @id @default(cuid())
+  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt @default(now())
   nome      String
   indirizzo String?
   link      String?
@@ -97,57 +111,57 @@ model Aula {
   @@map("aule")
 }
 
-// next-auth models
+// // next-auth models
 
-model Account {
-  id                String  @id @default(cuid())
-  userId            String  @map("user_id")
-  type              String
-  provider          String
-  providerAccountId String  @map("provider_account_id")
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
+// model Account {
+//   id                String  @db.Uuid @id @default(uuid())
+//   userId            String  @map("user_id") @db.Uuid
+//   type              String
+//   provider          String
+//   providerAccountId String  @map("provider_account_id")
+//   refresh_token     String?
+//   access_token      String?
+//   expires_at        Int?
+//   token_type        String?
+//   scope             String?
+//   id_token          String?
+//   session_state     String?
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
-}
+//   @@unique([provider, providerAccountId])
+//   @@map("accounts")
+// }
 
-model User {
-  id            String    @id @default(cuid())
-  name          String?
-  username      String?   @unique
-  email         String?   @unique
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  corsi         Corso[]
+// model User {
+//   id            String    @db.Uuid @id @default(uuid())
+//   name          String?
+//   username      String?   @unique
+//   email         String?   @unique
+//   emailVerified DateTime? @map("email_verified")
+//   image         String?
+//   accounts      Account[]
+//   sessions      Session[]
+//   corsi         Corso[]
 
-  @@map("users")
-}
+//   @@map("users")
+// }
 
-model Session {
-  id           String   @id @default(cuid())
-  sessionToken String   @unique @map("session_token")
-  userId       String   @map("user_id")
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+// model Session {
+//   id           String   @db.Uuid @id @default(uuid())
+//   sessionToken String   @unique @map("session_token")
+//   userId       String   @map("user_id") @db.Uuid
+//   expires      DateTime
+//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@map("sessions")
-}
+//   @@map("sessions")
+// }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+// model VerificationToken {
+//   identifier String
+//   token      String   @unique
+//   expires    DateTime
 
-  @@unique([identifier, token])
-  @@map("verificationtokens")
-}
+//   @@unique([identifier, token])
+//   @@map("verificationtokens")
+// }

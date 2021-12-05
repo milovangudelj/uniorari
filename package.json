@@ -7,8 +7,9 @@
 		"start": "next start",
 		"lint": "next lint",
 		"vercel-build": "yarn prisma:generate && next build",
-		"prisma:generate": "PRISMA_CLIENT_ENGINE_TYPE='dataproxy' prisma generate",
-		"prisma:push": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma db push",
+		"prisma:push": "prisma db push",
+		"prisma:generate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma generate",
+		"prisma:studio": "prisma studio",
 		"prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
 	},
 	"dependencies": {
@@ -16,6 +17,7 @@
 		"@hookform/resolvers": "^2.8.3",
 		"@next-auth/prisma-adapter": "^0.5.2-next.19",
 		"@prisma/client": "^3.5.0",
+		"@supabase/supabase-js": "^1.28.4",
 		"apollo-server-micro": "^3.5.0",
 		"graphql": "15.7.2",
 		"graphql-scalars": "^1.13.1",
