@@ -5,17 +5,10 @@ import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import * as yup from "yup";
-import { gql } from "@apollo/client";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { Button } from "../components";
-import apolloClient from "../lib/apollo";
 import { useAuth } from "../lib/auth";
-
-const path =
-	process.env.NODE_ENV === "development"
-		? "http://localhost:3000"
-		: "https://uniorari.it";
 
 const schema = yup
 	.object({
@@ -47,44 +40,11 @@ const schema = yup
 	})
 	.required();
 
-const queryEmailUtente = gql`
-	query ($emailUtente: String!) {
-		utente(emailUtente: $emailUtente) {
-			email
-		}
-	}
-`;
-
-const queryUsernameUtente = gql`
-	query ($usernameUtente: String!) {
-		utente(usernameUtente: $usernameUtente) {
-			username
-		}
-	}
-`;
-
-const exists = async (emailUtente, usernameUtente) => {
-	const res1 = await apolloClient.query({
-		query: queryEmailUtente,
-		variables: { emailUtente },
-	});
-
-	const res2 = await apolloClient.query({
-		query: queryUsernameUtente,
-		variables: { usernameUtente },
-	});
-
-	return {
-		email: res1.data.utente !== null && !res1.error,
-		username: res2.data.utente !== null && !res2.error,
-	};
-};
-
 const SignUp = ({ providers, csrfToken }) => {
 	const router = useRouter();
 	const { error } = router.query;
 
-	const { signUp, signInWithGoogle } = useAuth();
+	const { signUp, signInWithGoogle, loading } = useAuth();
 
 	const recaptchaRef = useRef(null);
 
@@ -102,11 +62,15 @@ const SignUp = ({ providers, csrfToken }) => {
 		const token = await recaptchaRef.current.executeAsync();
 
 		const { success } = await (
-			await fetch(`${path}/api/verifyCaptcha?token=${token}`)
+			await fetch(`/api/verifyCaptcha?token=${token}`)
 		).json();
 
 		if (success) {
-			let userLookup = await exists(formData.email, formData.username);
+			let userLookup = await fetch(
+				`/api/checkExists?email=${formData.email}&username=${formData.username}`
+			).then((res) => res.json());
+
+			console.log(userLookup);
 
 			if (userLookup.email) {
 				setError("email", {

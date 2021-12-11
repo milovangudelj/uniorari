@@ -43,7 +43,7 @@ model Corso {
   docenti  Docente[]
   lauree   Laurea[]
   gruppi   Gruppo[]
-  studenti CorsoToUser[]
+  studenti User[]
 
   @@map("corsi")
 }
@@ -121,15 +121,15 @@ model User {
   myId     String        @unique @db.Uuid
   name     String?
   username String?       @unique
-  corsi    CorsoToUser[]
+  corsi    Corso[]
 
   @@map("users")
 }
 
-model CorsoToUser {
-  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  corso   Corso  @relation(fields: [idCorso], references: [id])
-  user    User   @relation(fields: [userId], references: [myId])
-  idCorso String @db.Uuid
-  userId  String @db.Uuid
-}
+// model CorsoToUser {
+//   id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+//   corso   Corso  @relation(fields: [idCorso], references: [id])
+//   user    User   @relation(fields: [userId], references: [myId])
+//   idCorso String @db.Uuid
+//   userId  String @db.Uuid
+// }

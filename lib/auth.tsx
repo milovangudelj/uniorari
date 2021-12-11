@@ -56,17 +56,12 @@ function useProvideAuth() {
 		if (error) throw error;
 
 		let createUserMutation = gql`
-			mutation (
-				$idUtente: String!
-				$nameUtente: String!
-				$usernameUtente: String!
-			) {
-				creaUtente(
-					idUtente: $idUtente
-					nameUtente: $nameUtente
-					usernameUtente: $usernameUtente
-				) {
-					id
+			mutation ($userData: users_insert_input!) {
+				insert_users_one(object: $userData) {
+					myId
+					name
+					username
+					email
 				}
 			}
 		`;
@@ -75,9 +70,12 @@ function useProvideAuth() {
 			await apolloClient.mutate({
 				mutation: createUserMutation,
 				variables: {
-					idUtente: user.id,
-					nameUtente: data?.name,
-					usernameUtente: data?.username,
+					userData: {
+						myId: user.id,
+						name: data?.name,
+						username: data?.username,
+						email: user.email,
+					},
 				},
 			});
 
