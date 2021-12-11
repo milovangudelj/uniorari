@@ -2,22 +2,6 @@
 ### Do not make changes to this file directly
 
 
-type Account {
-  access_token: String
-  expires_at: Int
-  id: ID!
-  id_token: String
-  provider: String!
-  providerAccountId: String!
-  refresh_token: String
-  scope: String
-  session_state: String
-  token_type: String
-  type: String!
-  user: User!
-  userId: String!
-}
-
 type Aula {
   id: ID!
   indirizzo: String
@@ -27,12 +11,20 @@ type Aula {
 }
 
 type Corso {
+  createdAt: DateTime
   docenti: [Docente!]!
   gruppi: [Gruppo!]!
   id: ID!
   lauree: [Laurea!]!
   nome: String!
-  studenti: [User!]!
+  studenti: [CorsoToUser!]!
+  updatedAt: DateTime
+}
+
+type CorsoToUser {
+  corso: Corso!
+  id: ID!
+  user: User!
 }
 
 """
@@ -80,6 +72,10 @@ type Lezione {
   ora: Int!
 }
 
+type Mutation {
+  creaUtente(idUtente: ID!, nameUtente: String!, usernameUtente: String!): User
+}
+
 type Query {
   aula(idAula: String!): Aula
   aule: [Aula!]!
@@ -93,25 +89,13 @@ type Query {
   lauree: [Laurea!]!
   lezione(idLezione: String!): Lezione
   lezioni: [Lezione!]!
-  utente(emailUtente: String, usernameUtente: String): User
-}
-
-type Session {
-  expires: DateTime!
-  id: ID!
-  sessionToken: String!
-  user: User!
-  userId: String!
+  utente(emailUtente: String, idUtente: String, usernameUtente: String): User
 }
 
 type User {
-  accounts: [Account]!
-  corsi: [Corso]!
-  email: String
-  emailVerified: DateTime
+  corsi: [CorsoToUser!]!
   id: ID!
-  image: String
+  myId: String!
   name: String
-  sessions: [Session]!
   username: String
 }

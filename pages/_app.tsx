@@ -1,11 +1,12 @@
 import "../styles/globals.css";
-import { SessionProvider } from "next-auth/react";
+// import { SessionProvider } from "next-auth/react";
+import { AuthProvider } from "../lib/auth";
 import { Layout } from "../components";
 import { SWRConfig } from "swr";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 	return (
-		<SessionProvider session={session}>
+		<AuthProvider>
 			<SWRConfig
 				value={{
 					refreshInterval: 3000,
@@ -17,7 +18,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 					<Component {...pageProps} />
 				</Layout>
 			</SWRConfig>
-		</SessionProvider>
+		</AuthProvider>
 	);
 }
 

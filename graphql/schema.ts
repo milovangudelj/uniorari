@@ -1,10 +1,9 @@
-import { makeSchema } from "nexus";
 import { join } from "path";
+import { makeSchema } from "nexus";
 import * as types from "./types";
-import { DateTime } from "./types/DateTime";
 
-export const schema = makeSchema({
-	types: { DateTime, ...types },
+const schema = makeSchema({
+	types: { ...types },
 	outputs: {
 		typegen: join(
 			process.cwd(),
@@ -20,3 +19,5 @@ export const schema = makeSchema({
 		module: join(process.cwd(), "graphql", "context.ts"),
 	},
 });
+
+export default schema;

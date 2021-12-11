@@ -1,21 +1,25 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["dataProxy"]
-}
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["dataProxy"]
+}
+
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
+
 model Docente {
   // Scalars
-  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   nome      String
   cognome   String?
   email     String?  @unique
@@ -30,31 +34,31 @@ model Docente {
 
 model Corso {
   // Scalars
-  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   nome      String
 
   // Relations
   docenti  Docente[]
   lauree   Laurea[]
   gruppi   Gruppo[]
-  // studenti String[] // Previously User[]
+  studenti CorsoToUser[]
 
   @@map("corsi")
 }
 
 model Gruppo {
   // Scalars
-  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   nome      String
   adc       Int?
 
   // Relations
   docenti  Docente[]
-  idLaurea String    @db.Uuid
+  idLaurea String
   laurea   Laurea    @relation(fields: [idLaurea], references: [id])
   corsi    Corso[]
   lezioni  Lezione[]
@@ -64,9 +68,9 @@ model Gruppo {
 
 model Laurea {
   // Scalars
-  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  id        String   @id @default(dbgenerated("uuid_generate_v4()"))
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   nome      String
   scuola    String
 
@@ -79,9 +83,9 @@ model Laurea {
 
 model Lezione {
   // Scalars
-  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   giorno    Int
   ora       Int
   inizio    String
@@ -98,9 +102,9 @@ model Lezione {
 
 model Aula {
   // Scalars
-  id        String   @id @db.Uuid @default(dbgenerated("uuid_generate_v4()"))
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
   nome      String
   indirizzo String?
   link      String?
@@ -111,57 +115,21 @@ model Aula {
   @@map("aule")
 }
 
-// // next-auth models
+/// User data model
+model User {
+  id       String        @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  myId     String        @unique @db.Uuid
+  name     String?
+  username String?       @unique
+  corsi    CorsoToUser[]
 
-// model Account {
-//   id                String  @db.Uuid @id @default(uuid())
-//   userId            String  @map("user_id") @db.Uuid
-//   type              String
-//   provider          String
-//   providerAccountId String  @map("provider_account_id")
-//   refresh_token     String?
-//   access_token      String?
-//   expires_at        Int?
-//   token_type        String?
-//   scope             String?
-//   id_token          String?
-//   session_state     String?
+  @@map("users")
+}
 
-//   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@unique([provider, providerAccountId])
-//   @@map("accounts")
-// }
-
-// model User {
-//   id            String    @db.Uuid @id @default(uuid())
-//   name          String?
-//   username      String?   @unique
-//   email         String?   @unique
-//   emailVerified DateTime? @map("email_verified")
-//   image         String?
-//   accounts      Account[]
-//   sessions      Session[]
-//   corsi         Corso[]
-
-//   @@map("users")
-// }
-
-// model Session {
-//   id           String   @db.Uuid @id @default(uuid())
-//   sessionToken String   @unique @map("session_token")
-//   userId       String   @map("user_id") @db.Uuid
-//   expires      DateTime
-//   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-//   @@map("sessions")
-// }
-
-// model VerificationToken {
-//   identifier String
-//   token      String   @unique
-//   expires    DateTime
-
-//   @@unique([identifier, token])
-//   @@map("verificationtokens")
-// }
+model CorsoToUser {
+  id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  corso   Corso  @relation(fields: [idCorso], references: [id])
+  user    User   @relation(fields: [userId], references: [myId])
+  idCorso String @db.Uuid
+  userId  String @db.Uuid
+}

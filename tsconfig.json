@@ -24,10 +24,10 @@
   "include": [
     "next-env.d.ts",
     "**/*.ts",
-    "**/*.tsx"
-,
-"pages/_app.tsx"
-],
+    "**/*.tsx",
+    "pages/_error.js",
+    "postcss.config.js"
+  ],
   "exclude": [
     "node_modules"
   ]

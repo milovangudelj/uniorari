@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button } from ".";
 import { ProfilePic } from "./ProfilePic";
+import Signin from "./Signin";
 
 const pages = [
 	{
@@ -22,51 +23,68 @@ const pages = [
 
 export const Navbar = () => {
 	const router = useRouter();
-	const { data: session, status } = useSession();
-	const [user, setUser] = useState({});
+	// const { data: session, status } = useSession();
+	const [user, setUser] = useState();
+	const [signIn, setSignIn] = useState(false);
 
-	useEffect(() => {
-		setUser(session?.user);
-	}, [session, status]);
+	// useEffect(() => {
+	// 	setUser(session?.user);
+	// }, [session, status]);
+
+	const showSignin = () => {
+		setSignIn(true);
+	};
+
+	const hideSignin = () => {
+		setSignIn(false);
+	};
 
 	return (
-		<div className="w-full bg-white border-b border-grey-100 flex justify-center sticky top-0">
-			<header className="max-w-7xl w-full flex items-center px-2 py-3">
-				<Link href="/">
-					<img
-						src="/logo.svg"
-						alt="Logo UniOrari"
-						title="UniOrari"
-						className="mr-8 cursor-pointer"
-					/>
-				</Link>
-				<nav className="mr-auto">
-					<ul className="flex text-body-l">
-						{pages.map((page, idx) => (
-							<li
-								key={idx}
-								className={`pr-4 ${
-									router.pathname === page.link
-										? "text-accent-500 hover:text-accent-700"
-										: "text-on-surface-me hover:text-on-surface-he"
-								} transition`}
-							>
-								<Link href={page.link}>
-									<a>{page.name}</a>
-								</Link>
-							</li>
-						))}
-					</ul>
-				</nav>
-				{user ? (
-					<ProfileMenu user={user} />
-				) : (
-					<Button variant="primary">
-						<Link href="/accedi">Accedi</Link>
-					</Button>
-				)}
-			</header>
-		</div>
+		<>
+			<div className="w-full bg-white border-b border-grey-100 flex justify-center sticky top-0 z-20">
+				<header className="max-w-7xl w-full flex items-center px-2 py-3">
+					<Link href="/">
+						<img
+							src="/logo.svg"
+							alt="Logo UniOrari"
+							title="UniOrari"
+							className="mr-8 cursor-pointer"
+						/>
+					</Link>
+					<nav className="mr-auto">
+						<ul className="flex text-body-l">
+							{pages.map((page, idx) => (
+								<li
+									key={idx}
+									className={`pr-4 ${
+										router.pathname === page.link
+											? "text-accent-500 hover:text-accent-700"
+											: "text-on-surface-me hover:text-on-surface-he"
+									} transition`}
+								>
+									<Link href={page.link}>
+										<a>{page.name}</a>
+									</Link>
+								</li>
+							))}
+						</ul>
+					</nav>
+					{user ? (
+						<ProfileMenu user={user} />
+					) : (
+						<Button
+							variant="primary"
+							// onClick={showSignin}
+						>
+							<Link href="/accedi">Accedi</Link>
+							{/* Accedi */}
+						</Button>
+					)}
+				</header>
+			</div>
+
+			{signIn && <Signin hide={hideSignin} />}
+		</>
 	);
 };
 

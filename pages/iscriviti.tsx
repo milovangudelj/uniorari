@@ -2,12 +2,6 @@ import { useRef } from "react";
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-	getProviders,
-	signIn,
-	getSession,
-	getCsrfToken,
-} from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
 import * as yup from "yup";
@@ -16,6 +10,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 import { Button } from "../components";
 import apolloClient from "../lib/apollo";
+import { useAuth } from "../lib/auth";
 
 const path =
 	process.env.NODE_ENV === "development"
@@ -24,7 +19,10 @@ const path =
 
 const schema = yup
 	.object({
-		csrfToken: yup.string().required(),
+		email: yup
+			.string()
+			.email("Inserisci un indirizzo email valido")
+			.required("Questo campo è obbligatorio"),
 		name: yup
 			.string()
 			.required("Questo campo è obbligatorio")
@@ -46,15 +44,11 @@ const schema = yup
 			.matches(/^\w.+$/, {
 				message: "L'username non può contenere nessun carattere speciale",
 			}),
-		email: yup
-			.string()
-			.email("Inserisci un indirizzo email valido")
-			.required("Questo campo è obbligatorio"),
 	})
 	.required();
 
 const queryEmailUtente = gql`
-	query emailUtente($emailUtente: String!) {
+	query ($emailUtente: String!) {
 		utente(emailUtente: $emailUtente) {
 			email
 		}
@@ -62,7 +56,7 @@ const queryEmailUtente = gql`
 `;
 
 const queryUsernameUtente = gql`
-	query Utente($usernameUtente: String!) {
+	query ($usernameUtente: String!) {
 		utente(usernameUtente: $usernameUtente) {
 			username
 		}
@@ -90,6 +84,8 @@ const SignUp = ({ providers, csrfToken }) => {
 	const router = useRouter();
 	const { error } = router.query;
 
+	const { signUp, signInWithGoogle } = useAuth();
+
 	const recaptchaRef = useRef(null);
 
 	const {
@@ -110,29 +106,23 @@ const SignUp = ({ providers, csrfToken }) => {
 		).json();
 
 		if (success) {
-			let uesrLookup = await exists(formData.email, formData.username);
+			let userLookup = await exists(formData.email, formData.username);
 
-			if (uesrLookup.email) {
+			if (userLookup.email) {
 				setError("email", {
 					type: "manual",
 					message: "Questa mail è già associata a un'altro account",
 				});
 			}
 
-			if (uesrLookup.username) {
+			if (userLookup.username) {
 				setError("username", {
 					type: "manual",
 					message: "Questo username è già in uso da a un'altro account",
 				});
 			}
 
-			if (!uesrLookup.email && !uesrLookup.username)
-				await signIn("email", {
-					name: formData.name,
-					username: formData.username,
-					email: formData.email,
-					csrfToken: formData.csrfToken,
-				});
+			if (!userLookup.email && !userLookup.username) await signUp(formData);
 		}
 	};
 
@@ -150,24 +140,7 @@ const SignUp = ({ providers, csrfToken }) => {
 						Iscriviti per vedere il tuo calendario
 					</p>
 					<div>
-						{Object.values(providers).map((provider: any) => {
-							if (provider.name === "Email") {
-								return;
-							}
-							return provider.name === "Google" ? (
-								<GoogleButton
-									key={provider.name}
-									providerId={provider.id}
-									providerName={provider.name}
-								/>
-							) : (
-								<div key={provider.name}>
-									<button onClick={() => signIn(provider.id)}>
-										Sign in with {provider.name}
-									</button>
-								</div>
-							);
-						})}
+						<GoogleButton onClick={signInWithGoogle} />
 					</div>
 					<div className="w-full flex my-10 items-center">
 						<div className="h-px w-full bg-grey-300"></div>
@@ -178,12 +151,6 @@ const SignUp = ({ providers, csrfToken }) => {
 					</div>
 					<form onSubmit={handleSubmit(onSubmitWithReCAPTCHA)} noValidate>
 						<div>
-							<input
-								name="csrfToken"
-								type="hidden"
-								defaultValue={csrfToken}
-								{...register("csrfToken")}
-							/>
 							<label htmlFor="name" className="text-body-l">
 								Nome<span className="text-accent-500">*</span>
 							</label>
@@ -325,11 +292,11 @@ const SignUp = ({ providers, csrfToken }) => {
 
 export default SignUp;
 
-const GoogleButton = ({ providerId, providerName }) => {
+const GoogleButton = ({ onClick }) => {
 	return (
 		<div>
 			<Button
-				onClick={() => signIn(providerId)}
+				onClick={onClick}
 				external
 				className="w-full text-sm font-roboto font-medium text-white uppercase flex justify-center items-center rounded-lg px-2 h-10 bg-google-darkBg shadow-none hover:shadow-google focus:bg-google-darkBgFocus focus:shadow-none transition"
 			>
@@ -363,7 +330,7 @@ const GoogleButton = ({ providerId, providerName }) => {
 						</g>
 					</svg>
 				</span>
-				Accedi con {providerName}
+				Accedi con Google
 			</Button>
 		</div>
 	);
@@ -390,25 +357,4 @@ const SignInError = ({ error }) => {
 			{errorMessage}
 		</div>
 	);
-};
-
-export const getServerSideProps = async (ctx) => {
-	const { req, res } = ctx;
-	const session = await getSession({ req });
-
-	if (session) {
-		return {
-			redirect: {
-				destination: "/",
-				permanent: false,
-			},
-		};
-	}
-
-	return {
-		props: {
-			providers: await getProviders(),
-			csrfToken: await getCsrfToken(ctx),
-		},
-	};
 };
