@@ -1,7 +1,6 @@
 import Head from "next/head";
 
-import { ReCAPTCHADisclaimer } from "../components";
-import { AuthForm, AuthLayout } from "../components/auth";
+import { AuthForm, AuthLayout, ReCAPTCHADisclaimer } from "../components/auth";
 
 const Iscriviti = () => {
 	return (

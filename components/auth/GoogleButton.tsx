@@ -1,4 +1,4 @@
-import { Button } from ".";
+import { Button } from "..";
 
 export const GoogleButton = ({ onClick }) => {
 	return (

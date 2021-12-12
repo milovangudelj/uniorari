@@ -33,13 +33,13 @@ function useProvideAuth() {
 		// Check active sessions and sets the user
 		const session = supabase.auth.session();
 
-		setUser(session?.user ?? null);
+		setUser(session?.user ? handleUser(session.user) : null);
 		setLoading(false);
 
 		// Listen for changes on auth state (logged in, signed out, etc.)
 		const { data: listener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
-				setUser(session?.user ?? null);
+				setUser(session?.user ? handleUser(session.user) : null);
 				setLoading(false);
 			}
 		);
@@ -48,6 +48,11 @@ function useProvideAuth() {
 			listener?.unsubscribe();
 		};
 	}, []);
+
+	// TODO: Add user handling logic to remove everything not necessary
+	const handleUser = (rawUser) => {
+		return rawUser;
+	};
 
 	const signUp = async (data) => {
 		let { user, error } = await supabase.auth.signUp({

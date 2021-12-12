@@ -121,6 +121,7 @@ model User {
   name     String
   email    String  @unique
   username String  @unique
+  image    String?
   corsi    Corso[]
 
   @@map("users")

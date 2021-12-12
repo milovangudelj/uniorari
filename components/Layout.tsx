@@ -8,7 +8,7 @@ export const Layout = (props) => {
 	const [excPaths, setExcPaths] = useState([
 		"/accedi",
 		"/iscriviti",
-		"/verify-request",
+		"/verifica-email",
 	]);
 	const [show, setShow] = useState(false);
 

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Button } from ".";
+import { useAuth } from "../lib/auth";
 import { ProfilePic } from "./ProfilePic";
 import Signin from "./Signin";
 
@@ -23,21 +24,12 @@ const pages = [
 
 export const Navbar = () => {
 	const router = useRouter();
-	// const { data: session, status } = useSession();
-	const [user, setUser] = useState();
-	const [signIn, setSignIn] = useState(false);
 
-	// useEffect(() => {
-	// 	setUser(session?.user);
-	// }, [session, status]);
+	const { user, loading } = useAuth();
 
-	const showSignin = () => {
-		setSignIn(true);
-	};
-
-	const hideSignin = () => {
-		setSignIn(false);
-	};
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
 
 	return (
 		<>
@@ -72,18 +64,12 @@ export const Navbar = () => {
 					{user ? (
 						<ProfileMenu user={user} />
 					) : (
-						<Button
-							variant="primary"
-							// onClick={showSignin}
-						>
+						<Button variant="primary">
 							<Link href="/accedi">Accedi</Link>
-							{/* Accedi */}
 						</Button>
 					)}
 				</header>
 			</div>
-
-			{signIn && <Signin hide={hideSignin} />}
 		</>
 	);
 };

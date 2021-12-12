@@ -6,4 +6,3 @@ export * from "./Laurea";
 export * from "./Lezione";
 export * from "./Aula";
 export * from "./User";
-export * from "./CorsoToUser";

@@ -1,8 +1,7 @@
 import Link from "next/link";
 
 import { useAuth } from "../../lib/auth";
-import { AuthDivider, SignInForm, SignUpForm } from ".";
-import { GoogleButton } from "..";
+import { AuthDivider, SignInForm, SignUpForm, GoogleButton } from ".";
 import { useEffect, useState } from "react";
 
 type formVariant = "signin" | "signup";
@@ -13,10 +12,6 @@ type propsType = {
 
 export const AuthForm = (props: propsType) => {
 	const [isSignin, setIsSignin] = useState(props.variant === "signin");
-
-	// useEffect(() => {
-	// 	setIsSignin(props.variant === "signin");
-	// });
 
 	// my auth variables
 	const { signInWithGoogle } = useAuth();
