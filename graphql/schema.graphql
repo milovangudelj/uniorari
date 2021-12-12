@@ -73,7 +73,7 @@ type Lezione {
 }
 
 type Mutation {
-  creaUtente(idUtente: ID!, nameUtente: String!, usernameUtente: String!): User
+  creaUtente(email: String!, id: ID!, name: String!, username: String!): User
 }
 
 type Query {
@@ -89,13 +89,13 @@ type Query {
   lauree: [Laurea!]!
   lezione(idLezione: String!): Lezione
   lezioni: [Lezione!]!
-  utente(emailUtente: String, idUtente: String, usernameUtente: String): User
+  utente(email: String, id: String, username: String): User
 }
 
 type User {
-  corsi: [CorsoToUser!]!
+  corsi: [Corso!]!
+  email: String!
   id: ID!
-  myId: String!
-  name: String
-  username: String
+  name: String!
+  username: String!
 }

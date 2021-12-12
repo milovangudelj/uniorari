@@ -101,7 +101,7 @@ function useProvideAuth() {
 		});
 		if (error) throw error;
 
-		router.push("/");
+		router.push("/verifica-email");
 	};
 
 	const signInWithGoogle = async () => {
