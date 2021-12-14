@@ -39,7 +39,7 @@ const schema = yup
 
 export const SignUpForm = () => {
 	// my auth variables
-	const { signUp } = useAuth();
+	const { signUpWithMagic } = useAuth();
 
 	// react-hook-form variables
 	const {
@@ -81,7 +81,8 @@ export const SignUpForm = () => {
 				});
 			}
 
-			if (!userLookup.email && !userLookup.username) await signUp(formData);
+			if (!userLookup.email && !userLookup.username)
+				await signUpWithMagic(formData);
 		}
 	};
 

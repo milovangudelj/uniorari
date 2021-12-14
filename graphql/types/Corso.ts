@@ -1,15 +1,15 @@
 import { objectType, extendType, list, nonNull, stringArg } from "nexus";
-import { Docente, Laurea, Gruppo, CorsoToUser } from ".";
+import { Docente, Laurea, Gruppo, User } from ".";
 
 export const Corso = objectType({
 	name: "Corso",
 	definition(t) {
 		t.nonNull.id("id");
-		t.dateTime("createdAt");
-		t.dateTime("updatedAt");
+		t.nonNull.dateTime("createdAt");
+		t.nonNull.dateTime("updatedAt");
 		t.nonNull.string("nome");
-		t.nonNull.list.field("docenti", {
-			type: nonNull(Docente),
+		t.nonNull.list.nonNull.field("docenti", {
+			type: Docente,
 			async resolve(parent, _args, ctx) {
 				return await ctx.prisma.corso
 					.findUnique({
@@ -20,8 +20,8 @@ export const Corso = objectType({
 					.docenti();
 			},
 		});
-		t.nonNull.list.field("lauree", {
-			type: nonNull(Laurea),
+		t.nonNull.list.nonNull.field("lauree", {
+			type: Laurea,
 			async resolve(parent, _args, ctx) {
 				return await ctx.prisma.corso
 					.findUnique({
@@ -32,8 +32,8 @@ export const Corso = objectType({
 					.lauree();
 			},
 		});
-		t.nonNull.list.field("gruppi", {
-			type: nonNull(Gruppo),
+		t.nonNull.list.nonNull.field("gruppi", {
+			type: Gruppo,
 			async resolve(parent, _args, ctx) {
 				return await ctx.prisma.corso
 					.findUnique({
@@ -44,8 +44,8 @@ export const Corso = objectType({
 					.gruppi();
 			},
 		});
-		t.nonNull.list.field("studenti", {
-			type: nonNull(CorsoToUser),
+		t.nonNull.list.nonNull.field("studenti", {
+			type: User,
 			async resolve(parent, _args, ctx) {
 				return await ctx.prisma.corso
 					.findUnique({
@@ -87,8 +87,8 @@ export const corsoSingolo = extendType({
 export const corsi = extendType({
 	type: "Query",
 	definition(t) {
-		t.nonNull.list.field("corsi", {
-			type: nonNull(Corso),
+		t.nonNull.list.nonNull.field("corsi", {
+			type: Corso,
 			async resolve(_parent, _args, ctx) {
 				return await ctx.prisma.corso.findMany({
 					include: {

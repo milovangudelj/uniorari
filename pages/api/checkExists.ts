@@ -4,17 +4,17 @@ import { gql } from "@apollo/client";
 import apolloClient from "../../lib/apollo";
 
 const queryEmailUtente = gql`
-	query ($emailUtente: String!) {
-		users(where: { email: { _eq: $emailUtente } }) {
+	query ($email: String) {
+		utente(email: $email) {
 			email
 		}
 	}
 `;
 
 const queryUsernameUtente = gql`
-	query ($usernameUtente: String!) {
-		users(where: { username: { _eq: $usernameUtente } }) {
-			name
+	query ($username: String) {
+		utente(username: $username) {
+			username
 		}
 	}
 `;
@@ -22,20 +22,24 @@ const queryUsernameUtente = gql`
 const handler = async (req, res) => {
 	const { email, username } = req.query;
 
-	const res1 = await apolloClient.query({
+	const emailCheck = await apolloClient.query({
 		query: queryEmailUtente,
-		variables: { emailUtente: email },
+		variables: { email: email },
 	});
 
-	const res2 = await apolloClient.query({
+	const usernameCheck = await apolloClient.query({
 		query: queryUsernameUtente,
-		variables: { usernameUtente: username },
+		variables: { username: username },
 	});
 
-	res.status(200).json({
-		email: res1.data.utente !== null && !res1.error,
-		username: res2.data.utente !== null && !res2.error,
-	});
+	const output = {};
+	if (email)
+		output["email"] = emailCheck.data.utente !== null && !emailCheck.error;
+	if (username)
+		output["username"] =
+			usernameCheck.data.utente !== null && !usernameCheck.error;
+
+	res.status(200).json(output);
 };
 
 export default withSentry(handler);

@@ -1,4 +1,6 @@
 import { extendType, stringArg, nonNull, objectType, idArg } from "nexus";
+// import * as yup from "yup";
+
 import { Corso } from ".";
 
 export const User = objectType({
@@ -8,6 +10,7 @@ export const User = objectType({
 		t.nonNull.string("name");
 		t.nonNull.string("email");
 		t.nonNull.string("username");
+		t.string("image");
 		t.nonNull.list.nonNull.field("corsi", {
 			type: Corso,
 			async resolve(parent, _args, ctx) {
@@ -34,8 +37,8 @@ export const utenteSingolo = extendType({
 				username: stringArg(),
 			},
 			async resolve(_parent, args, ctx) {
-				if (Object.keys(args).length !== 1)
-					throw "You need to provide one and only one argument.";
+				if (!args)
+					throw "You need to provide at least one argument. The first one will be used.";
 
 				let where = {};
 				where[Object.keys(args)[0]] = Object.values(args)[0];
@@ -61,6 +64,7 @@ export const creaUtente = extendType({
 				name: nonNull(stringArg()),
 				email: nonNull(stringArg()),
 				username: nonNull(stringArg()),
+				image: stringArg(),
 			},
 			async resolve(_parent, args, ctx) {
 				return await ctx.prisma.user.create({
@@ -69,6 +73,7 @@ export const creaUtente = extendType({
 						name: args.name,
 						email: args.email,
 						username: args.username,
+						image: args.image,
 					},
 				});
 			},

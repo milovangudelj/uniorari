@@ -1,11 +1,10 @@
-import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+
 import { Button } from ".";
 import { useAuth } from "../lib/auth";
 import { ProfilePic } from "./ProfilePic";
-import Signin from "./Signin";
 
 const pages = [
 	{
@@ -25,11 +24,7 @@ const pages = [
 export const Navbar = () => {
 	const router = useRouter();
 
-	const { user, loading } = useAuth();
-
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
+	const { user, loading, signOut } = useAuth();
 
 	return (
 		<>
@@ -62,7 +57,7 @@ export const Navbar = () => {
 						</ul>
 					</nav>
 					{user ? (
-						<ProfileMenu user={user} />
+						<ProfileMenu user={user} signOut={signOut} />
 					) : (
 						<Button variant="primary">
 							<Link href="/accedi">Accedi</Link>
@@ -74,7 +69,7 @@ export const Navbar = () => {
 	);
 };
 
-const ProfileMenu = ({ user }) => {
+const ProfileMenu = ({ user, signOut }) => {
 	return (
 		<div className="group self-center relative flex justify-end">
 			{user.image ? (

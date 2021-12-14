@@ -11,9 +11,9 @@ generator client {
   previewFeatures = ["dataProxy"]
 }
 
-generator nexusPrisma {
-  provider = "nexus-prisma"
-}
+// generator nexusPrisma {
+//   provider = "nexus-prisma"
+// }
 
 model Docente {
   // Scalars
@@ -126,11 +126,3 @@ model User {
 
   @@map("users")
 }
-
-// model CorsoToUser {
-//   id      String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-//   corso   Corso  @relation(fields: [idCorso], references: [id])
-//   user    User   @relation(fields: [userId], references: [myId])
-//   idCorso String @db.Uuid
-//   userId  String @db.Uuid
-// }

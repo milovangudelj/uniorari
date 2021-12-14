@@ -1,17 +1,14 @@
 import router from "next/router";
-import {
-	createContext,
-	useContext,
-	useState,
-	useEffect,
-	ReactNode,
-} from "react";
-import { AuthSession, AuthUser } from "@supabase/supabase-js";
+import { createContext, useContext, useState, useEffect } from "react";
 import { gql } from "@apollo/client";
 
-import prisma from "./prisma";
 import { supabase } from "./supabase";
 import apolloClient from "./apollo";
+
+const path =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:3000"
+		: "https://uniorari.it";
 
 const AuthContext = createContext(undefined);
 
@@ -30,17 +27,15 @@ function useProvideAuth() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		// Check active sessions and sets the user
-		const session = supabase.auth.session();
+		// // Check active sessions and sets the user
+		// 	const session = supabase.auth.session();
 
-		setUser(session?.user ? handleUser(session.user) : null);
-		setLoading(false);
+		// 	await handleUser(session.user);
 
 		// Listen for changes on auth state (logged in, signed out, etc.)
 		const { data: listener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
-				setUser(session?.user ? handleUser(session.user) : null);
-				setLoading(false);
+				await handleUser(session?.user);
 			}
 		);
 
@@ -50,54 +45,47 @@ function useProvideAuth() {
 	}, []);
 
 	// TODO: Add user handling logic to remove everything not necessary
-	const handleUser = (rawUser) => {
-		return rawUser;
-	};
-
-	const signUp = async (data) => {
-		let { user, error } = await supabase.auth.signUp({
-			email: data?.email,
-		});
-		if (error) throw error;
-
-		let createUserMutation = gql`
-			mutation (
-				$idUtente: String!
-				$nameUtente: String!
-				$usernameUtente: String!
-			) {
-				creaUtente(
-					idUtente: $idUtente
-					nameUtente: $nameUtente
-					usernameUtente: $usernameUtente
-				) {
+	const handleUser = async (rawUser) => {
+		const queryUtente = gql`
+			query Utente($id: String) {
+				utente(id: $id) {
 					id
+					name
+					username
+					email
+					image
 				}
 			}
 		`;
 
-		try {
-			await apolloClient.mutate({
-				mutation: createUserMutation,
+		if (rawUser) {
+			const { data, error } = await apolloClient.query({
+				query: queryUtente,
 				variables: {
-					idUtente: user.id,
-					nameUtente: data?.name,
-					usernameUtente: data?.username,
+					id: rawUser.id,
 				},
 			});
 
-			router.push("/");
-		} catch (e) {
-			if (e) {
-				// The .code property can be accessed in a type-safe manner
-				if (e?.code === "P2002") {
-					console.error(
-						"There is a unique constraint violation, a new user cannot be created with this username"
-					);
-				}
-			}
-			throw e;
+			setUser({ ...data.utente });
+		} else {
+			setUser(null);
 		}
+
+		setLoading(false);
+	};
+
+	const signUpWithMagic = async (userData) => {
+		const signinRes = await supabase.auth.signIn({
+			email: userData?.email,
+		});
+		if (signinRes.error) throw signinRes.error;
+
+		const { data, error } = await fetch(
+			`/api/createNewUser?name_input=${userData?.name}&username_input=${userData?.username}&email_input=${userData?.email}`
+		).then((res) => res.json());
+		if (error) throw error;
+
+		router.push("/verifica-email");
 	};
 
 	const signInWithMagic = async (email) => {
@@ -110,9 +98,31 @@ function useProvideAuth() {
 	};
 
 	const signInWithGoogle = async () => {
-		let { user, error } = await supabase.auth.signIn({
+		let signinRes = await supabase.auth.signIn({
 			provider: "google",
 		});
+		if (signinRes.error) throw signinRes.error;
+
+		let userLookup = await fetch(
+			`/api/checkExists?email=${signinRes.user.email}`
+		).then((res) => res.json());
+
+		if (userLookup.email) return;
+
+		const identityData = signinRes.user.identities.find(
+			(idntity) => idntity.provider === "google"
+		).identity_data;
+
+		const { data, error } = await fetch(
+			`/api/createNewUser?id_input=${signinRes.user.id}&name_input=${
+				identityData.full_name
+			}&username_input=${identityData.full_name
+				.toLowerCase()
+				.replaceAll(" ", "_")
+				.replaceAll(".", "")}&email_input=${
+				identityData.email
+			}&image_input=${identityData.picture}`
+		).then((res) => res.json());
 		if (error) throw error;
 
 		router.push("/");
@@ -131,7 +141,18 @@ function useProvideAuth() {
 		loading,
 		signInWithMagic,
 		signInWithGoogle,
-		signUp,
+		signUpWithMagic,
 		signOut,
 	};
 }
+
+const formatUser = (user) => {
+	return {
+		id: user.uid,
+		email: user.email,
+		name: user.displayName,
+		username: user.displayName,
+		//   provider: user.providerData[0].providerId,
+		image: user.photoURL,
+	};
+};

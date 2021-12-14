@@ -11,20 +11,14 @@ type Aula {
 }
 
 type Corso {
-  createdAt: DateTime
+  createdAt: DateTime!
   docenti: [Docente!]!
   gruppi: [Gruppo!]!
   id: ID!
   lauree: [Laurea!]!
   nome: String!
-  studenti: [CorsoToUser!]!
-  updatedAt: DateTime
-}
-
-type CorsoToUser {
-  corso: Corso!
-  id: ID!
-  user: User!
+  studenti: [User!]!
+  updatedAt: DateTime!
 }
 
 """
@@ -73,7 +67,7 @@ type Lezione {
 }
 
 type Mutation {
-  creaUtente(email: String!, id: ID!, name: String!, username: String!): User
+  creaUtente(email: String!, id: ID!, image: String, name: String!, username: String!): User
 }
 
 type Query {
@@ -96,6 +90,7 @@ type User {
   corsi: [Corso!]!
   email: String!
   id: ID!
+  image: String
   name: String!
   username: String!
 }
