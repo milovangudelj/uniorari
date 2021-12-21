@@ -43,3 +43,4 @@ export const ProfilePic = (props) => {
 		</div>
 	);
 };
+ 

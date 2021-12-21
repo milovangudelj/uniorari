@@ -3,3 +3,4 @@ const Scuole = () => {
 };
 
 export default Scuole;
+ 

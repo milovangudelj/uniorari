@@ -262,3 +262,4 @@ font-family: 'Inter', sans-serif;
 export const text = ({ url, host }: Record<"url" | "host", string>) => {
 	return `Accedi a UniOrari\n\nClicca il link qua sotto per accedere ai tuoi corsi.\n\n${url}\n\n`;
 };
+ 

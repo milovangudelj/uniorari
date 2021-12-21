@@ -128,3 +128,4 @@ model Profile {
 
   @@map("profiles")
 }
+ 

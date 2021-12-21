@@ -131,3 +131,4 @@ const Lezione = ({ lezione, last = false }) => {
 const days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
 
 export default Corsi;
+ 
