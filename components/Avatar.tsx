@@ -87,3 +87,4 @@ export default function Avatar({ url, size, onUpload }) {
 		</div>
 	);
 }
+ 

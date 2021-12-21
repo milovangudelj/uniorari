@@ -6,3 +6,4 @@ export const DateTime = asNexusMethod(
 	new GraphQLScalarType(DateTimeResolver),
 	"dateTime"
 );
+ 

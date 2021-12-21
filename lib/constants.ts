@@ -14,3 +14,4 @@ export type Profile = {
 	image?: string;
 	corsi?: string[];
 };
+ 

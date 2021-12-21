@@ -86,3 +86,4 @@ const completeUser = async (user) => {
 };
 
 export default withSentry(handler);
+ 

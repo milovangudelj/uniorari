@@ -44,4 +44,5 @@ export const GoogleButton = ({ view }) => {
 			</Button>
 		</div>
 	);
-};
+}; 
+ 
