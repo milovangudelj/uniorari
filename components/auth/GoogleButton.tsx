@@ -1,10 +1,12 @@
 import { Button } from "..";
+import { useAuth } from "../../lib/auth";
 
-export const GoogleButton = ({ onClick }) => {
+export const GoogleButton = ({ view }) => {
+	const { signInWithGoogle, signUpWithGoogle } = useAuth();
 	return (
 		<div>
 			<Button
-				onClick={onClick}
+				onClick={view === "sign_in" ? signInWithGoogle : signUpWithGoogle}
 				external
 				className="w-full text-sm font-roboto font-medium text-white uppercase flex justify-center items-center rounded-lg px-2 h-10 bg-google-darkBg shadow-none hover:shadow-google focus:bg-google-darkBgFocus focus:shadow-none transition"
 			>

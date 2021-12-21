@@ -81,11 +81,34 @@ function useProvideAuth() {
 		if (signinRes.error) throw signinRes.error;
 
 		const { data, error } = await fetch(
-			`/api/createNewUser?name_input=${userData?.name}&username_input=${userData?.username}&email_input=${userData?.email}`
+			`/api/createNewUser?name=${userData?.name}&username=${userData?.username}&email=${userData?.email}`
 		).then((res) => res.json());
 		if (error) throw error;
 
 		router.push("/verifica-email");
+	};
+
+	const signUpWithPassword = async (userData: {
+		name: string;
+		username: string;
+		email: string;
+		password: string;
+	}) => {
+		const auth = await supabase.auth.signUp(
+			{
+				email: userData.email,
+				password: userData.password,
+			},
+			{
+				data: {
+					name: userData.name,
+					username: userData.username,
+				},
+			}
+		);
+		if (auth.error) throw auth.error;
+
+		completeUser(auth.user);
 	};
 
 	const signInWithMagic = async (email) => {
@@ -98,34 +121,46 @@ function useProvideAuth() {
 	};
 
 	const signInWithGoogle = async () => {
-		let signinRes = await supabase.auth.signIn({
+		let auth = await supabase.auth.signIn({
 			provider: "google",
 		});
-		if (signinRes.error) throw signinRes.error;
-
-		let userLookup = await fetch(
-			`/api/checkExists?email=${signinRes.user.email}`
-		).then((res) => res.json());
-
-		if (userLookup.email) return;
-
-		const identityData = signinRes.user.identities.find(
-			(idntity) => idntity.provider === "google"
-		).identity_data;
-
-		const { data, error } = await fetch(
-			`/api/createNewUser?id_input=${signinRes.user.id}&name_input=${
-				identityData.full_name
-			}&username_input=${identityData.full_name
-				.toLowerCase()
-				.replaceAll(" ", "_")
-				.replaceAll(".", "")}&email_input=${
-				identityData.email
-			}&image_input=${identityData.picture}`
-		).then((res) => res.json());
-		if (error) throw error;
+		if (auth.error) throw auth.error;
 
 		router.push("/");
+	};
+
+	const signUpWithGoogle = async () => {
+		let auth = await supabase.auth.signIn(
+			{
+				provider: "google",
+			},
+			{
+				redirectTo: "https://uniorari.it/api/complete-user?from=google",
+			}
+		);
+		if (auth.error) throw auth.error;
+
+		// console.log("auth.user:", auth.user);
+		// const identityData = auth.user.identities.find(
+		// 	(identity) => identity.provider === "google"
+		// ).identity_data;
+
+		// console.log(identityData);
+
+		// let updated = await supabase.auth.update({
+		// 	data: {
+		// 		name: identityData.full_name,
+		// 		username: identityData.full_name
+		// 			.toLowerCase()
+		// 			.replaceAll(" ", "_")
+		// 			.replaceAll(".", ""),
+		// 	},
+		// });
+		// if (updated.error) throw updated.error;
+
+		// completeUser(auth.user);
+
+		// router.push("/");
 	};
 
 	const signOut = async () => {
@@ -135,13 +170,43 @@ function useProvideAuth() {
 		router.push("/");
 	};
 
+	const completeUser = async (user) => {
+		const updateQuery = gql`
+			mutation Mutation($id: String!, $name: String, $username: String) {
+				modificaUtente(id: $id, name: $name, username: $username) {
+					id
+				}
+			}
+		`;
+
+		console.log({
+			id: user.id,
+			name: user.user_metadata.name,
+			username: user.user_metadata.username,
+		});
+
+		const completed = await apolloClient.mutate({
+			mutation: updateQuery,
+			variables: {
+				id: user.id,
+				name: user.user_metadata.name,
+				username: user.user_metadata.username,
+			},
+		});
+		if (completed.errors) throw completed.errors;
+
+		console.log("User updated successfully.");
+	};
+
 	// Will be passed down to Signup, Login and Dashboard components
 	return {
 		user,
 		loading,
 		signInWithMagic,
 		signInWithGoogle,
+		signUpWithGoogle,
 		signUpWithMagic,
+		signUpWithPassword,
 		signOut,
 	};
 }

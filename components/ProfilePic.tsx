@@ -5,7 +5,7 @@ export const ProfilePic = (props) => {
 	const [avatarUrl, setAvatarUrl] = useState(null);
 
 	useEffect(() => {
-		if (props.src && !props.src.contains("https")) {
+		if (props.src && !props.src.includes("https")) {
 			downloadImage(props.src);
 		} else {
 			setAvatarUrl(props.src);

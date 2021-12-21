@@ -11,14 +11,12 @@ type Aula {
 }
 
 type Corso {
-  createdAt: DateTime!
   docenti: [Docente!]!
   gruppi: [Gruppo!]!
   id: ID!
   lauree: [Laurea!]!
   nome: String!
   studenti: [Profile!]!
-  updatedAt: DateTime!
 }
 
 """

@@ -26,7 +26,7 @@ export const AuthForm = (props: propsType) => {
 					? "Accedi per vedere il tuo calendario"
 					: "Iscriviti per vedere il tuo calendario"}
 			</p>
-			<GoogleButton onClick={signInWithGoogle} />
+			<GoogleButton view={isSignin ? "sign_in" : "sign_up"} />
 			<AuthDivider />
 			{isSignin ? <SignInForm /> : <SignUpForm />}
 

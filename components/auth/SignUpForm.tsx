@@ -9,10 +9,6 @@ import { Button } from "..";
 
 const schema = yup
 	.object({
-		email: yup
-			.string()
-			.email("Inserisci un indirizzo email valido")
-			.required("Questo campo è obbligatorio"),
 		name: yup
 			.string()
 			.required("Questo campo è obbligatorio")
@@ -34,12 +30,25 @@ const schema = yup
 			.matches(/^\w.+$/, {
 				message: "L'username non può contenere nessun carattere speciale",
 			}),
+		email: yup
+			.string()
+			.email("Inserisci un indirizzo email valido")
+			.required("Questo campo è obbligatorio"),
+		password: yup
+			.string()
+			.required("Questo campo è obbligatorio")
+			.min(8, "La password deve avere almeno 8 caratteri.")
+			.max(32, "La password non deve avere più di 32 caratteri.")
+			.matches(/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,32}$/, {
+				message:
+					"La password deve contenere almeno un numero e avere sia lettere minuscole che maiuscole.",
+			}),
 	})
 	.required();
 
 export const SignUpForm = () => {
 	// my auth variables
-	const { signUpWithMagic } = useAuth();
+	const { signUpWithPassword } = useAuth();
 
 	// react-hook-form variables
 	const {
@@ -65,7 +74,9 @@ export const SignUpForm = () => {
 		if (success) {
 			let userLookup = await fetch(
 				`/api/checkExists?email=${formData.email}&username=${formData.username}`
-			).then((res) => res.json());
+			)
+				.then((res) => res.json())
+				.catch((e) => console.log(e));
 
 			if (userLookup.email) {
 				setError("email", {
@@ -82,7 +93,7 @@ export const SignUpForm = () => {
 			}
 
 			if (!userLookup.email && !userLookup.username)
-				await signUpWithMagic(formData);
+				await signUpWithPassword(formData);
 		}
 	};
 
@@ -149,6 +160,26 @@ export const SignUpForm = () => {
 					{errors.email && (
 						<span className="text-label-l text-error-500">
 							{errors.email.message}
+						</span>
+					)}
+				</div>
+				<label htmlFor="password" className="text-body-l">
+					Password<span className="text-accent-500">*</span>
+				</label>
+				<div className="mt-2">
+					<input
+						type="password"
+						id="password"
+						name="password"
+						autoComplete="off"
+						{...register("password")}
+						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
+							errors.password ? "border-error-500" : "border-grey-200"
+						} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+					/>
+					{errors.password && (
+						<span className="text-label-l text-error-500">
+							{errors.password.message}
 						</span>
 					)}
 				</div>

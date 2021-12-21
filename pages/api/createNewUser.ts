@@ -5,14 +5,16 @@ import apolloClient from "../../lib/apollo";
 import { supabaseAdmin } from "../../lib/supabase-admin";
 
 const handler = async (req, res) => {
-	console.log("Trying to create a new user...");
-	const params = req.query;
+	const { id, name, username, email, image } = req.query;
 
-	if (!params.id_input) {
+	console.log({ id, name, username, email, image });
+
+	// If the user is created from a signup form then call the postgres function
+	if (!id) {
 		const { data, error } = await supabaseAdmin.rpc("create_public_user", {
-			name_input: params.name_input,
-			username_input: params.username_input,
-			email_input: params.email_input,
+			name_input: name,
+			username_input: username,
+			email_input: email,
 		});
 		res.status(200).json({ data, errors: [error] });
 	}
@@ -21,8 +23,8 @@ const handler = async (req, res) => {
 		mutation (
 			$id: ID!
 			$name: String!
-			$email: String!
 			$username: String!
+			$email: String!
 			$image: String
 		) {
 			creaUtente(
@@ -37,18 +39,17 @@ const handler = async (req, res) => {
 		}
 	`;
 
+	// If the user is created with the google button then add his data in the table
 	const { data, errors } = await apolloClient.mutate({
 		mutation: createUserMutation,
 		variables: {
-			id: params.id_input,
-			name: params.name_input,
-			username: params.username_input,
-			email: params.email_input,
-			image: params.image_input,
+			id,
+			name,
+			username,
+			email,
+			image,
 		},
 	});
-
-	console.log(data);
 
 	res.status(200).json({ data, errors });
 };
