@@ -1,12 +1,10 @@
 import { objectType, extendType, list, nonNull, stringArg } from "nexus";
-import { Docente, Laurea, Gruppo, User } from ".";
+import { Docente, Laurea, Gruppo, Profile } from ".";
 
 export const Corso = objectType({
 	name: "Corso",
 	definition(t) {
 		t.nonNull.id("id");
-		t.nonNull.dateTime("createdAt");
-		t.nonNull.dateTime("updatedAt");
 		t.nonNull.string("nome");
 		t.nonNull.list.nonNull.field("docenti", {
 			type: Docente,
@@ -45,7 +43,7 @@ export const Corso = objectType({
 			},
 		});
 		t.nonNull.list.nonNull.field("studenti", {
-			type: User,
+			type: Profile,
 			async resolve(parent, _args, ctx) {
 				return await ctx.prisma.corso
 					.findUnique({
