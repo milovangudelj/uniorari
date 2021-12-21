@@ -108,7 +108,10 @@ function useProvideAuth() {
 		);
 		if (auth.error) throw auth.error;
 
-		completeUser(auth.user);
+		const { errors } = await fetch("/api/complete-user").then((res) =>
+			res.json()
+		);
+		if (errors) throw errors;
 	};
 
 	const signInWithMagic = async (email) => {
@@ -139,28 +142,6 @@ function useProvideAuth() {
 			}
 		);
 		if (auth.error) throw auth.error;
-
-		// console.log("auth.user:", auth.user);
-		// const identityData = auth.user.identities.find(
-		// 	(identity) => identity.provider === "google"
-		// ).identity_data;
-
-		// console.log(identityData);
-
-		// let updated = await supabase.auth.update({
-		// 	data: {
-		// 		name: identityData.full_name,
-		// 		username: identityData.full_name
-		// 			.toLowerCase()
-		// 			.replaceAll(" ", "_")
-		// 			.replaceAll(".", ""),
-		// 	},
-		// });
-		// if (updated.error) throw updated.error;
-
-		// completeUser(auth.user);
-
-		// router.push("/");
 	};
 
 	const signOut = async () => {
@@ -168,34 +149,6 @@ function useProvideAuth() {
 		if (error) throw error;
 
 		router.push("/");
-	};
-
-	const completeUser = async (user) => {
-		const updateQuery = gql`
-			mutation Mutation($id: String!, $name: String, $username: String) {
-				modificaUtente(id: $id, name: $name, username: $username) {
-					id
-				}
-			}
-		`;
-
-		console.log({
-			id: user.id,
-			name: user.user_metadata.name,
-			username: user.user_metadata.username,
-		});
-
-		const completed = await apolloClient.mutate({
-			mutation: updateQuery,
-			variables: {
-				id: user.id,
-				name: user.user_metadata.name,
-				username: user.user_metadata.username,
-			},
-		});
-		if (completed.errors) throw completed.errors;
-
-		console.log("User updated successfully.");
 	};
 
 	// Will be passed down to Signup, Login and Dashboard components
