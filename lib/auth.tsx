@@ -1,17 +1,14 @@
 import router from "next/router";
-import {
-	createContext,
-	useContext,
-	useState,
-	useEffect,
-	ReactNode,
-} from "react";
-import { AuthSession, AuthUser } from "@supabase/supabase-js";
+import { createContext, useContext, useState, useEffect } from "react";
 import { gql } from "@apollo/client";
 
-import prisma from "./prisma";
 import { supabase } from "./supabase";
 import apolloClient from "./apollo";
+
+const path =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:3000"
+		: "https://uniorari.it";
 
 const AuthContext = createContext(undefined);
 
@@ -30,17 +27,15 @@ function useProvideAuth() {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		// Check active sessions and sets the user
-		const session = supabase.auth.session();
+		// // Check active sessions and sets the user
+		// 	const session = supabase.auth.session();
 
-		setUser(session?.user ?? null);
-		setLoading(false);
+		// 	await handleUser(session.user);
 
 		// Listen for changes on auth state (logged in, signed out, etc.)
 		const { data: listener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
-				setUser(session?.user ?? null);
-				setLoading(false);
+				await handleUser(session?.user);
 			}
 		);
 
@@ -49,48 +44,74 @@ function useProvideAuth() {
 		};
 	}, []);
 
-	const signUp = async (data) => {
-		let { user, error } = await supabase.auth.signUp({
-			email: data?.email,
-		});
-		if (error) throw error;
-
-		let createUserMutation = gql`
-			mutation ($userData: users_insert_input!) {
-				insert_users_one(object: $userData) {
-					myId
+	// TODO: Add user handling logic to remove everything not necessary
+	const handleUser = async (rawUser) => {
+		const queryUtente = gql`
+			query Utente($id: String) {
+				utente(id: $id) {
+					id
 					name
 					username
 					email
+					image
 				}
 			}
 		`;
 
-		try {
-			await apolloClient.mutate({
-				mutation: createUserMutation,
+		if (rawUser) {
+			const { data, error } = await apolloClient.query({
+				query: queryUtente,
 				variables: {
-					userData: {
-						myId: user.id,
-						name: data?.name,
-						username: data?.username,
-						email: user.email,
-					},
+					id: rawUser.id,
 				},
 			});
 
-			router.push("/");
-		} catch (e) {
-			if (e) {
-				// The .code property can be accessed in a type-safe manner
-				if (e?.code === "P2002") {
-					console.error(
-						"There is a unique constraint violation, a new user cannot be created with this username"
-					);
-				}
-			}
-			throw e;
+			setUser({ ...data.utente });
+		} else {
+			setUser(null);
 		}
+
+		setLoading(false);
+	};
+
+	const signUpWithMagic = async (userData) => {
+		const signinRes = await supabase.auth.signIn({
+			email: userData?.email,
+		});
+		if (signinRes.error) throw signinRes.error;
+
+		const { data, error } = await fetch(
+			`/api/createNewUser?name=${userData?.name}&username=${userData?.username}&email=${userData?.email}`
+		).then((res) => res.json());
+		if (error) throw error;
+
+		router.push("/verifica-email");
+	};
+
+	const signUpWithPassword = async (userData: {
+		name: string;
+		username: string;
+		email: string;
+		password: string;
+	}) => {
+		const auth = await supabase.auth.signUp(
+			{
+				email: userData.email,
+				password: userData.password,
+			},
+			{
+				data: {
+					name: userData.name,
+					username: userData.username,
+				},
+			}
+		);
+		if (auth.error) throw auth.error;
+
+		const { errors } = await fetch("/api/complete-user").then((res) =>
+			res.json()
+		);
+		if (errors) throw errors;
 	};
 
 	const signInWithMagic = async (email) => {
@@ -99,16 +120,28 @@ function useProvideAuth() {
 		});
 		if (error) throw error;
 
-		router.push("/");
+		router.push("/verifica-email");
 	};
 
 	const signInWithGoogle = async () => {
-		let { user, error } = await supabase.auth.signIn({
+		let auth = await supabase.auth.signIn({
 			provider: "google",
 		});
-		if (error) throw error;
+		if (auth.error) throw auth.error;
 
 		router.push("/");
+	};
+
+	const signUpWithGoogle = async () => {
+		let auth = await supabase.auth.signIn(
+			{
+				provider: "google",
+			},
+			{
+				redirectTo: "https://uniorari.it/api/complete-user?from=google",
+			}
+		);
+		if (auth.error) throw auth.error;
 	};
 
 	const signOut = async () => {
@@ -124,7 +157,20 @@ function useProvideAuth() {
 		loading,
 		signInWithMagic,
 		signInWithGoogle,
-		signUp,
+		signUpWithGoogle,
+		signUpWithMagic,
+		signUpWithPassword,
 		signOut,
 	};
 }
+
+const formatUser = (user) => {
+	return {
+		id: user.uid,
+		email: user.email,
+		name: user.displayName,
+		username: user.displayName,
+		//   provider: user.providerData[0].providerId,
+		image: user.photoURL,
+	};
+};

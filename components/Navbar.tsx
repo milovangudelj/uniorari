@@ -1,10 +1,10 @@
-import { signOut, useSession } from "next-auth/react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+
 import { Button } from ".";
+import { useAuth } from "../lib/auth";
 import { ProfilePic } from "./ProfilePic";
-import Signin from "./Signin";
 
 const pages = [
 	{
@@ -23,21 +23,8 @@ const pages = [
 
 export const Navbar = () => {
 	const router = useRouter();
-	// const { data: session, status } = useSession();
-	const [user, setUser] = useState();
-	const [signIn, setSignIn] = useState(false);
 
-	// useEffect(() => {
-	// 	setUser(session?.user);
-	// }, [session, status]);
-
-	const showSignin = () => {
-		setSignIn(true);
-	};
-
-	const hideSignin = () => {
-		setSignIn(false);
-	};
+	const { user, loading, signOut } = useAuth();
 
 	return (
 		<>
@@ -70,25 +57,19 @@ export const Navbar = () => {
 						</ul>
 					</nav>
 					{user ? (
-						<ProfileMenu user={user} />
+						<ProfileMenu user={user} signOut={signOut} />
 					) : (
-						<Button
-							variant="primary"
-							// onClick={showSignin}
-						>
+						<Button variant="primary">
 							<Link href="/accedi">Accedi</Link>
-							{/* Accedi */}
 						</Button>
 					)}
 				</header>
 			</div>
-
-			{signIn && <Signin hide={hideSignin} />}
 		</>
 	);
 };
 
-const ProfileMenu = ({ user }) => {
+const ProfileMenu = ({ user, signOut }) => {
 	return (
 		<div className="group self-center relative flex justify-end">
 			{user.image ? (
