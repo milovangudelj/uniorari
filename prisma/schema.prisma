@@ -43,7 +43,7 @@ model Corso {
   docenti  Docente[]
   lauree   Laurea[]
   gruppi   Gruppo[]
-  studenti User[]
+  studenti Profile[]
 
   @@map("corsi")
 }
@@ -116,13 +116,15 @@ model Aula {
 }
 
 /// User data model
-model User {
-  id       String  @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name     String
-  email    String  @unique
-  username String  @unique
-  image    String?
-  corsi    Corso[]
+model Profile {
+  id        String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  name      String?
+  email     String?  @unique
+  username  String?  @unique
+  image     String?
+  corsi     Corso[]
 
-  @@map("users")
+  @@map("profiles")
 }

@@ -17,7 +17,7 @@ type Corso {
   id: ID!
   lauree: [Laurea!]!
   nome: String!
-  studenti: [User!]!
+  studenti: [Profile!]!
   updatedAt: DateTime!
 }
 
@@ -67,7 +67,17 @@ type Lezione {
 }
 
 type Mutation {
-  creaUtente(email: String!, id: ID!, image: String, name: String!, username: String!): User
+  creaUtente(email: String!, id: ID!, image: String, name: String!, username: String!): Profile
+  modificaUtente(email: String, id: String!, image: String, name: String, username: String): Profile
+}
+
+type Profile {
+  corsi: [Corso!]!
+  email: String!
+  id: ID!
+  image: String
+  name: String!
+  username: String!
 }
 
 type Query {
@@ -83,14 +93,5 @@ type Query {
   lauree: [Laurea!]!
   lezione(idLezione: String!): Lezione
   lezioni: [Lezione!]!
-  utente(email: String, id: String, username: String): User
-}
-
-type User {
-  corsi: [Corso!]!
-  email: String!
-  id: ID!
-  image: String
-  name: String!
-  username: String!
+  utente(email: String, id: String, username: String): Profile
 }
