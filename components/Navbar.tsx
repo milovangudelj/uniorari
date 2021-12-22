@@ -61,7 +61,9 @@ export const Navbar = () => {
 					) : (
 						<div>
 							<Link href="/accedi">
-								<a>Accedi</a>
+								<a className="mr-4 text-on-surface-me hover:text-on-surface-he transition">
+									Accedi
+								</a>
 							</Link>
 							<Button variant="primary">
 								<Link href="/iscriviti">Iscriviti</Link>
