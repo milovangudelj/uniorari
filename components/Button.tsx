@@ -1,10 +1,4 @@
-import {
-	ReactChildren,
-	ReactNode,
-	ReactPropTypes,
-	useEffect,
-	useState,
-} from "react";
+import { MouseEventHandler, ReactNode, useEffect, useState } from "react";
 
 type ButtonVariant = {};
 
@@ -16,6 +10,7 @@ type ButtonProps = {
 	fill?: "filled" | "outlined";
 	className?: string;
 	type?: "button" | "submit" | "reset";
+	onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 export const Button = ({
@@ -26,6 +21,7 @@ export const Button = ({
 	fill = "filled",
 	className,
 	type,
+	onClick,
 }: ButtonProps) => {
 	const [bgStyles, setBgStyles] = useState({
 		primary: {
@@ -62,6 +58,7 @@ export const Button = ({
 	return (
 		<button
 			type={type}
+			onClick={onClick}
 			className={
 				className +
 				(!external
