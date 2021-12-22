@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
@@ -47,6 +47,8 @@ const schema = yup
 	.required();
 
 export const SignUpForm = () => {
+	const [loading, setLoading] = useState(false);
+
 	// my auth variables
 	const { signUpWithPassword } = useAuth();
 
@@ -65,6 +67,8 @@ export const SignUpForm = () => {
 	const recaptchaRef = useRef(null);
 
 	const onSubmitWithReCAPTCHA = async (formData) => {
+		setLoading(true);
+
 		const token = await recaptchaRef.current.executeAsync();
 
 		const { success } = await fetch(
@@ -95,6 +99,7 @@ export const SignUpForm = () => {
 			if (!userLookup.email && !userLookup.username)
 				await signUpWithPassword(formData);
 		}
+		setLoading(false);
 	};
 
 	return (
@@ -201,6 +206,7 @@ export const SignUpForm = () => {
 				variant="primary"
 				className="w-full mt-10"
 				size="big"
+				loading={loading}
 			>
 				Iscriviti
 			</Button>
@@ -217,4 +223,3 @@ export const SignUpForm = () => {
 		</form>
 	);
 };
- 

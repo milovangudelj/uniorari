@@ -76,12 +76,22 @@ function useProvideAuth() {
 	};
 
 	const signInWithMagic = async (email) => {
-		let { user, error } = await supabase.auth.signIn({
+		let { error } = await supabase.auth.signIn({
 			email,
 		});
-		if (error) throw error;
+		if (error) return { error };
 
 		router.push("/verifica-email");
+	};
+
+	const signInWithPassword = async ({ email, password }) => {
+		let { error } = await supabase.auth.signIn({
+			email,
+			password,
+		});
+		if (error) return { error };
+
+		router.push("/");
 	};
 
 	const signInWithGoogle = async () => {
@@ -105,6 +115,7 @@ function useProvideAuth() {
 		signOut,
 		signInWithMagic,
 		signInWithGoogle,
+		signInWithPassword,
 		signUpWithPassword,
 	};
 }

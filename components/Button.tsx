@@ -11,6 +11,7 @@ type ButtonProps = {
 	className?: string;
 	type?: "button" | "submit" | "reset";
 	onClick?: MouseEventHandler<HTMLButtonElement>;
+	loading?: boolean;
 };
 
 export const Button = ({
@@ -22,6 +23,7 @@ export const Button = ({
 	className,
 	type,
 	onClick,
+	loading = false,
 }: ButtonProps) => {
 	const [bgStyles, setBgStyles] = useState({
 		primary: {
@@ -57,14 +59,13 @@ export const Button = ({
 
 	return (
 		<button
+			disabled={loading}
 			type={type}
 			onClick={onClick}
-			className={
-				className +
-				(!external
-					? ` ${sizes[size]} ${bgStyles[variant][fill]} uppercase tracking-wide font-medium transition`
-					: "")
-			}
+			className={`${className} ${loading && "bg-opacity-50"} ${
+				!external &&
+				` ${sizes[size]} ${bgStyles[variant][fill]} uppercase tracking-wide font-medium transition`
+			}`}
 		>
 			{children}
 		</button>
