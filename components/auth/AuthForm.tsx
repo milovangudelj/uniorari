@@ -13,9 +13,6 @@ type propsType = {
 export const AuthForm = (props: propsType) => {
 	const [isSignin, setIsSignin] = useState(props.variant === "signin");
 
-	// my auth variables
-	const { signInWithGoogle } = useAuth();
-
 	return (
 		<>
 			<h1 className="text-display-s mb-2">
@@ -26,7 +23,7 @@ export const AuthForm = (props: propsType) => {
 					? "Accedi per vedere il tuo calendario"
 					: "Iscriviti per vedere il tuo calendario"}
 			</p>
-			<GoogleButton view={isSignin ? "sign_in" : "sign_up"} />
+			<GoogleButton />
 			<AuthDivider />
 			{isSignin ? <SignInForm /> : <SignUpForm />}
 

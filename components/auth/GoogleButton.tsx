@@ -1,12 +1,12 @@
 import { Button } from "..";
 import { useAuth } from "../../lib/auth";
 
-export const GoogleButton = ({ view }) => {
-	const { signInWithGoogle, signUpWithGoogle } = useAuth();
+export const GoogleButton = (props) => {
+	const { signInWithGoogle } = useAuth();
 	return (
 		<div>
 			<Button
-				onClick={view === "sign_in" ? signInWithGoogle : signUpWithGoogle}
+				onClick={props.onClick || signInWithGoogle}
 				external
 				className="w-full text-sm font-roboto font-medium text-white uppercase flex justify-center items-center rounded-lg px-2 h-10 bg-google-darkBg shadow-none hover:shadow-google focus:bg-google-darkBgFocus focus:shadow-none transition"
 			>
@@ -44,5 +44,4 @@ export const GoogleButton = ({ view }) => {
 			</Button>
 		</div>
 	);
-}; 
- 
+};
