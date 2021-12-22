@@ -47,9 +47,9 @@ export const SignInForm = () => {
 	const onSubmitWithReCAPTCHA = async (formData) => {
 		const token = await recaptchaRef.current.executeAsync();
 
-		const { success } = await fetch(`/api/verifyCaptcha?token=${token}`).then(
-			(res) => res.json()
-		);
+		const { success } = await fetch(
+			`/api/verify-captcha?token=${token}`
+		).then((res) => res.json());
 
 		if (success) {
 			const { data, loading, error } = await apolloClient.query({

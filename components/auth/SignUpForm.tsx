@@ -67,13 +67,13 @@ export const SignUpForm = () => {
 	const onSubmitWithReCAPTCHA = async (formData) => {
 		const token = await recaptchaRef.current.executeAsync();
 
-		const { success } = await fetch(`/api/verifyCaptcha?token=${token}`).then(
-			(res) => res.json()
-		);
+		const { success } = await fetch(
+			`/api/verify-captcha?token=${token}`
+		).then((res) => res.json());
 
 		if (success) {
 			let userLookup = await fetch(
-				`/api/checkExists?email=${formData.email}&username=${formData.username}`
+				`/api/check-exists?email=${formData.email}&username=${formData.username}`
 			)
 				.then((res) => res.json())
 				.catch((e) => console.log(e));

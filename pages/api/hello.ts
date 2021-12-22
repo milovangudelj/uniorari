@@ -1,8 +1,7 @@
 import { withSentry } from "@sentry/nextjs";
 
 const handler = async (req, res) => {
-	// throw new Error("API throw error test");
-	res.status(200).json({ name: "John Doe" });
+	res.status(200).json("world");
 };
 
 export default withSentry(handler);
