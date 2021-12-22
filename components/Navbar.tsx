@@ -59,9 +59,14 @@ export const Navbar = () => {
 					{user ? (
 						<ProfileMenu user={user} signOut={signOut} />
 					) : (
-						<Button variant="primary">
-							<Link href="/accedi">Accedi</Link>
-						</Button>
+						<div>
+							<Link href="/accedi">
+								<a>Accedi</a>
+							</Link>
+							<Button variant="primary">
+								<Link href="/iscriviti">Iscriviti</Link>
+							</Button>
+						</div>
 					)}
 				</header>
 			</div>
