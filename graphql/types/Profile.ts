@@ -36,7 +36,7 @@ export const utenteSingolo = extendType({
 				username: stringArg(),
 			},
 			async resolve(_parent, args, ctx) {
-				if (!args)
+				if (!Object.values(args).some((arg) => arg !== null))
 					throw "You need to provide at least one argument. The first one will be used.";
 
 				let where = {};

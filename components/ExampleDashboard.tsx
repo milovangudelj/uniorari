@@ -17,7 +17,6 @@ const Dashboard = () => {
 	return (
 		<div>
 			<p>Welcome, {user?.id}!</p>
-			<button onClick={handleSignOut}>Sign out</button>
 		</div>
 	);
 };

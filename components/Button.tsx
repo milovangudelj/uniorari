@@ -20,7 +20,7 @@ export const Button = ({
 	variant = "primary",
 	size = "regular",
 	fill = "filled",
-	className,
+	className = "",
 	type,
 	onClick,
 	loading = false,
@@ -62,7 +62,7 @@ export const Button = ({
 			disabled={loading}
 			type={type}
 			onClick={onClick}
-			className={`${className} ${loading && "bg-opacity-50"} ${
+			className={`h-content ${className} ${loading && "bg-opacity-50"} ${
 				!external &&
 				` ${sizes[size]} ${bgStyles[variant][fill]} uppercase tracking-wide font-medium transition`
 			}`}

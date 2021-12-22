@@ -19,17 +19,28 @@ export function AuthProvider({ children }) {
 
 function useProvideAuth() {
 	const [user, setUser] = useState(null);
+	const [session, setSession] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		// Check active sessions and sets the user
+		// get session for user
 		const session = supabase.auth.session();
+		setSession(session);
 
 		handleUser(session?.user);
 
 		// Listen for changes on auth state (logged in, signed out, etc.)
 		const { data: listener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
+				setSession(session);
+				await fetch("/api/auth", {
+					method: "POST",
+					body: JSON.stringify({ event, session }),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
+
 				await handleUser(session?.user);
 			}
 		);
@@ -111,6 +122,7 @@ function useProvideAuth() {
 	// Will be passed down to Signup, Login and Dashboard components
 	return {
 		user,
+		session,
 		loading,
 		signOut,
 		signInWithMagic,

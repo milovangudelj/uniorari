@@ -1,34 +1,21 @@
-import Head from "next/head";
-import useSWR, { useSWRConfig } from "swr";
+import { Button } from ".";
 
-const Corsi = ({ fallback }) => {
-	const { fetcher } = useSWRConfig();
-	const { data } = useSWR("/api/corsi", fetcher);
+export const CardCorso = ({ corso }) => {
+	const handleSave = () => {
+		console.log("Saving course to user");
+	};
 
-	return (
-		<div className="bg-grey-50 font-sans">
-			<Head>
-				<title>Corsi | UniOrari</title>
-				<meta name="description" content="Orari delle lezioni" />
-			</Head>
-			<section className="flex justify-center py-4">
-				<div className="w-full max-w-7xl m-4 grid grid-cols-2 gap-14">
-					{data?.corsi.map((corso, idx) => (
-						<Corso key={idx} corso={corso} />
-					))}
-				</div>
-			</section>
-		</div>
-	);
-};
-
-const Corso = ({ corso }) => {
 	return (
 		<div>
 			<div className="min-w-60 h-min bg-white shadow rounded-lg p-4">
-				<h2 className="text-headline-m text-on-surface-he mb-2">
-					{corso.nome}
-				</h2>
+				<div className="flex items-center">
+					<h2 className="text-headline-m text-on-surface-he mb-2 mr-4">
+						{corso.nome}
+					</h2>
+					<Button onClick={handleSave} size="small">
+						Save
+					</Button>
+				</div>
 				<span className="text-body-m text-on-surface-me">
 					{corso.docenti.length !== 0
 						? corso.docenti[0].nome + " " + corso.docenti[0].cognome
@@ -129,6 +116,3 @@ const Lezione = ({ lezione, last = false }) => {
 };
 
 const days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
-
-export default Corsi;
- 

@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 
 import { Button } from ".";
 import { useAuth } from "../lib/auth";
-import { ProfilePic } from "./ProfilePic";
+import { Avatar } from "./Avatar";
 
 const pages = [
 	{
@@ -80,13 +80,13 @@ const ProfileMenu = ({ user, signOut }) => {
 	return (
 		<div className="group self-center relative flex justify-end">
 			{user.image ? (
-				<ProfilePic
+				<Avatar
 					src={user.image}
 					alt={user.name || user.email}
 					title={user.name || user.email}
 				/>
 			) : (
-				<ProfilePic
+				<Avatar
 					title={user.name || user.email}
 					letter={user.name?.charAt(0) || user.email?.charAt(0)}
 				/>
@@ -95,7 +95,7 @@ const ProfileMenu = ({ user, signOut }) => {
 				<div className="mt-1 rounded-lg w-max bg-white border border-grey-100 elevation-1">
 					<ul className="text-body-m">
 						<li className="border-b border-grey-100 py-1">
-							<Link href="#">
+							<Link href="/corsi/salvati">
 								<a className="inline-block w-full py-1 px-2 hover:bg-grey-50">
 									I miei corsi
 								</a>

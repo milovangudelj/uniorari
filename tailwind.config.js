@@ -126,6 +126,9 @@ module.exports = {
 				400: "400px",
 				500: "500px",
 			},
+			height: {
+				content: "max-content",
+			},
 			textOpacity: {
 				54: "0.54",
 			},
