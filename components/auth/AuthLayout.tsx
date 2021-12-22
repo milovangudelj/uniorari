@@ -1,10 +1,10 @@
 export const AuthLayout = (props) => {
 	return (
-		<div className="h-screen w-screen flex">
-			<div className="flex items-center justify-center h-full w-1/2 bg-grey-50 relative">
+		<div className="h-screen flex">
+			<div className="flex justify-center h-full w-3/5 bg-grey-50 relative overflow-auto no-scrollbar">
 				{props.children}
 			</div>
-			<div className="h-full w-1/2 relative justify-center overflow-hidden bg-unsplash-random bg-center bg-cover">
+			<div className="h-full w-2/5 relative justify-center overflow-hidden bg-unsplash-random bg-center bg-cover">
 				<a
 					href="https://unsplash.com"
 					className="absolute bottom-4 right-4 w-8 h-8 flex items-center justify-center bg-white rounded"

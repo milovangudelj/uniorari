@@ -4,10 +4,12 @@ type ButtonVariant = {};
 
 type ButtonProps = {
 	children: ReactChildren | string;
-	variant?: string;
-	size?: string;
-	fill?: string;
-	props?: any;
+	external?: boolean;
+	variant?: "primary" | "accent" | "success" | "error";
+	size?: "small" | "regular" | "big";
+	fill?: "filled" | "outlined";
+	className?: string;
+	type?: "button" | "submit" | "reset";
 };
 
 export const Button = ({
@@ -16,8 +18,9 @@ export const Button = ({
 	variant = "primary",
 	size = "regular",
 	fill = "filled",
-	...props
-}) => {
+	className,
+	type,
+}: ButtonProps) => {
 	const [bgStyles, setBgStyles] = useState({
 		primary: {
 			filled:
@@ -52,9 +55,9 @@ export const Button = ({
 
 	return (
 		<button
-			{...props}
+			type={type}
 			className={
-				props?.className +
+				className +
 				(!external
 					? ` ${sizes[size]} ${bgStyles[variant][fill]} uppercase tracking-wide font-medium transition`
 					: "")

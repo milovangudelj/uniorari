@@ -100,52 +100,60 @@ export const SignUpForm = () => {
 	return (
 		<form onSubmit={handleSubmit(onSubmitWithReCAPTCHA)} noValidate>
 			<div>
-				<label htmlFor="name" className="text-body-l">
-					Nome<span className="text-accent-500">*</span>
-				</label>
-				<div className="mt-2 mb-4">
-					<input
-						type="text"
-						id="name"
-						name="name"
-						placeholder="John Doe"
-						autoComplete="off"
-						{...register("name")}
-						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-							errors.name ? "border-error-500" : "border-grey-200"
-						} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
-					/>
-					{errors.name && (
-						<span className="text-label-l text-error-500">
-							{errors.name.message}
-						</span>
-					)}
+				<div className="flex">
+					<div className="mb-4 mr-2 w-1/2">
+						<label
+							htmlFor="name"
+							className="text-body-l inline-block mb-2"
+						>
+							Nome<span className="text-accent-500">*</span>
+						</label>
+						<input
+							type="text"
+							id="name"
+							name="name"
+							placeholder="John Doe"
+							autoComplete="off"
+							{...register("name")}
+							className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
+								errors.name ? "border-error-500" : "border-grey-200"
+							} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+						/>
+						{errors.name && (
+							<span className="text-label-l text-error-500">
+								{errors.name.message}
+							</span>
+						)}
+					</div>
+					<div className="mb-4 ml-2 w-1/2">
+						<label
+							htmlFor="username"
+							className="text-body-l inline-block mb-2"
+						>
+							Username<span className="text-accent-500">*</span>
+						</label>
+						<input
+							type="text"
+							id="username"
+							name="username"
+							placeholder="johndoe"
+							autoComplete="off"
+							{...register("username")}
+							className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
+								errors.username ? "border-error-500" : "border-grey-200"
+							} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+						/>
+						{errors.username && (
+							<span className="text-label-l text-error-500">
+								{errors.username.message}
+							</span>
+						)}
+					</div>
 				</div>
-				<label htmlFor="username" className="text-body-l">
-					Username<span className="text-accent-500">*</span>
-				</label>
-				<div className="mt-2 mb-4">
-					<input
-						type="text"
-						id="username"
-						name="username"
-						placeholder="johndoe"
-						autoComplete="off"
-						{...register("username")}
-						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-							errors.username ? "border-error-500" : "border-grey-200"
-						} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
-					/>
-					{errors.username && (
-						<span className="text-label-l text-error-500">
-							{errors.username.message}
-						</span>
-					)}
-				</div>
-				<label htmlFor="email" className="text-body-l">
-					Email<span className="text-accent-500">*</span>
-				</label>
-				<div className="mt-2">
+				<div className="mb-4">
+					<label htmlFor="email" className="text-body-l inline-block mb-2">
+						Email<span className="text-accent-500">*</span>
+					</label>
 					<input
 						type="email"
 						id="email"
@@ -163,14 +171,18 @@ export const SignUpForm = () => {
 						</span>
 					)}
 				</div>
-				<label htmlFor="password" className="text-body-l">
-					Password<span className="text-accent-500">*</span>
-				</label>
-				<div className="mt-2">
+				<div>
+					<label
+						htmlFor="password"
+						className="text-body-l inline-block mb-2"
+					>
+						Password<span className="text-accent-500">*</span>
+					</label>
 					<input
 						type="password"
 						id="password"
 						name="password"
+						placeholder="8-32 caratteri"
 						autoComplete="off"
 						{...register("password")}
 						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
@@ -184,7 +196,12 @@ export const SignUpForm = () => {
 					)}
 				</div>
 			</div>
-			<Button type="submit" variant="primary" className="w-full mt-10">
+			<Button
+				type="submit"
+				variant="primary"
+				className="w-full mt-10"
+				size="big"
+			>
 				Iscriviti
 			</Button>
 			<ReCAPTCHA

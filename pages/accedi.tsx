@@ -9,7 +9,7 @@ const Accedi = () => {
 				<title>Accedi | UniOrari</title>
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
-			<main className="min-w-200 w-full max-w-400 p-2 rounded-lg">
+			<main className="min-w-200 w-full max-w-400 px-2 py-32 rounded-lg">
 				<AuthForm variant="signin" />
 				<ReCAPTCHADisclaimer />
 			</main>

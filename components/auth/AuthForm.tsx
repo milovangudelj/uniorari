@@ -15,14 +15,14 @@ export const AuthForm = (props: propsType) => {
 
 	return (
 		<>
-			<h1 className="text-display-s mb-2">
-				{isSignin ? "Accedi" : "Iscriviti"}
+			<h1 className="text-headline-m mb-8">
+				{isSignin ? "Accedi a UniOrari" : "Iscriviti a UniOrari"}
 			</h1>
-			<p className="text-body-l text-on-surface-me mb-10">
+			{/* <p className="text-body-l text-on-surface-me mb-10">
 				{isSignin
 					? "Accedi per vedere il tuo calendario"
 					: "Iscriviti per vedere il tuo calendario"}
-			</p>
+			</p> */}
 			<GoogleButton />
 			<AuthDivider />
 			{isSignin ? <SignInForm /> : <SignUpForm />}

@@ -95,7 +95,12 @@ export const SignInForm = () => {
 					)}
 				</div>
 			</div>
-			<Button type="submit" variant="primary" className="w-full mt-10">
+			<Button
+				type="submit"
+				variant="primary"
+				className="w-full mt-10"
+				size="big"
+			>
 				Accedi
 			</Button>
 			<ReCAPTCHA
