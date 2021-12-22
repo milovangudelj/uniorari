@@ -1,7 +1,7 @@
 export const AuthLayout = (props) => {
 	return (
 		<div className="h-screen flex">
-			<div className="flex justify-center h-full w-3/5 bg-grey-50 relative overflow-auto no-scrollbar">
+			<div className="h-full w-3/5 bg-grey-50 relative overflow-auto no-scrollbar">
 				{props.children}
 			</div>
 			<div className="h-full w-2/5 relative justify-center overflow-hidden bg-unsplash-random bg-center bg-cover">

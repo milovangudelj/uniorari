@@ -9,9 +9,8 @@ const Iscriviti = () => {
 				<title>Iscriviti | UniOrari</title>
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
-			<main className="min-w-200 w-full max-w-400 px-2 py-32 rounded-lg">
+			<main className="min-h-full">
 				<AuthForm variant="signup" />
-				<ReCAPTCHADisclaimer />
 			</main>
 		</AuthLayout>
 	);
