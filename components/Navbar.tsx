@@ -110,7 +110,7 @@ const ProfileMenu = ({ user, signOut }) => {
 						</li>
 						<li className="py-1">
 							<button
-								onClick={() => signOut()}
+								onClick={signOut}
 								className="inline-block w-full text-left py-1 px-2 hover:bg-grey-50"
 							>
 								Log Out

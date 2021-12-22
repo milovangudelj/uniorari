@@ -1,9 +1,15 @@
-import { ReactChildren, ReactPropTypes, useEffect, useState } from "react";
+import {
+	ReactChildren,
+	ReactNode,
+	ReactPropTypes,
+	useEffect,
+	useState,
+} from "react";
 
 type ButtonVariant = {};
 
 type ButtonProps = {
-	children: ReactChildren | string;
+	children: ReactNode | string;
 	external?: boolean;
 	variant?: "primary" | "accent" | "success" | "error";
 	size?: "small" | "regular" | "big";
@@ -67,4 +73,3 @@ export const Button = ({
 		</button>
 	);
 };
- 
