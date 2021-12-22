@@ -4,6 +4,11 @@ export const NEXT_PUBLIC_SUPABASE_ANON_KEY =
 
 export const DEFAULT_AVATARS_BUCKET = "avatars";
 
+export const PATH =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:3000"
+		: "https://uniorari.it";
+
 export type Profile = {
 	id: string;
 	createdAt?: string;
