@@ -62,9 +62,10 @@ export const Button = ({
 			disabled={loading}
 			type={type}
 			onClick={onClick}
-			className={`h-content ${className} ${loading && "bg-opacity-50"} ${
-				!external &&
-				` ${sizes[size]} ${bgStyles[variant][fill]} uppercase tracking-wide font-medium transition`
+			className={`${className} ${loading && "bg-opacity-50"} ${
+				!external
+					? "h-content"
+					: `${sizes[size]} ${bgStyles[variant][fill]} uppercase tracking-wide font-medium transition`
 			}`}
 		>
 			{children}
