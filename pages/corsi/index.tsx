@@ -13,7 +13,7 @@ const Corsi = ({ fallback }) => {
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
 			<section className="flex justify-center py-4">
-				<div className="w-full max-w-7xl m-4 grid grid-cols-2 gap-14">
+				<div className="w-full max-w-7xl m-4 grid grid-cols-1 md:grid-cols-2 gap-14">
 					{data?.corsi.map((corso, idx) => (
 						<CardCorso key={idx} corso={corso} />
 					))}
