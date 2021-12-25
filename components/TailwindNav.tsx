@@ -63,9 +63,8 @@ export const TailwindNav = () => {
 								<div className="hidden sm:block sm:ml-6">
 									<div className="flex space-x-4">
 										{navigation.map((item) => (
-											<Link href={item.href}>
+											<Link key={item.name} href={item.href}>
 												<a
-													key={item.name}
 													className={classNames(
 														item.href === pathname
 															? "bg-gray-900 text-white"
@@ -197,9 +196,8 @@ export const TailwindNav = () => {
 					<Disclosure.Panel className="sm:hidden">
 						<div className="px-2 pt-2 pb-3 space-y-1">
 							{navigation.map((item) => (
-								<Disclosure.Button
+								<Link
 									key={item.name}
-									as={Link}
 									href={item.href}
 									aria-current={
 										item.href === pathname ? "page" : undefined
@@ -215,7 +213,7 @@ export const TailwindNav = () => {
 									>
 										{item.name}
 									</a>
-								</Disclosure.Button>
+								</Link>
 							))}
 						</div>
 					</Disclosure.Panel>
