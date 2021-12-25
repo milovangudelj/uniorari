@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Navbar, Footer } from ".";
+import { Navbar, TailwindNav, Footer } from ".";
 
 export const Layout = (props) => {
 	const { pathname } = useRouter();
@@ -45,7 +45,8 @@ export const Layout = (props) => {
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#6366F1" />
 			</Head>
-			{show && <Navbar />}
+			{/* {show && <Navbar />} */}
+			{show && <TailwindNav />}
 			{props.children}
 			{show && <Footer />}
 		</div>

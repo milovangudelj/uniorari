@@ -14,6 +14,8 @@
 	},
 	"dependencies": {
 		"@apollo/client": "^3.5.5",
+		"@headlessui/react": "^1.4.2",
+		"@heroicons/react": "^1.0.5",
 		"@hookform/resolvers": "^2.8.3",
 		"@next-auth/prisma-adapter": "^0.5.2-next.19",
 		"@nexus/schema": "^0.20.1",
@@ -51,4 +53,3 @@
 		"typescript": "^4.4.4"
 	}
 }
- 

@@ -13,100 +13,86 @@ export default function Styleguide() {
 				<h2>Buttons</h2>
 				<div>
 					<h3>Primary</h3>
-					<div>
-						<Button variant="primary" size="small">
-							Small
-						</Button>
-						<Button variant="primary" size="regular">
-							Regular
-						</Button>
-						<Button variant="primary" size="big">
-							Big
-						</Button>
+					<div className="flex gap-2 m-2">
+						<Button size="small">Small</Button>
+						<Button>Regular</Button>
+						<Button size="large">Big</Button>
 					</div>
-					<div>
-						<Button variant="primary" size="small" fill="outlined">
+					<div className="flex gap-2 m-2">
+						<Button size="small" outlined>
 							Small
 						</Button>
-						<Button variant="primary" size="regular" fill="outlined">
-							Regular
-						</Button>
-						<Button variant="primary" size="big" fill="outlined">
+						<Button outlined>Regular</Button>
+						<Button size="large" outlined>
 							Big
 						</Button>
 					</div>
 				</div>
 				<div>
 					<h3>Accent</h3>
-					<div>
+					<div className="flex gap-2 m-2">
 						<Button variant="accent" size="small">
 							Small
 						</Button>
-						<Button variant="accent" size="regular">
-							Regular
-						</Button>
-						<Button variant="accent" size="big">
+						<Button variant="accent">Regular</Button>
+						<Button variant="accent" size="large">
 							Big
 						</Button>
 					</div>
-					<div>
-						<Button variant="accent" size="small" fill="outlined">
+					<div className="flex gap-2 m-2">
+						<Button variant="accent" size="small" outlined>
 							Small
 						</Button>
-						<Button variant="accent" size="regular" fill="outlined">
+						<Button variant="accent" outlined>
 							Regular
 						</Button>
-						<Button variant="accent" size="big" fill="outlined">
+						<Button variant="accent" size="large" outlined>
 							Big
 						</Button>
 					</div>
 				</div>
 				<div>
 					<h3>Success</h3>
-					<div>
+					<div className="flex gap-2 m-2">
 						<Button variant="success" size="small">
 							Small
 						</Button>
-						<Button variant="success" size="regular">
-							Regular
-						</Button>
-						<Button variant="success" size="big">
+						<Button variant="success">Regular</Button>
+						<Button variant="success" size="large">
 							Big
 						</Button>
 					</div>
-					<div>
-						<Button variant="success" size="small" fill="outlined">
+					<div className="flex gap-2 m-2">
+						<Button variant="success" size="small" outlined>
 							Small
 						</Button>
-						<Button variant="success" size="regular" fill="outlined">
+						<Button variant="success" outlined>
 							Regular
 						</Button>
-						<Button variant="success" size="big" fill="outlined">
+						<Button variant="success" size="large" outlined>
 							Big
 						</Button>
 					</div>
 				</div>
 				<div>
 					<h3>Error</h3>
-					<div>
+					<div className="flex gap-2 m-2">
 						<Button variant="error" size="small">
 							Small
 						</Button>
-						<Button variant="error" size="regular">
-							Regular
-						</Button>
-						<Button variant="error" size="big">
+						<Button variant="error">Regular</Button>
+						<Button variant="error" size="large">
 							Big
 						</Button>
 					</div>
-					<div>
-						<Button variant="error" size="small" fill="outlined">
+					<div className="flex gap-2 m-2">
+						<Button variant="error" size="small" outlined>
 							Small
 						</Button>
-						<Button variant="error" size="regular" fill="outlined">
+						<Button variant="error" outlined>
 							Regular
 						</Button>
-						<Button variant="error" size="big" fill="outlined">
+						<Button variant="error" size="large" outlined>
 							Big
 						</Button>
 					</div>
