@@ -48,12 +48,15 @@ export const TailwindNav = () => {
 							</div>
 							<div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
 								<div className="flex-shrink-0 flex items-center">
-									<img
-										className="block h-6 w-auto"
-										src="/logo.svg"
-										alt="Workflow"
-									/>
-									<span className="hidden ml-2 text-white font-semibold text-title-l md:inline">
+									<Link href="/">
+										<img
+											src="/logo.svg"
+											alt="Logo UniOrari"
+											title="UniOrari"
+											className="block h-6 w-auto mr-2 cursor-pointer"
+										/>
+									</Link>
+									<span className="hidden text-white font-semibold text-title-l md:inline">
 										UniOrari
 									</span>
 								</div>
