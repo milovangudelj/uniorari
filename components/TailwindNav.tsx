@@ -199,19 +199,22 @@ export const TailwindNav = () => {
 							{navigation.map((item) => (
 								<Disclosure.Button
 									key={item.name}
-									as="a"
+									as={Link}
 									href={item.href}
-									className={classNames(
-										item.href === pathname
-											? "bg-gray-900 text-white"
-											: "text-gray-300 hover:bg-gray-700 hover:text-white",
-										"block px-3 py-2 rounded-md text-base font-medium"
-									)}
 									aria-current={
 										item.href === pathname ? "page" : undefined
 									}
 								>
-									{item.name}
+									<a
+										className={classNames(
+											item.href === pathname
+												? "bg-gray-900 text-white"
+												: "text-gray-300 hover:bg-gray-700 hover:text-white",
+											"block px-3 py-2 rounded-md text-base font-medium"
+										)}
+									>
+										{item.name}
+									</a>
 								</Disclosure.Button>
 							))}
 						</div>
