@@ -205,7 +205,7 @@ export const SignUpForm = () => {
 				type="submit"
 				variant="primary"
 				className="w-full mt-10"
-				size="big"
+				size="large"
 				loading={loading}
 			>
 				Iscriviti
