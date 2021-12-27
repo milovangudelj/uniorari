@@ -2,14 +2,13 @@ import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { Navbar, TailwindNav, Footer } from ".";
+import { useTheme } from "../lib/theme";
+
+const excPaths = ["/accedi", "/iscriviti", "/verifica-email"];
 
 export const Layout = (props) => {
 	const { pathname } = useRouter();
-	const [excPaths, setExcPaths] = useState([
-		"/accedi",
-		"/iscriviti",
-		"/verifica-email",
-	]);
+	const { theme } = useTheme();
 	const [show, setShow] = useState(false);
 
 	useEffect(() => {
@@ -17,7 +16,11 @@ export const Layout = (props) => {
 	}, [excPaths, pathname]);
 
 	return (
-		<div className="relative min-h-screen bg-grey-50">
+		<div
+			className={`${
+				theme === "dark" && "dark"
+			} relative min-h-screen bg-grey-50`}
+		>
 			<Head>
 				<link
 					rel="apple-touch-icon"
@@ -45,8 +48,8 @@ export const Layout = (props) => {
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#6366F1" />
 			</Head>
-			{/* {show && <Navbar />} */}
-			{show && <TailwindNav />}
+			{show && <Navbar />}
+			{/* {show && <TailwindNav />} */}
 			{props.children}
 			{show && <Footer />}
 		</div>

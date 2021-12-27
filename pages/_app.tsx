@@ -1,8 +1,10 @@
+import { SWRConfig } from "swr";
+import { useEffect, useState } from "react";
+
 import "../styles/globals.css";
-// import { SessionProvider } from "next-auth/react";
 import { AuthProvider } from "../lib/auth";
 import { Layout } from "../components";
-import { SWRConfig } from "swr";
+import { ThemeProvider } from "../lib/theme";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 	return (
@@ -14,13 +16,14 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 						fetch(resource, init).then((res) => res.json()),
 				}}
 			>
-				<Layout>
-					<Component {...pageProps} />
-				</Layout>
+				<ThemeProvider>
+					<Layout>
+						<Component {...pageProps} />
+					</Layout>
+				</ThemeProvider>
 			</SWRConfig>
 		</AuthProvider>
 	);
 }
 
 export default MyApp;
- 
