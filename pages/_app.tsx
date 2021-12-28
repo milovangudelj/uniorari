@@ -5,6 +5,7 @@ import "../styles/globals.css";
 import { AuthProvider } from "../lib/auth";
 import { Layout } from "../components";
 import { ThemeProvider } from "../lib/theme";
+import { DeviceProvider } from "../lib/device";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 	return (
@@ -16,11 +17,13 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 						fetch(resource, init).then((res) => res.json()),
 				}}
 			>
-				<ThemeProvider>
-					<Layout>
-						<Component {...pageProps} />
-					</Layout>
-				</ThemeProvider>
+				<DeviceProvider>
+					<ThemeProvider>
+						<Layout>
+							<Component {...pageProps} />
+						</Layout>
+					</ThemeProvider>
+				</DeviceProvider>
 			</SWRConfig>
 		</AuthProvider>
 	);
