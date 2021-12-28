@@ -8,7 +8,7 @@ const excPaths = ["/accedi", "/iscriviti", "/verifica-email"];
 
 export const Layout = (props) => {
 	const { pathname } = useRouter();
-	const { theme } = useTheme();
+	const { dark } = useTheme();
 	const [show, setShow] = useState(false);
 
 	useEffect(() => {
@@ -16,11 +16,7 @@ export const Layout = (props) => {
 	}, [excPaths, pathname]);
 
 	return (
-		<div
-			className={`${
-				theme === "dark" && "dark"
-			} relative min-h-screen bg-grey-50`}
-		>
+		<div className={`${dark && "dark"} relative min-h-screen bg-grey-50`}>
 			<Head>
 				<link
 					rel="apple-touch-icon"
