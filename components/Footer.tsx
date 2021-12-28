@@ -1,4 +1,6 @@
 export const Footer = () => {
-	return <footer className="absolute bottom-0">Footer</footer>;
+	return (
+		<footer className="absolute bottom-0">&copy; All rights reserved.</footer>
+	);
 };
  
