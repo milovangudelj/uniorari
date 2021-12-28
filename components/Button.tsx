@@ -46,7 +46,7 @@ export const Button = ({
 				`btn ${variants[variant]} ${size && sizes[size]} ${
 					outlined && "btn-outlined"
 				}`
-			} ${loading && "bg-opacity-50"} ${className}`}
+			} ${loading && "bg-opacity-50 border-opacity-50"} ${className}`}
 		>
 			{children}
 		</button>
