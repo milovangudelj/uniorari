@@ -1,10 +1,14 @@
 import { ChevronDownIcon } from "@heroicons/react/solid";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTheme } from "../../lib/theme";
 
 const ThemeSwitch = (props) => {
-	const { setTheme } = useTheme();
+	const { theme, setTheme } = useTheme();
 	const selectRef = useRef(null);
+
+	useEffect(() => {
+		selectRef.current.value = theme;
+	}, []);
 
 	const handleThemeChange = () => {
 		setTheme(selectRef.current?.value || "default");
@@ -21,8 +25,8 @@ const ThemeSwitch = (props) => {
 					className="appearance-none bg-transparent outline-none pl-2 pr-7 cursor-pointer"
 					onChange={handleThemeChange}
 				>
-					<option value="light">Light</option>
 					<option value="default">Default</option>
+					<option value="light">Light</option>
 					<option value="dark">Dark</option>
 				</select>
 				<span className="absolute self-center right-1 pointer-events-none">
