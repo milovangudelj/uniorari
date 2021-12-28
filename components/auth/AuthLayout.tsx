@@ -1,28 +1,15 @@
 import { useEffect, useState } from "react";
+import { useDevice } from "../../lib/device";
 
 export const AuthLayout = (props) => {
-	const [deviceWidth, setDeviceWidth] = useState(
-		typeof window !== "undefined" ? window.innerWidth : null
-	);
-
-	const handleResize = () => {
-		setDeviceWidth(window.innerWidth);
-	};
-
-	useEffect(() => {
-		window.addEventListener("resize", handleResize);
-
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, []);
+	const { width } = useDevice();
 
 	return (
 		<div className="h-screen flex">
 			<div className="h-full lg:w-3/5 w-full bg-grey-50 relative overflow-auto">
 				{props.children}
 			</div>
-			{deviceWidth > 1024 && (
+			{width > 1024 && (
 				<div className="h-full w-2/5 relative justify-center overflow-hidden bg-unsplash-random bg-center bg-cover">
 					<a
 						href="https://unsplash.com"
