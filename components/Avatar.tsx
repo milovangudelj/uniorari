@@ -32,7 +32,7 @@ export const Avatar = (props) => {
 			src={avatarUrl}
 			alt={props.alt}
 			title={props.title}
-			className="rounded-full w-8 h-8 border border-grey-100"
+			className="rounded-full w-12 h-12 border border-grey-100"
 		/>
 	) : (
 		<div

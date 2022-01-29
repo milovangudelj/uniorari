@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useEffect } from "react";
 
 import { Avatar } from "../Avatar";
 import ThemeSwitch from "./ThemeSwitch";
@@ -6,16 +7,16 @@ import ThemeSwitch from "./ThemeSwitch";
 const ProfileMenu = ({ user, signOut }) => {
 	return (
 		<div className="group self-center relative flex justify-end">
-			{user.image ? (
+			{user?.image ? (
 				<Avatar
-					src={user.image}
-					alt={user.name || user.email}
-					title={user.name || user.email}
+					src={user?.image}
+					alt={user?.name || user?.email}
+					title={user?.name || user?.email}
 				/>
 			) : (
 				<Avatar
-					title={user.name || user.email}
-					letter={user.name?.charAt(0) || user.email?.charAt(0)}
+					title={user?.name || user?.email}
+					letter={user?.name?.charAt(0) || user?.email?.charAt(0)}
 				/>
 			)}
 			<div className="hidden group-hover:block absolute top-full">

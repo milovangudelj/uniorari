@@ -108,6 +108,14 @@ module.exports = {
 				"body-m": ".875rem",
 				"body-s": ".75rem",
 			},
+			gridTemplateColumns: {
+				// Layout columns template
+				layout: "300px 1fr",
+			},
+			gridTemplateRows: {
+				// Layout columns template
+				layout: "auto 1fr",
+			},
 			width: {
 				200: "200px",
 				300: "300px",

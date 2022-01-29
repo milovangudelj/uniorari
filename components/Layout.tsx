@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Navbar, TailwindNav, Footer } from ".";
+import { Navbar, TailwindNav, Footer, SideMenu, TopBar } from ".";
 import { useTheme } from "../lib/theme";
 
 const excPaths = ["/accedi", "/iscriviti", "/verifica-email"];
@@ -44,10 +44,20 @@ export const Layout = (props) => {
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#6366F1" />
 			</Head>
-			{show && <Navbar />}
-			{/* {show && <TailwindNav />} */}
-			{props.children}
-			{show && <Footer />}
+			{show ? (
+				<div className="grid grid-cols-layout grid-rows-layout h-screen bg-grey-100 border-collapse">
+					{/* <Navbar /> */}
+					{/* <TailwindNav /> */}
+					<SideMenu className="col-span-1 col-start-1 row-span-2 row-start-1" />
+					<TopBar className="row-start-1 row-span-1 col-start-2 col-span-1" />
+					<main className="col-span-1 row-span-1 col-start-2 row-start-2">
+						{props.children}
+					</main>
+					{/* <Footer /> */}
+				</div>
+			) : (
+				props.children
+			)}
 		</div>
 	);
 };

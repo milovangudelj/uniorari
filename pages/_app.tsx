@@ -19,9 +19,19 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 			>
 				<DeviceProvider>
 					<ThemeProvider>
-						<Layout>
-							<Component {...pageProps} />
-						</Layout>
+						{false ? (
+							<Layout>
+								<Component {...pageProps} />
+							</Layout>
+						) : (
+							<div className="bg-grey-100 w-screen h-screen flex items-center justify-center">
+								<img
+									src="/johntravolta.png"
+									alt="Confused John Travolta"
+									className="opacity-10"
+								/>
+							</div>
+						)}
 					</ThemeProvider>
 				</DeviceProvider>
 			</SWRConfig>
