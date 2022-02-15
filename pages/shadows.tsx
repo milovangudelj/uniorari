@@ -12,7 +12,7 @@ const Shadows = () => {
 				<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-2xl"></div>
 				<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-3xl"></div>
 				<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-4xl"></div>
-				<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-inner"></div>
+				<div className="rounded-xl w-24 h-24 shadow-inner"></div>
 			</div>
 			<div className="flex space-x-4 items-center justify-center">
 				<div className="bg-primary-500 shadow-primary-500/5 rounded-xl w-24 h-24 shadow-none"></div>
@@ -24,7 +24,7 @@ const Shadows = () => {
 				<div className="bg-primary-500 shadow-primary-500/5 rounded-xl w-24 h-24 shadow-2xl"></div>
 				<div className="bg-primary-500 shadow-primary-500/5 rounded-xl w-24 h-24 shadow-3xl"></div>
 				<div className="bg-primary-500 shadow-primary-500/5 rounded-xl w-24 h-24 shadow-4xl"></div>
-				<div className="bg-primary-500 shadow-primary-500/5 rounded-xl w-24 h-24 shadow-inner"></div>
+				<div className="shadow-primary-500/5 rounded-xl w-24 h-24 shadow-inner"></div>
 			</div>
 		</div>
 	);
