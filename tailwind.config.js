@@ -1,8 +1,10 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-const defaultConfig = require("tailwindcss/defaultConfig");
 
 module.exports = {
-	purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+	content: [
+		"./pages/**/*.{js,ts,jsx,tsx}",
+		"./components/**/*.{js,ts,jsx,tsx}",
+	],
 	darkMode: "class", // or 'media' or 'class'
 	theme: {
 		fontFamily: {
@@ -141,16 +143,19 @@ module.exports = {
 				54: "0.54",
 			},
 			boxShadow: {
-				1: "2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02), 6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028), 12.5px 12.5px 10px rgba(0, 0, 0, 0.035), 22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042), 41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05), 100px 100px 80px rgba(0, 0, 0, 0.07)",
+				inner: "inset 0px 2px 4px rgba(0, 0, 0, 0.05)",
+				none: "none",
+				sm: "0 1px 2px rgba(0,0,0,0.05)",
+				DEFAULT: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)",
+				md: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05)",
+				lg: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05)",
+				xl: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05)",
+				"2xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05)",
+				"3xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05)",
+				"4xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05), 0 128px 256px rgba(0,0,0,0.05)",
 				google: "0px 0px 0px 3px #BBD2F5",
 			},
 		},
 	},
-	variants: {
-		extend: {
-			display: ["group-hover", ...defaultConfig.variants.display],
-		},
-	},
 	plugins: [],
 };
- 

@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 							<Layout>
 								<Component {...pageProps} />
 							</Layout>
-						) : (
+						) : false ? (
 							<div className="bg-grey-100 w-screen h-screen flex items-center justify-center">
 								<img
 									src="/johntravolta.png"
@@ -31,6 +31,8 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 									className="opacity-10"
 								/>
 							</div>
+						) : (
+							<Component {...pageProps} />
 						)}
 					</ThemeProvider>
 				</DeviceProvider>
