@@ -50,8 +50,8 @@ export const Navbar = () => {
 									</a>
 								</Link>
 							)}
-							<Button>
-								<Link href="/iscriviti">Iscriviti</Link>
+							<Button href="/iscriviti" link>
+								Iscriviti
 							</Button>
 						</div>
 					)}
