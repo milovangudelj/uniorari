@@ -1,7 +1,7 @@
 const Shadows = () => {
 	return (
 		<div className="w-full h-screen flex flex-col items-center justify-center space-y-16 bg-grey-50">
-			<div className="bg-primary-500 shadow-primary-500/5 rounded-xl w-24 h-24 shadow-sm hover:shadow-4xl transition duration-500"></div>
+			<div className="bg-primary-500 shadow-primary-500/5 rounded-xl w-24 h-24 shadow-sm hover:shadow-4xl transition duration-200"></div>
 			<div className="flex space-x-4 items-center justify-center">
 				<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-none"></div>
 				<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-sm"></div>

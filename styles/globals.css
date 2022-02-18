@@ -7,14 +7,27 @@
 
 @layer components {
 	.btn {
-		/* Common */
-		@apply text-label-m font-medium tracking-wide uppercase text-on-primary-he transition border;
-		/* Size */
-		@apply py-1.5 px-3 rounded-md h-content;
+		@apply text-label-m font-medium tracking-wide uppercase text-on-primary-he relative transition border h-max inline-flex items-center justify-center w-max;
+	}
+
+	.btn.btn-sm {
+		@apply text-label-s py-1 px-2 rounded;
+	}
+
+	.btn.btn-md {
+		@apply py-1.5 px-3 rounded-md;
+	}
+
+	.btn.btn-lg {
+		@apply text-label-l py-2 px-4 rounded-lg;
 	}
 
 	.btn-primary {
 		@apply bg-primary-500 border-primary-500 hover:bg-primary-400 hover:border-primary-400 focus:bg-primary-600 focus:border-primary-600;
+	}
+
+	.btn-primary.btn-text {
+		@apply bg-transparent border-transparent text-primary-500 hover:bg-primary-500 hover:bg-opacity-5 focus:bg-opacity-10 focus:bg-primary-600;
 	}
 
 	.btn-primary.btn-outlined {
@@ -25,12 +38,20 @@
 		@apply bg-accent-500 border-accent-500 hover:bg-accent-400 hover:border-accent-400 focus:bg-accent-600 focus:border-accent-600;
 	}
 
+	.btn-accent.btn-text {
+		@apply bg-transparent border-transparent text-accent-500 hover:bg-accent-500 hover:bg-opacity-5 focus:bg-opacity-10 focus:bg-accent-600;
+	}
+
 	.btn-accent.btn-outlined {
 		@apply bg-transparent text-accent-500 hover:bg-accent-500 hover:border-accent-500 hover:bg-opacity-5 focus:bg-opacity-10 focus:bg-accent-600 focus:border-accent-500;
 	}
 
 	.btn-success {
 		@apply bg-success-500 border-success-500 hover:bg-success-400 hover:border-success-400 focus:bg-success-600 focus:border-success-600;
+	}
+
+	.btn-success.btn-text {
+		@apply bg-transparent border-transparent text-success-500 hover:bg-success-500 hover:bg-opacity-5 focus:bg-opacity-10 focus:bg-success-600;
 	}
 
 	.btn-success.btn-outlined {
@@ -41,16 +62,12 @@
 		@apply bg-error-500 border-error-500 hover:bg-error-400 hover:border-error-400 focus:bg-error-600 focus:border-error-600;
 	}
 
+	.btn-error.btn-text {
+		@apply bg-transparent border-transparent text-error-500 hover:bg-error-500 hover:bg-opacity-5 focus:bg-opacity-10 focus:bg-error-600;
+	}
+
 	.btn-error.btn-outlined {
 		@apply bg-transparent text-error-500 hover:bg-error-500 hover:border-error-500 hover:bg-opacity-5 focus:bg-opacity-10 focus:bg-error-600 focus:border-error-500;
-	}
-
-	.btn.btn-s {
-		@apply text-label-s py-1 px-2 rounded;
-	}
-
-	.btn.btn-l {
-		@apply text-label-l py-2 px-4 rounded-lg;
 	}
 }
 

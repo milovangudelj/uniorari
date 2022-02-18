@@ -4,5 +4,7 @@ export * from "./SideMenu";
 export * from "./TopBar";
 export * from "./TailwindNav";
 export * from "./Footer";
-export * from "./Button";
 export * from "./CardCorso";
+export * from "./Button";
+export * from "./Code";
+export * from "./ComponentShowcase";

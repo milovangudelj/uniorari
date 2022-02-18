@@ -11,6 +11,19 @@ module.exports = {
 			sans: ["Inter", ...defaultTheme.fontFamily.sans],
 			roboto: ["Roboto", "sans-serif"],
 		},
+		boxShadow: {
+			inner: "inset 0px 2px 4px rgba(0, 0, 0, 0.05)",
+			none: "none",
+			sm: "0 1px 2px rgba(0,0,0,0.05)",
+			DEFAULT: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)",
+			md: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05)",
+			lg: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05)",
+			xl: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05)",
+			"2xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05)",
+			"3xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05)",
+			"4xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05), 0 128px 256px rgba(0,0,0,0.05)",
+			google: "0px 0px 0px 3px #BBD2F5",
+		},
 		extend: {
 			colors: {
 				grey: {
@@ -112,7 +125,7 @@ module.exports = {
 			},
 			gridTemplateColumns: {
 				// Layout columns template
-				layout: "300px 1fr",
+				layout: "224px 1fr",
 			},
 			gridTemplateRows: {
 				// Layout columns template
@@ -141,19 +154,6 @@ module.exports = {
 			},
 			textOpacity: {
 				54: "0.54",
-			},
-			boxShadow: {
-				inner: "inset 0px 2px 4px rgba(0, 0, 0, 0.05)",
-				none: "none",
-				sm: "0 1px 2px rgba(0,0,0,0.05)",
-				DEFAULT: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)",
-				md: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05)",
-				lg: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05)",
-				xl: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05)",
-				"2xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05)",
-				"3xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05)",
-				"4xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05), 0 128px 256px rgba(0,0,0,0.05)",
-				google: "0px 0px 0px 3px #BBD2F5",
 			},
 		},
 	},
