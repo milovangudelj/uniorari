@@ -79,8 +79,8 @@ const Ds = () => {
 								</h3>
 								<p>
 									Outlined buttons are medium-emphasis buttons. They
-									contain actions that are important but aren't the
-									primary action in an app.
+									contain actions that are important but aren&apos;t
+									the primary action in an app.
 								</p>
 								<p>
 									Outlined buttons are also a lower emphasis
