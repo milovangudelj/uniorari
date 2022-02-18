@@ -1,6 +1,6 @@
-import jsxToString from "jsx-to-string";
 import React, { useEffect, useState } from "react";
 
+import jsxToString from "../lib/jsxToString";
 import { Code } from ".";
 
 type Props = {
@@ -22,6 +22,7 @@ export const ComponentShowcase = ({
 		React.Children.map(children, (child) =>
 			jsxToString(child, {
 				shortBooleanSyntax: true,
+				singleLineProps: true,
 				ignoreTags,
 			})
 		).join("\n")
@@ -32,6 +33,7 @@ export const ComponentShowcase = ({
 			React.Children.map(children, (child) =>
 				jsxToString(child, {
 					shortBooleanSyntax: true,
+					singleLineProps: true,
 					ignoreTags,
 				})
 			).join("\n")
