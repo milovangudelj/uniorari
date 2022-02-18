@@ -126,10 +126,8 @@ export const TailwindNav = () => {
 															Accedi
 														</a>
 													</Link>
-													<Button variant="primary">
-														<Link href="/iscriviti">
-															Iscriviti
-														</Link>
+													<Button href="/iscriviti" link>
+														Iscriviti
 													</Button>
 												</div>
 											)}
