@@ -1,3 +1,4 @@
+import { PlusCircleIcon } from "@heroicons/react/solid";
 import { Button } from ".";
 
 export const CardCorso = ({ corso }) => {
@@ -12,7 +13,12 @@ export const CardCorso = ({ corso }) => {
 					<h2 className="text-headline-m text-on-surface-he mb-2 mr-4">
 						{corso.nome}
 					</h2>
-					<Button onClick={handleSave} size="small">
+					<Button
+						onClick={handleSave}
+						variant="text"
+						startIcon={<PlusCircleIcon className="w-5 h-5" />}
+						size="small"
+					>
 						Save
 					</Button>
 				</div>
