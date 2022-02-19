@@ -25,14 +25,29 @@ const classes = {
 	base: "btn",
 	disabled: (disabled) => (disabled ? "opacity-50 cursor-not-allowed" : ""),
 	loading: (loading) => (loading ? "cursor-wait" : ""),
-	pill: (isPill) => (isPill ? "rounded-full" : ""),
+	pill: (pill) => (pill ? "rounded-full" : ""),
 	size: {
 		small: "btn-sm",
 		normal: "btn-md",
 		large: "btn-lg",
 	},
 	variant: (color) => {
-		let c = "btn-" + color;
+		let c = "";
+
+		switch (color) {
+			case "primary":
+				c = "btn-primary";
+				break;
+			case "accent":
+				c = "btn-accent";
+				break;
+			case "success":
+				c = "btn-success";
+				break;
+			case "error":
+				c = "btn-error";
+				break;
+		}
 
 		return {
 			text: `${c} btn-text`,
@@ -107,11 +122,7 @@ export const Button = <T extends ElementType = "button">({
 			className={style}
 		>
 			{passHref ? (
-				<a
-					{...props}
-					disabled={props.disabled || loading}
-					className={style}
-				>
+				<a {...props} className={style}>
 					{content}
 				</a>
 			) : (
