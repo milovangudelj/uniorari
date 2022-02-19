@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Button, ComponentShowcase } from "../components";
 
 const Ds = () => {
@@ -50,7 +52,9 @@ const Ds = () => {
 									</Button>
 									<Button
 										variant="text"
-										href="https://piscinacomprensorialeagordina.it"
+										href="/docenti"
+										as={Link}
+										passHref
 									>
 										Link
 									</Button>
@@ -68,7 +72,7 @@ const Ds = () => {
 								<ComponentShowcase className="mt-4" showCode>
 									<Button>Contained</Button>
 									<Button disabled>Disabled</Button>
-									<Button href="/scuole" link>
+									<Button as={Link} passHref href="/scuole">
 										Link
 									</Button>
 								</ComponentShowcase>
@@ -92,7 +96,12 @@ const Ds = () => {
 									<Button variant="outlined" disabled>
 										Disabled
 									</Button>
-									<Button variant="outlined" href="/corsi" link>
+									<Button
+										variant="outlined"
+										as={Link}
+										passHref
+										href="/corsi"
+									>
 										Link
 									</Button>
 								</ComponentShowcase>

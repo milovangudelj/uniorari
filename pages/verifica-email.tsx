@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Link from "next/link";
 import { Button } from "../components";
 
 export default function verifyRequest({ baseUrl }) {
@@ -14,7 +15,7 @@ export default function verifyRequest({ baseUrl }) {
 					Per accedere clicca il pulsante che ti abbiamo inviato per mail.
 				</p>
 
-				<Button href="/" link>
+				<Button as={Link} passHref href="/">
 					Torna alla Home
 				</Button>
 			</main>
