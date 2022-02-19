@@ -19,6 +19,8 @@ interface ButtonProps<T extends ElementType> {
 	variant?: "text" | "contained" | "outlined";
 	color?: "primary" | "accent" | "success" | "error";
 	size?: "small" | "normal" | "large";
+	startIcon?: ReactNode;
+	endIcon?: ReactNode;
 }
 
 const classes = {
@@ -67,6 +69,8 @@ export const Button = <T extends ElementType = "button">({
 	pill = false,
 	size = "normal",
 	loading = false,
+	startIcon,
+	endIcon,
 	...props
 }: ButtonProps<T> &
 	Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) => {
@@ -111,8 +115,14 @@ export const Button = <T extends ElementType = "button">({
 							></path>
 						</svg>
 					)}
-					<span className={loading ? "invisible" : ""}>
+					<span
+						className={`${
+							loading ? "invisible" : ""
+						} flex gap-2 items-center`}
+					>
+						{startIcon && <span>{startIcon}</span>}
 						{props.children}
+						{endIcon && <span>{endIcon}</span>}
 					</span>
 				</>
 			) : (
