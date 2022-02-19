@@ -26,7 +26,7 @@ export const TopBar = (props) => {
 				</Link>
 				<form
 					action=""
-					className="group flex p-2 shadow-sm w-max transition text-on-surface-le rounded-lg bg-grey-100"
+					className="hidden lg:flex group p-2 shadow-sm w-max transition text-on-surface-le rounded-lg bg-grey-100"
 				>
 					<span>
 						<SearchIcon
