@@ -43,7 +43,9 @@ export const SideMenu = (props) => {
 	}, [router.pathname]);
 
 	return (
-		<div className={`${props.className} bg-grey-50 py-4 px-2 shadow-sm`}>
+		<div
+			className={`${props.className} bg-grey-50 hidden lg:block py-4 px-2 shadow-sm`}
+		>
 			<ul className="flex flex-col space-y-2">
 				{pages.map((page, idx) => (
 					<li key={idx}>

@@ -47,7 +47,7 @@ export const Layout = (props) => {
 			{show ? (
 				<div className="grid grid-cols-layout grid-rows-layout h-screen bg-grey-100 border-collapse">
 					<TopBar className="row-start-1 row-span-1 col-start-1 sticky top-0 col-span-2" />
-					<main className="col-span-1 row-span-1 col-start-2 max-h-full overflow-auto px-10 py-6 row-start-2">
+					<main className="lg:col-span-1 col-span-2 row-span-1 col-start-1 lg:col-start-2 max-h-full overflow-auto px-10 py-6 row-start-2">
 						{props.children}
 					</main>
 					<SideMenu className="col-span-1 col-start-1 row-span-1 row-start-2" />
