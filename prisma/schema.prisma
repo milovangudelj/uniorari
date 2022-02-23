@@ -8,13 +8,13 @@ datasource db {
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["dataProxy"]
 }
 
-// generator nexusPrisma {
-//   provider = "nexus-prisma"
-// }
+generator nexusPrisma {
+  provider = "nexus-prisma"
+}
 
+/// Model representing each Professor
 model Docente {
   // Scalars
   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
@@ -32,6 +32,7 @@ model Docente {
   @@map("docenti")
 }
 
+/// Model representing each Course
 model Corso {
   // Scalars
   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
@@ -43,11 +44,12 @@ model Corso {
   docenti  Docente[]
   lauree   Laurea[]
   gruppi   Gruppo[]
-  studenti Profile[]
+  studenti Profilo[]
 
   @@map("corsi")
 }
 
+/// Model representing each Group
 model Gruppo {
   // Scalars
   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
@@ -66,6 +68,7 @@ model Gruppo {
   @@map("gruppi")
 }
 
+/// Model representing each Degree
 model Laurea {
   // Scalars
   id        String   @id @default(dbgenerated("uuid_generate_v4()"))
@@ -81,6 +84,7 @@ model Laurea {
   @@map("lauree")
 }
 
+/// Model representing each Lesson
 model Lezione {
   // Scalars
   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
@@ -100,6 +104,7 @@ model Lezione {
   @@map("lezioni")
 }
 
+/// Model representing each Classroom
 model Aula {
   // Scalars
   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
@@ -116,7 +121,7 @@ model Aula {
 }
 
 /// User data model
-model Profile {
+model Profilo {
   id        String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -126,6 +131,6 @@ model Profile {
   image     String?
   corsi     Corso[]
 
-  @@map("profiles")
+  @@map("profili")
 }
  

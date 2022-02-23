@@ -1,48 +1,37 @@
 import { extendType, stringArg, nonNull, objectType, idArg } from "nexus";
+import { Profilo } from "nexus-prisma";
 
-import { Corso } from ".";
-
-export const Profile = objectType({
-	name: "Profile",
+export const ProfileObject = objectType({
+	name: Profilo.$name,
+	description: Profilo.$description,
 	definition(t) {
-		t.nonNull.id("id");
-		t.nonNull.string("name");
-		t.nonNull.string("email");
-		t.nonNull.string("username");
-		t.string("image");
-		t.nonNull.list.nonNull.field("corsi", {
-			type: Corso,
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.profile
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.corsi();
-			},
-		});
+		t.nonNull.field(Profilo.id);
+		t.nonNull.field(Profilo.name);
+		t.nonNull.field(Profilo.email);
+		t.nonNull.field(Profilo.username);
+		t.field(Profilo.image);
+		t.nonNull.list.nonNull.field(Profilo.corsi);
 	},
 });
 
-export const utenteSingolo = extendType({
+export const ProfileQuery = extendType({
 	type: "Query",
 	definition(t) {
 		t.field("utente", {
-			type: Profile,
+			type: ProfileObject,
 			args: {
 				id: stringArg(),
 				email: stringArg(),
 				username: stringArg(),
 			},
-			async resolve(_parent, args, ctx) {
+			async resolve(_, args, ctx) {
 				if (!Object.values(args).some((arg) => arg !== null))
 					throw "You need to provide at least one argument. The first one will be used.";
 
 				let where = {};
 				where[Object.keys(args)[0]] = Object.values(args)[0];
 
-				return await ctx.prisma.profile.findUnique({
+				return await ctx.prisma.profilo.findUnique({
 					where,
 					include: {
 						corsi: true,
@@ -57,7 +46,7 @@ export const creaUtente = extendType({
 	type: "Mutation",
 	definition(t) {
 		t.field("creaUtente", {
-			type: Profile,
+			type: ProfileObject,
 			args: {
 				id: nonNull(idArg()),
 				name: nonNull(stringArg()),
@@ -65,8 +54,8 @@ export const creaUtente = extendType({
 				username: nonNull(stringArg()),
 				image: stringArg(),
 			},
-			async resolve(_parent, args, ctx) {
-				return await ctx.prisma.profile.create({
+			async resolve(_, args, ctx) {
+				return await ctx.prisma.profilo.create({
 					data: {
 						id: args.id,
 						name: args.name,
@@ -84,7 +73,7 @@ export const modificaUtente = extendType({
 	type: "Mutation",
 	definition(t) {
 		t.field("modificaUtente", {
-			type: Profile,
+			type: ProfileObject,
 			args: {
 				id: nonNull(stringArg()),
 				name: stringArg(),
@@ -92,13 +81,13 @@ export const modificaUtente = extendType({
 				username: stringArg(),
 				image: stringArg(),
 			},
-			async resolve(_parent, { id, ...args }, ctx) {
+			async resolve(_, { id, ...args }, ctx) {
 				if (!Object.values(args).some((arg) => arg !== null))
 					throw "You need to provide at least one field to be updated.";
 
 				console.log(args);
 
-				return await ctx.prisma.profile.update({
+				return await ctx.prisma.profilo.update({
 					where: {
 						id,
 					},

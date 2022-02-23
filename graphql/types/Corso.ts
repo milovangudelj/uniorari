@@ -1,71 +1,53 @@
-import { objectType, extendType, list, nonNull, stringArg } from "nexus";
-import { Docente, Laurea, Gruppo, Profile } from ".";
+import {
+	objectType,
+	extendType,
+	list,
+	nonNull,
+	stringArg,
+	queryType,
+} from "nexus";
+import { Corso } from "nexus-prisma";
 
-export const Corso = objectType({
-	name: "Corso",
+export const CourseObject = objectType({
+	name: Corso.$name,
 	definition(t) {
-		t.nonNull.id("id");
-		t.nonNull.string("nome");
-		t.nonNull.list.nonNull.field("docenti", {
-			type: Docente,
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.corso
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.docenti();
-			},
-		});
-		t.nonNull.list.nonNull.field("lauree", {
-			type: Laurea,
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.corso
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.lauree();
-			},
-		});
-		t.nonNull.list.nonNull.field("gruppi", {
-			type: Gruppo,
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.corso
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.gruppi();
-			},
-		});
-		t.nonNull.list.nonNull.field("studenti", {
-			type: Profile,
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.corso
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.studenti();
+		t.nonNull.field(Corso.id);
+		t.nonNull.field(Corso.nome);
+		t.nonNull.list.field(Corso.docenti);
+		t.nonNull.list.field(Corso.lauree);
+		t.nonNull.list.field(Corso.gruppi);
+		t.nonNull.list.field(Corso.studenti);
+	},
+});
+
+export const CoursesQuery = extendType({
+	type: "Query",
+	definition(t) {
+		t.list.field("corsi", {
+			type: CourseObject,
+			async resolve(_, __, ctx) {
+				return await ctx.prisma.corso.findMany({
+					include: {
+						docenti: true,
+						lauree: true,
+						gruppi: true,
+						studenti: true,
+					},
+				});
 			},
 		});
 	},
 });
 
-export const corsoSingolo = extendType({
+export const CourseQuery = extendType({
 	type: "Query",
 	definition(t) {
 		t.field("corso", {
-			type: Corso,
+			type: CourseObject,
 			args: {
 				idCorso: nonNull(stringArg()),
 			},
-			async resolve(_parent, args, ctx) {
+			async resolve(_, args, ctx) {
 				return await ctx.prisma.corso.findUnique({
 					where: {
 						id: args.idCorso,
@@ -81,23 +63,3 @@ export const corsoSingolo = extendType({
 		});
 	},
 });
-
-export const corsi = extendType({
-	type: "Query",
-	definition(t) {
-		t.nonNull.list.nonNull.field("corsi", {
-			type: Corso,
-			async resolve(_parent, _args, ctx) {
-				return await ctx.prisma.corso.findMany({
-					include: {
-						docenti: true,
-						lauree: true,
-						gruppi: true,
-						studenti: true,
-					},
-				});
-			},
-		});
-	},
-});
- 

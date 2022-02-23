@@ -2,75 +2,76 @@
 ### Do not make changes to this file directly
 
 
+"""Model representing each Classroom"""
 type Aula {
   id: ID!
   indirizzo: String
-  lezioni: [Lezione]!
+  lezioni: [[Lezione!]!]!
   link: String
   nome: String!
 }
 
 type Corso {
-  docenti: [Docente!]!
-  gruppi: [Gruppo!]!
+  docenti: [[Docente!]!]!
+  gruppi: [[Gruppo!]!]!
   id: ID!
-  lauree: [Laurea!]!
+  lauree: [[Laurea!]!]!
   nome: String!
-  studenti: [Profile!]!
+  studenti: [[Profilo!]!]!
 }
 
-"""
-A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
-"""
-scalar DateTime
-
+"""Model representing each Professor"""
 type Docente {
-  cognome: String
-  corsi: [Corso]!
-  email: String
-  gruppi: [Gruppo]!
+  cognome: String!
+  corsi: [[Corso!]!]!
+  email: String!
+  gruppi: [[Gruppo!]!]!
   id: ID!
-  lezioni: [Lezione]!
+  lezioni: [[Lezione!]!]!
   nome: String!
 }
 
+"""Model representing each Group"""
 type Gruppo {
   adc: Int
-  corsi: [Corso!]!
-  docenti: [Docente!]!
+  corsi: [[Corso!]!]!
+  docenti: [[Docente!]!]!
   id: ID!
   laurea: Laurea!
-  lezioni: [Lezione!]!
+  lezioni: [[Lezione!]!]!
   nome: String!
 }
 
+"""Model representing each Degree"""
 type Laurea {
-  corsi: [Corso!]!
-  gruppi: [Gruppo!]!
+  corsi: [[Corso!]!]!
+  gruppi: [[Gruppo!]!]!
   id: ID!
   nome: String!
   scuola: String!
 }
 
+"""Model representing each Lesson"""
 type Lezione {
-  aule: [Aula!]!
-  docenti: [Docente!]!
+  aule: [[Aula!]!]!
+  docenti: [[Docente!]!]!
   durata: Int!
   fine: String!
   giorno: Int!
-  gruppi: [Gruppo!]!
+  gruppi: [[Gruppo!]!]!
   id: ID!
   inizio: String!
   ora: Int!
 }
 
 type Mutation {
-  creaUtente(email: String!, id: ID!, image: String, name: String!, username: String!): Profile
-  modificaUtente(email: String, id: String!, image: String, name: String, username: String): Profile
+  creaUtente(email: String!, id: ID!, image: String, name: String!, username: String!): Profilo
+  modificaUtente(email: String, id: String!, image: String, name: String, username: String): Profilo
 }
 
-type Profile {
-  corsi: [Corso!]!
+"""User data model"""
+type Profilo {
+  corsi: [[Corso!]!]!
   email: String!
   id: ID!
   image: String
@@ -81,15 +82,15 @@ type Profile {
 type Query {
   aula(idAula: String!): Aula
   aule: [Aula!]!
-  corsi: [Corso!]!
+  corsi: [Corso]
   corso(idCorso: String!): Corso
   docente(idDocente: String!): Docente
-  docenti: [Docente!]!
+  docenti: [Docente]
   gruppi: [Gruppo!]!
   gruppo(idGruppo: String!): Gruppo
   laurea(idLaurea: String!): Laurea
   lauree: [Laurea!]!
   lezione(idLezione: String!): Lezione
   lezioni: [Lezione!]!
-  utente(email: String, id: String, username: String): Profile
+  utente(email: String, id: String, username: String): Profilo
 }

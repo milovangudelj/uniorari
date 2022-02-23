@@ -1,72 +1,48 @@
-import { objectType, extendType, list, nonNull, stringArg } from "nexus";
-import { Docente, Laurea, Corso, Lezione } from ".";
+import { objectType, extendType, nonNull, stringArg } from "nexus";
+import { Gruppo } from "nexus-prisma";
 
-export const Gruppo = objectType({
-	name: "Gruppo",
+export const GroupObject = objectType({
+	name: Gruppo.$name,
+	description: Gruppo.$description,
 	definition(t) {
-		t.nonNull.id("id");
-		t.nonNull.string("nome");
-		t.int("adc");
-		t.nonNull.list.field("docenti", {
-			type: nonNull(Docente),
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.gruppo
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.docenti();
-			},
-		});
-		t.nonNull.field("laurea", {
-			type: nonNull(Laurea),
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.gruppo
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.laurea();
-			},
-		});
-		t.nonNull.list.field("corsi", {
-			type: nonNull(Corso),
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.gruppo
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.corsi();
-			},
-		});
-		t.nonNull.list.field("lezioni", {
-			type: nonNull(Lezione),
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.gruppo
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.lezioni();
+		t.nonNull.field(Gruppo.id);
+		t.nonNull.field(Gruppo.nome);
+		t.field(Gruppo.adc);
+		t.nonNull.list.field(Gruppo.docenti);
+		t.nonNull.list.field(Gruppo.corsi);
+		t.nonNull.list.field(Gruppo.lezioni);
+		t.nonNull.field(Gruppo.laurea);
+	},
+});
+
+export const GroupsQuery = extendType({
+	type: "Query",
+	definition(t) {
+		t.nonNull.list.field("gruppi", {
+			type: nonNull(GroupObject),
+			async resolve(_, __, ctx) {
+				return await ctx.prisma.gruppo.findMany({
+					include: {
+						docenti: true,
+						laurea: true,
+						corsi: true,
+						lezioni: true,
+					},
+				});
 			},
 		});
 	},
 });
 
-export const gruppoSingolo = extendType({
+export const GroupQuery = extendType({
 	type: "Query",
 	definition(t) {
 		t.field("gruppo", {
-			type: Gruppo,
+			type: GroupObject,
 			args: {
 				idGruppo: nonNull(stringArg()),
 			},
-			async resolve(_parent, args, ctx) {
+			async resolve(_, args, ctx) {
 				return await ctx.prisma.gruppo.findUnique({
 					where: {
 						id: args.idGruppo,
@@ -82,23 +58,3 @@ export const gruppoSingolo = extendType({
 		});
 	},
 });
-
-export const gruppi = extendType({
-	type: "Query",
-	definition(t) {
-		t.nonNull.list.field("gruppi", {
-			type: nonNull(Gruppo),
-			async resolve(_parent, _args, ctx) {
-				return await ctx.prisma.gruppo.findMany({
-					include: {
-						docenti: true,
-						laurea: true,
-						corsi: true,
-						lezioni: true,
-					},
-				});
-			},
-		});
-	},
-});
- 
