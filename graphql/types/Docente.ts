@@ -1,31 +1,39 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";
+import { Prisma } from "@prisma/client";
+import { objectType, extendType, nonNull, stringArg, list, idArg } from "nexus";
 import { Docente } from "nexus-prisma";
 
 export const ProfessorObject = objectType({
 	name: Docente.$name,
 	description: Docente.$description,
 	definition(t) {
-		t.nonNull.field(Docente.id);
-		t.nonNull.field(Docente.nome);
-		t.nonNull.field(Docente.cognome);
-		t.nonNull.field(Docente.email);
-		t.nonNull.list.field(Docente.corsi);
-		t.nonNull.list.field(Docente.gruppi);
-		t.nonNull.list.field(Docente.lezioni);
+		t.field(Docente.id);
+		t.field(Docente.nome);
+		t.field(Docente.cognome);
+		t.field(Docente.email);
+		t.field(Docente.corsi);
+		t.field(Docente.gruppi);
+		t.field(Docente.lezioni);
 	},
 });
 
-export const ProfessorsQuery = extendType({
+export const ProfessorQueries = extendType({
 	type: "Query",
 	definition(t) {
-		t.list.field("docenti", {
-			type: ProfessorObject,
-			async resolve(_, __, ctx) {
-				return await ctx.prisma.docente.findMany({
-					include: {
-						corsi: true,
-						gruppi: true,
-						lezioni: true,
+		t.nonNull.list.nonNull.field("docenti", {
+			type: "Docente",
+			resolve(_, __, ctx) {
+				return ctx.prisma.docente.findMany();
+			},
+		});
+		t.field("docente", {
+			type: "Docente",
+			args: {
+				id: nonNull(stringArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.findUnique({
+					where: {
+						...args,
 					},
 				});
 			},
@@ -33,68 +41,183 @@ export const ProfessorsQuery = extendType({
 	},
 });
 
-export const ProfessorQuery = extendType({
-	type: "Query",
+export const ProfessorMutations = extendType({
+	type: "Mutation",
 	definition(t) {
-		t.field("docente", {
-			type: ProfessorObject,
+		t.nonNull.field("creaDocente", {
+			type: "Docente",
 			args: {
-				idDocente: nonNull(stringArg()),
+				id: stringArg(),
+				nome: nonNull(stringArg()),
+				cognome: nonNull(stringArg()),
+				email: nonNull(stringArg()),
 			},
-			async resolve(_, args, ctx) {
-				return await ctx.prisma.docente.findUnique({
+			resolve(_, { id, ...args }, ctx) {
+				let data: any = { ...args };
+				if (id) data.id = id;
+
+				return ctx.prisma.docente.create({
+					data,
+				});
+			},
+		});
+		t.nonNull.field("modificaDocente", {
+			type: "Docente",
+			args: {
+				id: nonNull(idArg()),
+				nome: stringArg(),
+				cognome: stringArg(),
+				email: stringArg(),
+			},
+			resolve(_, { id, ...args }, ctx) {
+				return ctx.prisma.docente.update({
+					where: {
+						id,
+					},
+					data: {
+						...args,
+					},
+				});
+			},
+		});
+		t.nonNull.field("aggiungiCorsoADocente", {
+			type: "Docente",
+			args: {
+				idDocente: nonNull(idArg()),
+				idCorso: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.update({
 					where: {
 						id: args.idDocente,
 					},
-					include: {
-						corsi: true,
-						gruppi: true,
-						lezioni: true,
+					data: {
+						corsi: {
+							connect: {
+								id: args.idCorso,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("rimuoviCorsoDaDocente", {
+			type: "Docente",
+			args: {
+				idDocente: nonNull(idArg()),
+				idCorso: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.update({
+					where: {
+						id: args.idDocente,
+					},
+					data: {
+						corsi: {
+							disconnect: {
+								id: args.idCorso,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("aggiungiGruppoADocente", {
+			type: "Docente",
+			args: {
+				idDocente: nonNull(idArg()),
+				idGruppo: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.update({
+					where: {
+						id: args.idDocente,
+					},
+					data: {
+						gruppi: {
+							connect: {
+								id: args.idGruppo,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("rimuoviGruppoDaDocente", {
+			type: "Docente",
+			args: {
+				idDocente: nonNull(idArg()),
+				idGruppo: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.update({
+					where: {
+						id: args.idDocente,
+					},
+					data: {
+						gruppi: {
+							disconnect: {
+								id: args.idGruppo,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("aggiungiLezioneADocente", {
+			type: "Docente",
+			args: {
+				idDocente: nonNull(idArg()),
+				idLezione: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.update({
+					where: {
+						id: args.idDocente,
+					},
+					data: {
+						lezioni: {
+							connect: {
+								id: args.idLezione,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("rimuoviLezioneDaDocente", {
+			type: "Docente",
+			args: {
+				idDocente: nonNull(idArg()),
+				idLezione: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.update({
+					where: {
+						id: args.idDocente,
+					},
+					data: {
+						lezioni: {
+							disconnect: {
+								id: args.idLezione,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("eliminaDocente", {
+			type: "Docente",
+			args: {
+				id: nonNull(stringArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.docente.delete({
+					where: {
+						...args,
 					},
 				});
 			},
 		});
 	},
 });
-
-// export const createDocente = extendType({
-// 	type: "Mutation",
-// 	definition(t) {
-// 		t.nonNull.field("createDocente", {
-// 			type: nonNull(Docente),
-// 			args: {
-// 				DocenteName: nonNull(stringArg()),
-// 				DocenteSurname: nonNull(stringArg()),
-// 				DocenteEmail: nonNull(stringArg()),
-// 			},
-// 			async resolve(_parent, args, ctx) {
-// 				return await ctx.prisma.Docente.create({
-// 					data: {
-// 						name: args.DocenteName,
-// 						surname: args.DocenteSurname,
-// 						email: args.DocenteEmail,
-// 					},
-// 				});
-// 			},
-// 		});
-// 	},
-// });
-
-// export const deleteDocente = extendType({
-// 	type: "Mutation",
-// 	definition(t) {
-// 		t.nonNull.field("deleteDocente", {
-// 			type: nonNull(Docente),
-// 			args: {
-// 				DocenteId: nonNull(stringArg()),
-// 			},
-// 			async resolve(_parent, args, ctx) {
-// 				return await ctx.prisma.Docente.delete({
-// 					where: {
-// 						id: args.DocenteId,
-// 					},
-// 				});
-// 			},
-// 		});
-// 	},
-// });

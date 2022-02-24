@@ -1,51 +1,36 @@
-import { objectType, extendType, nonNull, stringArg } from "nexus";
+import { objectType, extendType, nonNull, stringArg, list } from "nexus";
 import { Laurea } from "nexus-prisma";
 
 export const DegreeObject = objectType({
 	name: Laurea.$name,
 	description: Laurea.$description,
 	definition(t) {
-		t.nonNull.field(Laurea.id);
-		t.nonNull.field(Laurea.nome);
-		t.nonNull.field(Laurea.scuola);
-		t.nonNull.list.field(Laurea.corsi);
-		t.nonNull.list.field(Laurea.gruppi);
+		t.field(Laurea.id);
+		t.field(Laurea.nome);
+		t.field(Laurea.scuola);
+		t.field(Laurea.corsi);
+		t.field(Laurea.gruppi);
 	},
 });
 
-export const DegreesQuery = extendType({
+export const DegreeQueries = extendType({
 	type: "Query",
 	definition(t) {
-		t.nonNull.list.field("lauree", {
-			type: nonNull(DegreeObject),
+		t.nonNull.list.nonNull.field("lauree", {
+			type: "Laurea",
 			async resolve(_, __, ctx) {
-				return await ctx.prisma.laurea.findMany({
-					include: {
-						corsi: true,
-						gruppi: true,
-					},
-				});
+				return await ctx.prisma.laurea.findMany();
 			},
 		});
-	},
-});
-
-export const DegreeQuery = extendType({
-	type: "Query",
-	definition(t) {
 		t.field("laurea", {
-			type: DegreeObject,
+			type: "Laurea",
 			args: {
-				idLaurea: nonNull(stringArg()),
+				id: nonNull(stringArg()),
 			},
 			async resolve(_, args, ctx) {
 				return await ctx.prisma.laurea.findUnique({
 					where: {
-						id: args.idLaurea,
-					},
-					include: {
-						corsi: true,
-						gruppi: true,
+						...args,
 					},
 				});
 			},

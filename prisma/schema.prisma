@@ -7,7 +7,7 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 generator nexusPrisma {
@@ -122,6 +122,7 @@ model Aula {
 
 /// User data model
 model Profilo {
+  // Scalars
   id        String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
@@ -129,8 +130,9 @@ model Profilo {
   email     String?  @unique
   username  String?  @unique
   image     String?
-  corsi     Corso[]
+
+  // Relations
+  corsi Corso[]
 
   @@map("profili")
 }
- 

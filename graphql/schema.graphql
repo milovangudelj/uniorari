@@ -4,48 +4,50 @@
 
 """Model representing each Classroom"""
 type Aula {
+  """Id Aula"""
   id: ID!
   indirizzo: String
-  lezioni: [[Lezione!]!]!
+  lezioni: [Lezione!]!
   link: String
   nome: String!
 }
 
+"""Model representing each Course"""
 type Corso {
-  docenti: [[Docente!]!]!
-  gruppi: [[Gruppo!]!]!
+  docenti: [Docente!]!
+  gruppi: [Gruppo!]!
   id: ID!
-  lauree: [[Laurea!]!]!
+  lauree: [Laurea!]!
   nome: String!
-  studenti: [[Profilo!]!]!
+  studenti: [Profilo!]!
 }
 
 """Model representing each Professor"""
 type Docente {
-  cognome: String!
-  corsi: [[Corso!]!]!
-  email: String!
-  gruppi: [[Gruppo!]!]!
+  cognome: String
+  corsi: [Corso!]!
+  email: String
+  gruppi: [Gruppo!]!
   id: ID!
-  lezioni: [[Lezione!]!]!
+  lezioni: [Lezione!]!
   nome: String!
 }
 
 """Model representing each Group"""
 type Gruppo {
   adc: Int
-  corsi: [[Corso!]!]!
-  docenti: [[Docente!]!]!
+  corsi: [Corso!]!
+  docenti: [Docente!]!
   id: ID!
   laurea: Laurea!
-  lezioni: [[Lezione!]!]!
+  lezioni: [Lezione!]!
   nome: String!
 }
 
 """Model representing each Degree"""
 type Laurea {
-  corsi: [[Corso!]!]!
-  gruppi: [[Gruppo!]!]!
+  corsi: [Corso!]!
+  gruppi: [Gruppo!]!
   id: ID!
   nome: String!
   scuola: String!
@@ -53,44 +55,53 @@ type Laurea {
 
 """Model representing each Lesson"""
 type Lezione {
-  aule: [[Aula!]!]!
-  docenti: [[Docente!]!]!
+  aule: [Aula!]!
+  docenti: [Docente!]!
   durata: Int!
   fine: String!
   giorno: Int!
-  gruppi: [[Gruppo!]!]!
+  gruppi: [Gruppo!]!
   id: ID!
   inizio: String!
   ora: Int!
 }
 
 type Mutation {
-  creaUtente(email: String!, id: ID!, image: String, name: String!, username: String!): Profilo
-  modificaUtente(email: String, id: String!, image: String, name: String, username: String): Profilo
+  aggiungiCorsoADocente(idCorso: ID!, idDocente: ID!): Docente!
+  aggiungiGruppoADocente(idDocente: ID!, idGruppo: ID!): Docente!
+  aggiungiLezioneADocente(idDocente: ID!, idLezione: ID!): Docente!
+  creaDocente(cognome: String!, email: String!, id: String, nome: String!): Docente!
+  creaProfilo(email: String!, id: ID!, image: String, name: String!, username: String!): Profilo
+  eliminaDocente(id: String!): Docente!
+  modificaDocente(cognome: String, email: String, id: ID!, nome: String): Docente!
+  modificaProfilo(email: String, id: String!, image: String, name: String, username: String): Profilo
+  rimuoviCorsoDaDocente(idCorso: ID!, idDocente: ID!): Docente!
+  rimuoviGruppoDaDocente(idDocente: ID!, idGruppo: ID!): Docente!
+  rimuoviLezioneDaDocente(idDocente: ID!, idLezione: ID!): Docente!
 }
 
 """User data model"""
 type Profilo {
-  corsi: [[Corso!]!]!
-  email: String!
+  corsi: [Corso!]!
+  email: String
   id: ID!
   image: String
-  name: String!
-  username: String!
+  name: String
+  username: String
 }
 
 type Query {
-  aula(idAula: String!): Aula
+  aula(id: String!): Aula
   aule: [Aula!]!
-  corsi: [Corso]
-  corso(idCorso: String!): Corso
-  docente(idDocente: String!): Docente
-  docenti: [Docente]
+  corsi: [Corso!]!
+  corso(id: String!): Corso
+  docente(id: String!): Docente
+  docenti: [Docente!]!
   gruppi: [Gruppo!]!
-  gruppo(idGruppo: String!): Gruppo
-  laurea(idLaurea: String!): Laurea
+  gruppo(id: String!): Gruppo
+  laurea(id: String!): Laurea
   lauree: [Laurea!]!
-  lezione(idLezione: String!): Lezione
+  lezione(id: String!): Lezione
   lezioni: [Lezione!]!
-  utente(email: String, id: String, username: String): Profilo
+  profilo(email: String, id: String, username: String): Profilo
 }

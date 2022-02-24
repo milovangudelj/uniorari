@@ -1,57 +1,38 @@
-import { objectType, extendType, nonNull, stringArg } from "nexus";
+import { objectType, extendType, nonNull, stringArg, list } from "nexus";
 import { Gruppo } from "nexus-prisma";
 
 export const GroupObject = objectType({
 	name: Gruppo.$name,
 	description: Gruppo.$description,
 	definition(t) {
-		t.nonNull.field(Gruppo.id);
-		t.nonNull.field(Gruppo.nome);
+		t.field(Gruppo.id);
+		t.field(Gruppo.nome);
 		t.field(Gruppo.adc);
-		t.nonNull.list.field(Gruppo.docenti);
-		t.nonNull.list.field(Gruppo.corsi);
-		t.nonNull.list.field(Gruppo.lezioni);
-		t.nonNull.field(Gruppo.laurea);
+		t.field(Gruppo.docenti);
+		t.field(Gruppo.corsi);
+		t.field(Gruppo.lezioni);
+		t.field(Gruppo.laurea);
 	},
 });
 
-export const GroupsQuery = extendType({
+export const GroupQueries = extendType({
 	type: "Query",
 	definition(t) {
-		t.nonNull.list.field("gruppi", {
-			type: nonNull(GroupObject),
+		t.nonNull.list.nonNull.field("gruppi", {
+			type: "Gruppo",
 			async resolve(_, __, ctx) {
-				return await ctx.prisma.gruppo.findMany({
-					include: {
-						docenti: true,
-						laurea: true,
-						corsi: true,
-						lezioni: true,
-					},
-				});
+				return await ctx.prisma.gruppo.findMany();
 			},
 		});
-	},
-});
-
-export const GroupQuery = extendType({
-	type: "Query",
-	definition(t) {
 		t.field("gruppo", {
-			type: GroupObject,
+			type: "Gruppo",
 			args: {
-				idGruppo: nonNull(stringArg()),
+				id: nonNull(stringArg()),
 			},
 			async resolve(_, args, ctx) {
 				return await ctx.prisma.gruppo.findUnique({
 					where: {
-						id: args.idGruppo,
-					},
-					include: {
-						docenti: true,
-						laurea: true,
-						corsi: true,
-						lezioni: true,
+						...args,
 					},
 				});
 			},

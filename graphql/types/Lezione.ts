@@ -1,61 +1,43 @@
-import { extendType, intArg, nonNull, objectType, stringArg } from "nexus";
+import { objectType, extendType, nonNull, stringArg, list } from "nexus";
 import { Lezione } from "nexus-prisma";
 
 export const LectureObject = objectType({
 	name: Lezione.$name,
 	description: Lezione.$description,
 	definition(t) {
-		t.nonNull.field(Lezione.id);
-		t.nonNull.field(Lezione.giorno);
-		t.nonNull.field(Lezione.ora);
-		t.nonNull.field(Lezione.inizio);
-		t.nonNull.field(Lezione.fine);
-		t.nonNull.field(Lezione.durata);
-		t.nonNull.list.field(Lezione.docenti);
-		t.nonNull.list.field(Lezione.gruppi);
-		t.nonNull.list.field(Lezione.aule);
+		t.field(Lezione.id);
+		t.field(Lezione.giorno);
+		t.field(Lezione.ora);
+		t.field(Lezione.inizio);
+		t.field(Lezione.fine);
+		t.field(Lezione.durata);
+		t.field(Lezione.docenti);
+		t.field(Lezione.gruppi);
+		t.field(Lezione.aule);
 	},
 });
 
-export const LecturesQuery = extendType({
+export const LectureQueries = extendType({
 	type: "Query",
 	definition(t) {
-		t.nonNull.list.field("lezioni", {
-			type: nonNull(LectureObject),
+		t.nonNull.list.nonNull.field("lezioni", {
+			type: "Lezione",
 			async resolve(_, __, ctx) {
-				return await ctx.prisma.lezione.findMany({
-					include: {
-						docenti: true,
-						gruppi: true,
-						aule: true,
-					},
-				});
+				return await ctx.prisma.lezione.findMany();
 			},
 		});
-	},
-});
-
-export const LectureQuery = extendType({
-	type: "Query",
-	definition(t) {
 		t.field("lezione", {
-			type: LectureObject,
+			type: "Lezione",
 			args: {
-				idLezione: nonNull(stringArg()),
+				id: nonNull(stringArg()),
 			},
 			async resolve(_, args, ctx) {
 				return await ctx.prisma.lezione.findUnique({
 					where: {
-						id: args.idLezione,
-					},
-					include: {
-						docenti: true,
-						gruppi: true,
-						aule: true,
+						...args,
 					},
 				});
 			},
 		});
 	},
 });
- 
