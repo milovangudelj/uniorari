@@ -1,15 +1,18 @@
-import { Prisma } from "@prisma/client";
-import { objectType, extendType, nonNull, stringArg, list, idArg } from "nexus";
+import { objectType, extendType, nonNull, stringArg, idArg } from "nexus";
 import { Docente } from "nexus-prisma";
 
 export const ProfessorObject = objectType({
 	name: Docente.$name,
 	description: Docente.$description,
 	definition(t) {
+		// Scalars
 		t.field(Docente.id);
+		t.field(Docente.createdAt);
+		t.field(Docente.updatedAt);
 		t.field(Docente.nome);
 		t.field(Docente.cognome);
 		t.field(Docente.email);
+		// Relations
 		t.field(Docente.corsi);
 		t.field(Docente.gruppi);
 		t.field(Docente.lezioni);
@@ -28,7 +31,7 @@ export const ProfessorQueries = extendType({
 		t.field("docente", {
 			type: "Docente",
 			args: {
-				id: nonNull(stringArg()),
+				id: nonNull(idArg()),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.findUnique({
@@ -47,7 +50,7 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("creaDocente", {
 			type: "Docente",
 			args: {
-				id: stringArg(),
+				id: idArg(),
 				nome: nonNull(stringArg()),
 				cognome: nonNull(stringArg()),
 				email: nonNull(stringArg()),
@@ -209,7 +212,7 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("eliminaDocente", {
 			type: "Docente",
 			args: {
-				id: nonNull(stringArg()),
+				id: nonNull(idArg()),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.delete({

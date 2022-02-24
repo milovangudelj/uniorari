@@ -1,15 +1,19 @@
-import { objectType, extendType, nonNull, stringArg, list, idArg } from "nexus";
+import { objectType, extendType, nonNull, stringArg, idArg } from "nexus";
 import { Profilo } from "nexus-prisma";
 
 export const ProfileObject = objectType({
 	name: Profilo.$name,
 	description: Profilo.$description,
 	definition(t) {
+		// Scalars
 		t.field(Profilo.id);
+		t.field(Profilo.createdAt);
+		t.field(Profilo.updatedAt);
 		t.field(Profilo.name);
 		t.field(Profilo.email);
 		t.field(Profilo.username);
 		t.field(Profilo.image);
+		// Relations
 		t.field(Profilo.corsi);
 	},
 });
@@ -20,7 +24,7 @@ export const ProfileQuery = extendType({
 		t.field("profilo", {
 			type: "Profilo",
 			args: {
-				id: stringArg(),
+				id: idArg(),
 				email: stringArg(),
 				username: stringArg(),
 			},
@@ -51,8 +55,8 @@ export const ProfileMutations = extendType({
 				username: nonNull(stringArg()),
 				image: stringArg(),
 			},
-			async resolve(_, args, ctx) {
-				return await ctx.prisma.profilo.create({
+			resolve(_, args, ctx) {
+				return ctx.prisma.profilo.create({
 					data: {
 						...args,
 					},
@@ -62,19 +66,18 @@ export const ProfileMutations = extendType({
 		t.field("modificaProfilo", {
 			type: "Profilo",
 			args: {
-				id: nonNull(stringArg()),
+				id: nonNull(idArg()),
 				name: stringArg(),
 				email: stringArg(),
 				username: stringArg(),
 				image: stringArg(),
 			},
-			async resolve(_, { id, ...args }, ctx) {
-				if (!Object.values(args).some((arg) => arg !== null))
-					throw "You need to provide at least one field to be updated.";
+			resolve(_, { id, ...args }, ctx) {
+				// Checking if at least one argument is provided
+				// if (!Object.values(args).some((arg) => arg !== null))
+				// 	throw "You need to provide at least one field to be updated.";
 
-				console.log(args);
-
-				return await ctx.prisma.profilo.update({
+				return ctx.prisma.profilo.update({
 					where: {
 						id,
 					},

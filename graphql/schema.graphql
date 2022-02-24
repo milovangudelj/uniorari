@@ -4,58 +4,75 @@
 
 """Model representing each Classroom"""
 type Aula {
+  createdAt: DateTime!
+
   """Id Aula"""
   id: ID!
   indirizzo: String
   lezioni: [Lezione!]!
   link: String
   nome: String!
+  updatedAt: DateTime!
 }
 
 """Model representing each Course"""
 type Corso {
+  createdAt: DateTime!
   docenti: [Docente!]!
   gruppi: [Gruppo!]!
   id: ID!
   lauree: [Laurea!]!
   nome: String!
   studenti: [Profilo!]!
+  updatedAt: DateTime!
 }
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
 
 """Model representing each Professor"""
 type Docente {
   cognome: String
   corsi: [Corso!]!
+  createdAt: DateTime!
   email: String
   gruppi: [Gruppo!]!
   id: ID!
   lezioni: [Lezione!]!
   nome: String!
+  updatedAt: DateTime!
 }
 
 """Model representing each Group"""
 type Gruppo {
   adc: Int
   corsi: [Corso!]!
+  createdAt: DateTime!
   docenti: [Docente!]!
   id: ID!
   laurea: Laurea!
   lezioni: [Lezione!]!
   nome: String!
+  updatedAt: DateTime!
 }
 
 """Model representing each Degree"""
 type Laurea {
   corsi: [Corso!]!
+  createdAt: DateTime!
   gruppi: [Gruppo!]!
   id: ID!
   nome: String!
   scuola: String!
+  updatedAt: DateTime!
 }
 
 """Model representing each Lesson"""
 type Lezione {
   aule: [Aula!]!
+  createdAt: DateTime!
   docenti: [Docente!]!
   durata: Int!
   fine: String!
@@ -64,44 +81,89 @@ type Lezione {
   id: ID!
   inizio: String!
   ora: Int!
+  updatedAt: DateTime!
 }
 
 type Mutation {
+  aggiungiAulaALezione(idAula: ID!, idLezione: ID!): Lezione!
   aggiungiCorsoADocente(idCorso: ID!, idDocente: ID!): Docente!
+  aggiungiCorsoAGruppo(idCorso: ID!, idGruppo: ID!): Gruppo!
+  aggiungiCorsoALaurea(idCorso: ID!, idLaurea: ID!): Laurea!
+  aggiungiDocenteACorso(idCorso: ID!, idDocente: ID!): Corso!
+  aggiungiDocenteAGruppo(idDocente: ID!, idGruppo: ID!): Gruppo!
+  aggiungiDocenteALezione(idDocente: ID!, idLezione: ID!): Lezione!
+  aggiungiGruppoACorso(idCorso: ID!, idGruppo: ID!): Corso!
   aggiungiGruppoADocente(idDocente: ID!, idGruppo: ID!): Docente!
+  aggiungiGruppoALaurea(idGruppo: ID!, idLaurea: ID!): Laurea!
+  aggiungiGruppoALezione(idGruppo: ID!, idLezione: ID!): Lezione!
+  aggiungiLaureaACorso(idCorso: ID!, idLaurea: ID!): Corso!
   aggiungiLezioneADocente(idDocente: ID!, idLezione: ID!): Docente!
-  creaDocente(cognome: String!, email: String!, id: String, nome: String!): Docente!
+  aggiungiLezioneAGruppo(idGruppo: ID!, idLezione: ID!): Gruppo!
+  aggiungiLezioneAdAula(idAula: ID!, idLezione: ID!): Aula!
+  aggiungiStudenteACorso(idCorso: ID!, idStudente: ID!): Corso!
+  creaAula(id: ID, indirizzo: String!, link: String!, nome: String!): Aula!
+  creaCorso(id: ID, nome: String!): Corso!
+  creaDocente(cognome: String!, email: String!, id: ID, nome: String!): Docente!
+  creaGruppo(adc: Int!, id: ID, nome: String!): Gruppo!
+  creaLaurea(id: ID, nome: String!, scuola: String!): Laurea!
+  creaLezione(durata: Int!, fine: String!, giorno: Int!, id: ID, inizio: String!, ora: Int!): Lezione!
   creaProfilo(email: String!, id: ID!, image: String, name: String!, username: String!): Profilo
-  eliminaDocente(id: String!): Docente!
+  eliminaAula(id: ID!): Aula!
+  eliminaCorso(id: ID!): Corso!
+  eliminaDocente(id: ID!): Docente!
+  eliminaGruppo(id: ID!): Gruppo!
+  eliminaLaurea(id: ID!): Laurea!
+  eliminaLezione(id: ID!): Lezione!
+  modificaAula(id: ID!, indirizzo: String, link: String, nome: String): Aula!
+  modificaCorso(id: ID!, nome: String): Corso!
   modificaDocente(cognome: String, email: String, id: ID!, nome: String): Docente!
-  modificaProfilo(email: String, id: String!, image: String, name: String, username: String): Profilo
+  modificaGruppo(adc: Int, id: ID!, nome: String): Gruppo!
+  modificaLaurea(id: ID!, nome: String, scuola: String): Laurea!
+  modificaLaureaDelGruppo(idGruppo: ID!, idLaurea: ID!): Gruppo!
+  modificaLezione(durata: Int, fine: String, giorno: Int, id: ID!, inizio: String, ora: Int): Lezione!
+  modificaProfilo(email: String, id: ID!, image: String, name: String, username: String): Profilo
+  rimuoviAulaDaLezione(idAula: ID!, idLezione: ID!): Lezione!
   rimuoviCorsoDaDocente(idCorso: ID!, idDocente: ID!): Docente!
+  rimuoviCorsoDaGruppo(idCorso: ID!, idGruppo: ID!): Gruppo!
+  rimuoviCorsoDaLaurea(idCorso: ID!, idLaurea: ID!): Laurea!
+  rimuoviDocenteDaCorso(idCorso: ID!, idDocente: ID!): Corso!
+  rimuoviDocenteDaGruppo(idDocente: ID!, idGruppo: ID!): Gruppo!
+  rimuoviDocenteDaLezione(idDocente: ID!, idLezione: ID!): Lezione!
+  rimuoviGruppoDaCorso(idCorso: ID!, idGruppo: ID!): Corso!
   rimuoviGruppoDaDocente(idDocente: ID!, idGruppo: ID!): Docente!
+  rimuoviGruppoDaLaurea(idGruppo: ID!, idLaurea: ID!): Laurea!
+  rimuoviGruppoDaLezione(idGruppo: ID!, idLezione: ID!): Lezione!
+  rimuoviLaureaDaCorso(idCorso: ID!, idLaurea: ID!): Corso!
+  rimuoviLezioneDaAula(idAula: ID!, idLezione: ID!): Aula!
   rimuoviLezioneDaDocente(idDocente: ID!, idLezione: ID!): Docente!
+  rimuoviLezioneDaGruppo(idGruppo: ID!, idLezione: ID!): Gruppo!
+  rimuoviStudenteDaCorso(idCorso: ID!, idStudente: ID!): Corso!
 }
 
 """User data model"""
 type Profilo {
   corsi: [Corso!]!
+  createdAt: DateTime!
   email: String
   id: ID!
   image: String
   name: String
+  updatedAt: DateTime!
   username: String
 }
 
 type Query {
-  aula(id: String!): Aula
+  aula(id: ID!): Aula
   aule: [Aula!]!
   corsi: [Corso!]!
-  corso(id: String!): Corso
-  docente(id: String!): Docente
+  corso(id: ID!): Corso
+  docente(id: ID!): Docente
   docenti: [Docente!]!
   gruppi: [Gruppo!]!
-  gruppo(id: String!): Gruppo
-  laurea(id: String!): Laurea
+  gruppo(id: ID!): Gruppo
+  laurea(id: ID!): Laurea
   lauree: [Laurea!]!
-  lezione(id: String!): Lezione
+  lezione(id: ID!): Lezione
   lezioni: [Lezione!]!
-  profilo(email: String, id: String, username: String): Profilo
+  profilo(email: String, id: ID, username: String): Profilo
 }
