@@ -1,14 +1,17 @@
 import { PlusCircleIcon } from "@heroicons/react/solid";
+import { useState } from "react";
 import { Button } from ".";
 
-export const CardCorso = ({ corso }) => {
+export const CardCorso = ({ data }) => {
+	const [corso, setCorso] = useState(data);
+
 	const handleSave = () => {
 		console.log("Saving course to user");
 	};
 
 	return (
 		<div>
-			<div className="min-w-60 h-min bg-white shadow rounded-lg p-4">
+			<div className="min-w-60 h-min bg-grey-50 shadow rounded-lg p-4">
 				<div className="flex items-center">
 					<h2 className="text-headline-m text-on-surface-he mb-2 mr-4">
 						{corso.nome}
@@ -60,7 +63,7 @@ export const CardCorso = ({ corso }) => {
 						</thead>
 						<tbody className="align-top text-on-surface-he">
 							{corso.gruppi.length !== 0 &&
-								corso.gruppi.map((gruppo) => {
+								corso.gruppi.map((gruppo, idx) => {
 									return gruppo.lezioni.length !== 0 ? (
 										gruppo.lezioni.map((lezione, idx) => (
 											<Lezione
@@ -74,7 +77,7 @@ export const CardCorso = ({ corso }) => {
 											/>
 										))
 									) : (
-										<Lezione lezione={null} last />
+										<Lezione lezione={null} key={idx} last />
 									);
 								})}
 						</tbody>

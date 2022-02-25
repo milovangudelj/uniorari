@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export const SideMenu = (props) => {
-	const router = useRouter();
+	const { pathname } = useRouter();
 	const [pages, setPages] = useState([
 		{
 			name: "Corsi",
@@ -37,32 +37,33 @@ export const SideMenu = (props) => {
 		},
 	]);
 
-	useEffect(() => {
-		const page = pages.find((el) => el.href === router.pathname);
-		if (page) page.current = true;
-	}, [router.pathname]);
-
 	return (
 		<div
-			className={`${props.className} bg-grey-50 hidden lg:block py-4 px-2 shadow-sm`}
+			className={`${props.className} bg-grey-50 hidden lg:block py-4 shadow-sm`}
 		>
 			<ul className="flex flex-col space-y-2">
-				{pages.map((page, idx) => (
-					<li key={idx}>
-						<Link href={page.href}>
-							<a
-								className={`flex px-2 py-1 items-center border ${
-									page.href === router.pathname
-										? "text-on-surface-he border-grey-200"
-										: "text-on-surface-me border-transparent"
-								} hover:text-on-surface-he hover:bg-grey-100 rounded-lg`}
-							>
-								<span>{page.icon}</span>
-								<span>{page.name}</span>
-							</a>
-						</Link>
-					</li>
-				))}
+				{pages.map((page, idx) => {
+					const current = page.href === pathname;
+					return (
+						<li key={idx} className="flex relative items-center px-2">
+							{current && (
+								<span className="block absolute left-0 top-1 bottom-1 rounded-tr-full rounded-br-full w-1 bg-primary-500"></span>
+							)}
+							<Link href={page.href}>
+								<a
+									className={`flex px-2 py-1 w-full items-center relative ${
+										current
+											? "text-on-surface-he"
+											: "text-on-surface-me"
+									} hover:text-on-surface-he hover:bg-grey-100 rounded-lg`}
+								>
+									<span>{page.icon}</span>
+									<span>{page.name}</span>
+								</a>
+							</Link>
+						</li>
+					);
+				})}
 			</ul>
 		</div>
 	);

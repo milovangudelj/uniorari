@@ -12,10 +12,11 @@ const Corsi = ({ fallback }) => {
 				<title>Corsi | UniOrari</title>
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
+			<h1 className="text-4xl font-bold mb-6">Corsi</h1>
 			<section className="flex justify-center">
-				<div className="w-full max-w-7xl grid grid-cols-1 md:grid-cols-2 gap-14">
+				<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
 					{data?.corsi.map((corso, idx) => (
-						<CardCorso key={idx} corso={corso} />
+						<CardCorso key={idx} data={corso} />
 					))}
 				</div>
 			</section>
