@@ -45,7 +45,7 @@ export const TopBar = (props) => {
 					<span className="ml-3 text-on-surface-le">ctrl + f</span>
 				</form>
 			</div>
-			<ProfileMenu user={user} signOut={signOut} />
+			{/* <ProfileMenu user={user} signOut={signOut} /> */}
 		</div>
 	);
 };
