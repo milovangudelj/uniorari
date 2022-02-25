@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import {
 	objectType,
 	extendType,
@@ -60,10 +61,19 @@ export const GroupMutations = extendType({
 				id: idArg(),
 				nome: nonNull(stringArg()),
 				adc: nonNull(intArg()),
+				idLaurea: nonNull(idArg()),
 			},
-			resolve(_, { id, ...args }, ctx) {
-				let data: any = { ...args };
-				if (id) data.id = id;
+			resolve(_, args, ctx) {
+				let data: Prisma.GruppoCreateInput = {
+					nome: args.nome,
+					adc: args.adc,
+					laurea: {
+						connect: {
+							id: args.idLaurea,
+						},
+					},
+				};
+				if (args.id) data.id = args.id;
 
 				return ctx.prisma.gruppo.create({
 					data,
