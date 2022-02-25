@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Navbar, TailwindNav, Footer, SideMenu, TopBar } from ".";
+import { Navbar, Footer, SideMenu, TopBar } from ".";
 import { useTheme } from "../lib/theme";
 
 const excPaths = ["/accedi", "/iscriviti", "/verifica-email"];
