@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
 import apolloClient from "../../lib/apollo";
 
 const queryCorsi = gql`
@@ -26,7 +26,7 @@ const queryCorsi = gql`
 		}
 	}
 `;
- 
+
 export default async function handler(req, res) {
 	const { data, loading, error } = await apolloClient.query({
 		query: queryCorsi,
@@ -36,4 +36,3 @@ export default async function handler(req, res) {
 
 	res.status(200).json(data);
 }
- 
