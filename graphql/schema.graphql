@@ -104,7 +104,7 @@ type Mutation {
   creaAula(id: ID, indirizzo: String!, link: String!, nome: String!): Aula!
   creaCorso(id: ID, nome: String!): Corso!
   creaDocente(cognome: String!, email: String!, id: ID, nome: String!): Docente!
-  creaGruppo(adc: Int!, id: ID, nome: String!): Gruppo!
+  creaGruppo(adc: Int!, id: ID, idLaurea: ID!, nome: String!): Gruppo!
   creaLaurea(id: ID, nome: String!, scuola: String!): Laurea!
   creaLezione(durata: Int!, fine: String!, giorno: Int!, id: ID, inizio: String!, ora: Int!): Lezione!
   creaProfilo(email: String!, id: ID!, image: String, name: String!, username: String!): Profilo
