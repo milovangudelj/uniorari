@@ -7,7 +7,7 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }) {
-	const [theme, setTheme] = useState("default");
+	const [theme, setTheme] = useState("dark");
 	const [dark, setDark] = useState(false);
 
 	useEffect(() => {
@@ -15,7 +15,7 @@ export function ThemeProvider({ children }) {
 			.matches
 			? "light"
 			: "dark";
-		setTheme(localStorage.themeUniOrari || "default");
+		setTheme(localStorage.themeUniOrari || "dark");
 		setDark(localStorage.themeUniOrari === "dark" || defaultTheme === "dark");
 	}, []);
 
