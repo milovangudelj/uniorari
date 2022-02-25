@@ -1,63 +1,140 @@
-import { extendType, nonNull, objectType, stringArg } from "nexus";
-import { Lezione } from ".";
+import { objectType, extendType, nonNull, stringArg, idArg } from "nexus";
+import { Aula } from "nexus-prisma";
 
-export const Aula = objectType({
-	name: "Aula",
+export const ClassroomObject = objectType({
+	name: Aula.$name,
+	description: Aula.$description,
 	definition(t) {
-		t.nonNull.id("id");
-		t.nonNull.string("nome");
-		t.string("indirizzo");
-		t.string("link");
-		t.nonNull.list.field("lezioni", {
-			type: Lezione,
-			async resolve(parent, _args, ctx) {
-				return await ctx.prisma.aula
-					.findUnique({
-						where: {
-							id: parent.id,
-						},
-					})
-					.lezioni();
+		// Scalars
+		t.field(Aula.id);
+		t.field(Aula.createdAt);
+		t.field(Aula.updatedAt);
+		t.field(Aula.nome);
+		t.field(Aula.indirizzo);
+		t.field(Aula.link);
+		// Relations
+		t.field(Aula.lezioni);
+	},
+});
+
+export const ClassroomQueries = extendType({
+	type: "Query",
+	definition(t) {
+		t.nonNull.list.nonNull.field("aule", {
+			type: "Aula",
+			resolve(_, __, ctx) {
+				return ctx.prisma.aula.findMany();
+			},
+		});
+		t.field("aula", {
+			type: "Aula",
+			args: {
+				id: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.aula.findUnique({
+					where: {
+						...args,
+					},
+				});
 			},
 		});
 	},
 });
 
-export const aulaSingola = extendType({
-	type: "Query",
+export const ClassroomMutations = extendType({
+	type: "Mutation",
 	definition(t) {
-		t.field("aula", {
-			type: Aula,
+		t.nonNull.field("creaAula", {
+			type: "Aula",
 			args: {
-				idAula: nonNull(stringArg()),
+				id: idArg(),
+				nome: nonNull(stringArg()),
+				indirizzo: nonNull(stringArg()),
+				link: nonNull(stringArg()),
 			},
-			async resolve(_parent, args, ctx) {
-				return await ctx.prisma.aula.findUnique({
+			resolve(_, { id, ...args }, ctx) {
+				let data: any = { ...args };
+				if (id) data.id = id;
+
+				return ctx.prisma.aula.create({
+					data,
+				});
+			},
+		});
+		t.nonNull.field("modificaAula", {
+			type: "Aula",
+			args: {
+				id: nonNull(idArg()),
+				nome: stringArg(),
+				indirizzo: stringArg(),
+				link: stringArg(),
+			},
+			resolve(_, { id, ...args }, ctx) {
+				return ctx.prisma.aula.update({
+					where: {
+						id,
+					},
+					data: {
+						...args,
+					},
+				});
+			},
+		});
+		t.nonNull.field("aggiungiLezioneAdAula", {
+			type: "Aula",
+			args: {
+				idAula: nonNull(idArg()),
+				idLezione: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.aula.update({
 					where: {
 						id: args.idAula,
 					},
-					include: {
-						lezioni: true,
+					data: {
+						lezioni: {
+							connect: {
+								id: args.idLezione,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("rimuoviLezioneDaAula", {
+			type: "Aula",
+			args: {
+				idAula: nonNull(idArg()),
+				idLezione: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.aula.update({
+					where: {
+						id: args.idAula,
+					},
+					data: {
+						lezioni: {
+							disconnect: {
+								id: args.idLezione,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.nonNull.field("eliminaAula", {
+			type: "Aula",
+			args: {
+				id: nonNull(idArg()),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.aula.delete({
+					where: {
+						...args,
 					},
 				});
 			},
 		});
 	},
 });
-
-export const aule = extendType({
-	type: "Query",
-	definition(t) {
-		t.nonNull.list.field("aule", {
-			type: nonNull(Aula),
-			async resolve(_parent, _args, ctx) {
-				return await ctx.prisma.aula.findMany({
-					include: {
-						lezioni: true,
-					},
-				});
-			},
-		});
-	},
-});
- 

@@ -1,11 +1,11 @@
 import { SWRConfig } from "swr";
-import { useEffect, useState } from "react";
 
 import "../styles/globals.css";
+import "../styles/codeblocks.css";
 import { AuthProvider } from "../lib/auth";
-import { Layout } from "../components";
 import { ThemeProvider } from "../lib/theme";
 import { DeviceProvider } from "../lib/device";
+import { Layout } from "../components";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 	return (
@@ -19,7 +19,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 			>
 				<DeviceProvider>
 					<ThemeProvider>
-						{false ? (
+						{true ? (
 							<Layout>
 								<Component {...pageProps} />
 							</Layout>

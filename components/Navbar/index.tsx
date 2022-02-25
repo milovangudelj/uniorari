@@ -50,8 +50,8 @@ export const Navbar = () => {
 									</a>
 								</Link>
 							)}
-							<Button variant="primary">
-								<Link href="/iscriviti">Iscriviti</Link>
+							<Button as={Link} passHref href="/iscriviti">
+								Iscriviti
 							</Button>
 						</div>
 					)}

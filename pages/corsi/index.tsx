@@ -7,15 +7,16 @@ const Corsi = ({ fallback }) => {
 	const { data } = useSWR("/api/corsi", fetcher);
 
 	return (
-		<div className="bg-grey-50 font-sans">
+		<div className="">
 			<Head>
 				<title>Corsi | UniOrari</title>
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
-			<section className="flex justify-center py-4">
-				<div className="w-full max-w-7xl m-4 grid grid-cols-1 md:grid-cols-2 gap-14">
+			<h1 className="text-4xl font-bold mb-6">Corsi</h1>
+			<section className="flex justify-center">
+				<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
 					{data?.corsi.map((corso, idx) => (
-						<CardCorso key={idx} corso={corso} />
+						<CardCorso key={idx} data={corso} />
 					))}
 				</div>
 			</section>

@@ -1,13 +1,28 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
-const defaultConfig = require("tailwindcss/defaultConfig");
 
 module.exports = {
-	purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+	content: [
+		"./pages/**/*.{js,ts,jsx,tsx}",
+		"./components/**/*.{js,ts,jsx,tsx}",
+	],
 	darkMode: "class", // or 'media' or 'class'
 	theme: {
 		fontFamily: {
 			sans: ["Inter", ...defaultTheme.fontFamily.sans],
 			roboto: ["Roboto", "sans-serif"],
+		},
+		boxShadow: {
+			sm: "0 1px 2px rgba(0,0,0,0.05)",
+			DEFAULT: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05)",
+			md: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05)",
+			lg: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05)",
+			xl: "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05)",
+			"2xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05)",
+			"3xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05)",
+			"4xl": "0 1px 2px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05), 0 4px 8px rgba(0,0,0,0.05), 0 8px 16px rgba(0,0,0,0.05),0 16px 32px rgba(0,0,0,0.05), 0 32px 64px rgba(0,0,0,0.05), 0 64px 128px rgba(0,0,0,0.05), 0 128px 256px rgba(0,0,0,0.05)",
+			inner: "inset 0px 2px 4px rgba(0, 0, 0, 0.05)",
+			none: "none",
+			google: "0px 0px 0px 3px #BBD2F5",
 		},
 		extend: {
 			colors: {
@@ -109,71 +124,17 @@ module.exports = {
 				"body-s": ".75rem",
 			},
 			gridTemplateColumns: {
-				// Layout columns template
-				layout: "300px 1fr",
+				layout: "224px 1fr",
 			},
 			gridTemplateRows: {
-				// Layout columns template
 				layout: "auto 1fr",
 			},
-			width: {
-				200: "200px",
-				300: "300px",
-				400: "400px",
-				500: "500px",
-			},
-			minWidth: {
-				200: "200px",
-				300: "300px",
-				400: "400px",
-				500: "500px",
-			},
-			maxWidth: {
-				200: "200px",
-				300: "300px",
-				400: "400px",
-				500: "500px",
-			},
-			height: {
-				content: "max-content",
-			},
+			minWidth: ({ theme }) => theme("spacing"),
+			maxWidth: ({ theme }) => theme("spacing"),
 			textOpacity: {
 				54: "0.54",
 			},
-			boxShadow: {
-				1: "0px 2px 1px rgba(0, 0, 0, 0.2), 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 1px 3px rgba(0, 0, 0, 0.12)",
-				2: "0px 3px 1px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14), 0px 1px 5px rgba(0, 0, 0, 0.12)",
-				3: "0px 3px 3px rgba(0, 0, 0, 0.2), 0px 3px 4px rgba(0, 0, 0, 0.14), 0px 1px 8px rgba(0, 0, 0, 0.12)",
-				4: "0px 2px 4px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.14), 0px 1px 10px rgba(0, 0, 0, 0.12)",
-				5: "0px 3px 5px rgba(0, 0, 0, 0.2), 0px 5px 8px rgba(0, 0, 0, 0.14), 0px 1px 14px rgba(0, 0, 0, 0.12)",
-				6: "0px 3px 5px rgba(0, 0, 0, 0.2), 0px 6px 10px rgba(0, 0, 0, 0.14), 0px 1px 18px rgba(0, 0, 0, 0.12)",
-				7: "0px 4px 5px rgba(0, 0, 0, 0.2), 0px 7px 10px rgba(0, 0, 0, 0.14), 0px 2px 16px rgba(0, 0, 0, 0.12)",
-				8: "0px 5px 5px rgba(0, 0, 0, 0.2), 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12)",
-				9: "0px 5px 6px rgba(0, 0, 0, 0.2), 0px 9px 12px rgba(0, 0, 0, 0.14), 0px 3px 16px rgba(0, 0, 0, 0.12)",
-				10: "0px 6px 6px rgba(0, 0, 0, 0.2), 0px 10px 14px rgba(0, 0, 0, 0.14), 0px 4px 18px rgba(0, 0, 0, 0.12)",
-				11: "0px 6px 7px rgba(0, 0, 0, 0.2), 0px 11px 15px rgba(0, 0, 0, 0.14), 0px 4px 20px rgba(0, 0, 0, 0.12)",
-				12: "0px 7px 8px rgba(0, 0, 0, 0.2), 0px 12px 17px rgba(0, 0, 0, 0.14), 0px 5px 22px rgba(0, 0, 0, 0.12)",
-				13: "0px 7px 8px rgba(0, 0, 0, 0.2), 0px 13px 19px rgba(0, 0, 0, 0.14), 0px 5px 24px rgba(0, 0, 0, 0.12)",
-				14: "0px 7px 9px rgba(0, 0, 0, 0.2), 0px 14px 21px rgba(0, 0, 0, 0.14), 0px 5px 26px rgba(0, 0, 0, 0.12)",
-				15: "0px 8px 9px rgba(0, 0, 0, 0.2), 0px 15px 22px rgba(0, 0, 0, 0.14), 0px 6px 28px rgba(0, 0, 0, 0.12)",
-				16: "0px 8px 10px rgba(0, 0, 0, 0.2), 0px 16px 24px rgba(0, 0, 0, 0.14), 0px 6px 30px rgba(0, 0, 0, 0.12)",
-				17: "0px 8px 11px rgba(0, 0, 0, 0.2), 0px 17px 26px rgba(0, 0, 0, 0.14), 0px 6px 32px rgba(0, 0, 0, 0.12)",
-				18: "0px 9px 11px rgba(0, 0, 0, 0.2), 0px 18px 28px rgba(0, 0, 0, 0.14), 0px 7px 34px rgba(0, 0, 0, 0.12)",
-				19: "0px 9px 12px rgba(0, 0, 0, 0.2), 0px 19px 29px rgba(0, 0, 0, 0.14), 0px 7px 36px rgba(0, 0, 0, 0.12)",
-				20: "0px 10px 13px rgba(0, 0, 0, 0.2), 0px 20px 31px rgba(0, 0, 0, 0.14), 0px 8px 38px rgba(0, 0, 0, 0.12)",
-				21: "0px 10px 13px rgba(0, 0, 0, 0.2), 0px 21px 33px rgba(0, 0, 0, 0.14), 0px 8px 40px rgba(0, 0, 0, 0.12)",
-				22: "0px 10px 14px rgba(0, 0, 0, 0.2), 0px 22px 35px rgba(0, 0, 0, 0.14), 0px 8px 42px rgba(0, 0, 0, 0.12)",
-				23: "0px 11px 14px rgba(0, 0, 0, 0.2), 0px 23px 36px rgba(0, 0, 0, 0.14), 0px 9px 44px rgba(0, 0, 0, 0.12)",
-				24: "0px 11px 15px rgba(0, 0, 0, 0.2), 0px 24px 38px rgba(0, 0, 0, 0.14), 0px 9px 46px rgba(0, 0, 0, 0.12)",
-				google: "0px 0px 0px 3px #BBD2F5",
-			},
-		},
-	},
-	variants: {
-		extend: {
-			display: ["group-hover", ...defaultConfig.variants.display],
 		},
 	},
 	plugins: [],
 };
- 

@@ -17,7 +17,6 @@ export const GoogleButton = (props) => {
 						width="18px"
 						height="18px"
 						viewBox="0 0 48 48"
-						className="abcRioButtonSvg"
 					>
 						<g>
 							<path

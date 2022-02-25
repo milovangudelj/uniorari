@@ -149,7 +149,6 @@ export const SignInForm = () => {
 			</div>
 			<Button
 				type="submit"
-				variant="primary"
 				className="w-full mt-10"
 				size="large"
 				loading={loading}

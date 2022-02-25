@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { Navbar, TailwindNav, Footer, SideMenu, TopBar } from ".";
+import { Navbar, Footer, SideMenu, TopBar } from ".";
 import { useTheme } from "../lib/theme";
 
 const excPaths = ["/accedi", "/iscriviti", "/verifica-email"];
@@ -16,7 +16,7 @@ export const Layout = (props) => {
 	}, [excPaths, pathname]);
 
 	return (
-		<div className={`${dark && "dark"} relative min-h-screen bg-grey-50`}>
+		<div className={`${dark && "dark "}relative min-h-screen bg-grey-50`}>
 			<Head>
 				<link
 					rel="apple-touch-icon"
@@ -46,13 +46,11 @@ export const Layout = (props) => {
 			</Head>
 			{show ? (
 				<div className="grid grid-cols-layout grid-rows-layout h-screen bg-grey-100 border-collapse">
-					{/* <Navbar /> */}
-					{/* <TailwindNav /> */}
-					<SideMenu className="col-span-1 col-start-1 row-span-2 row-start-1" />
-					<TopBar className="row-start-1 row-span-1 col-start-2 col-span-1" />
-					<main className="col-span-1 row-span-1 col-start-2 row-start-2">
+					<TopBar className="row-start-1 row-span-1 col-start-1 sticky top-0 col-span-2" />
+					<main className="lg:col-span-1 col-span-2 row-span-1 col-start-1 lg:col-start-2 max-h-full overflow-auto px-10 py-6 row-start-2">
 						{props.children}
 					</main>
+					<SideMenu className="col-span-1 col-start-1 row-span-1 row-start-2" />
 					{/* <Footer /> */}
 				</div>
 			) : (
