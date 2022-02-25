@@ -1,10 +1,10 @@
 import { ApolloClient, InMemoryCache, HttpLink } from "@apollo/client";
 import { PATH } from "./constants";
 
-const httpLink = new HttpLink({ uri: "/api/graphql" });
+const origin = typeof window !== "undefined" ? window.origin : PATH;
 
 const apolloClient = new ApolloClient({
-	link: httpLink,
+	uri: origin + "/api/graphql",
 	cache: new InMemoryCache(),
 });
 
