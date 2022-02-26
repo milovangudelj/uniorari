@@ -29,7 +29,7 @@ export const ClassroomQueries = extendType({
 		t.field("aula", {
 			type: "Aula",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.aula.findUnique({
@@ -48,10 +48,10 @@ export const ClassroomMutations = extendType({
 		t.nonNull.field("creaAula", {
 			type: "Aula",
 			args: {
-				id: idArg(),
-				nome: nonNull(stringArg()),
-				indirizzo: nonNull(stringArg()),
-				link: nonNull(stringArg()),
+				id: "ID",
+				nome: nonNull("String"),
+				indirizzo: nonNull("String"),
+				link: nonNull("String"),
 			},
 			resolve(_, { id, ...args }, ctx) {
 				let data: any = { ...args };
@@ -65,10 +65,10 @@ export const ClassroomMutations = extendType({
 		t.nonNull.field("modificaAula", {
 			type: "Aula",
 			args: {
-				id: nonNull(idArg()),
-				nome: stringArg(),
-				indirizzo: stringArg(),
-				link: stringArg(),
+				id: nonNull("ID"),
+				nome: "String",
+				indirizzo: "String",
+				link: "String",
 			},
 			resolve(_, { id, ...args }, ctx) {
 				return ctx.prisma.aula.update({
@@ -84,8 +84,8 @@ export const ClassroomMutations = extendType({
 		t.nonNull.field("aggiungiLezioneAdAula", {
 			type: "Aula",
 			args: {
-				idAula: nonNull(idArg()),
-				idLezione: nonNull(idArg()),
+				idAula: nonNull("ID"),
+				idLezione: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.aula.update({
@@ -105,8 +105,8 @@ export const ClassroomMutations = extendType({
 		t.nonNull.field("rimuoviLezioneDaAula", {
 			type: "Aula",
 			args: {
-				idAula: nonNull(idArg()),
-				idLezione: nonNull(idArg()),
+				idAula: nonNull("ID"),
+				idLezione: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.aula.update({
@@ -126,7 +126,7 @@ export const ClassroomMutations = extendType({
 		t.nonNull.field("eliminaAula", {
 			type: "Aula",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.aula.delete({

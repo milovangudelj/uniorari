@@ -2,11 +2,8 @@
 ### Do not make changes to this file directly
 
 
-"""Model representing each Classroom"""
 type Aula {
   createdAt: DateTime!
-
-  """Id Aula"""
   id: ID!
   indirizzo: String
   lezioni: [Lezione!]!
@@ -15,14 +12,23 @@ type Aula {
   updatedAt: DateTime!
 }
 
-"""Model representing each Course"""
+type Canale {
+  corsi: [Corso!]!
+  createdAt: DateTime!
+  id: ID!
+  nome: String!
+  updatedAt: DateTime!
+}
+
 type Corso {
+  canale: Canale!
   createdAt: DateTime!
   docenti: [Docente!]!
-  gruppi: [Gruppo!]!
   id: ID!
-  lauree: [Laurea!]!
+  insegnamento: Insegnamento!
+  moodle: String!
   nome: String!
+  responsabile: Docente!
   studenti: [Profilo!]!
   updatedAt: DateTime!
 }
@@ -32,44 +38,59 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `dat
 """
 scalar DateTime
 
-"""Model representing each Professor"""
+type Dipartimento {
+  acronimo: String!
+  createdAt: DateTime!
+  direttore: String!
+  email: String!
+  id: ID!
+  lauree: [Laurea!]!
+  nome: String!
+  scuola: Scuola!
+  sede: String!
+  sito: String!
+  telefono: String!
+  updatedAt: DateTime!
+}
+
 type Docente {
-  cognome: String
+  cognome: String!
   corsi: [Corso!]!
   createdAt: DateTime!
-  email: String
-  gruppi: [Gruppo!]!
+  email: String!
   id: ID!
   lezioni: [Lezione!]!
   nome: String!
   updatedAt: DateTime!
 }
 
-"""Model representing each Group"""
-type Gruppo {
-  adc: Int
+type Insegnamento {
+  adc: Int!
+  cfu: Int!
   corsi: [Corso!]!
   createdAt: DateTime!
-  docenti: [Docente!]!
+  curriculum: String!
   id: ID!
-  laurea: Laurea!
-  lezioni: [Lezione!]!
+  lauree: [Laurea!]!
+  lingua: String!
   nome: String!
+  obbligatorio: Boolean!
+  semestre: Int!
   updatedAt: DateTime!
 }
 
-"""Model representing each Degree"""
 type Laurea {
-  corsi: [Corso!]!
+  codice: String!
   createdAt: DateTime!
-  gruppi: [Gruppo!]!
+  dipartimento: Dipartimento!
+  email: String!
   id: ID!
+  insegnamenti: [Insegnamento!]!
   nome: String!
-  scuola: String!
+  presidente: String!
   updatedAt: DateTime!
 }
 
-"""Model representing each Lesson"""
 type Lezione {
   aule: [Aula!]!
   createdAt: DateTime!
@@ -77,93 +98,95 @@ type Lezione {
   durata: Int!
   fine: String!
   giorno: Int!
-  gruppi: [Gruppo!]!
   id: ID!
   inizio: String!
-  ora: Int!
   updatedAt: DateTime!
 }
 
 type Mutation {
   aggiungiAulaALezione(idAula: ID!, idLezione: ID!): Lezione!
+  aggiungiCorsoACanale(idCanale: ID!, idCorso: ID!): Canale!
   aggiungiCorsoADocente(idCorso: ID!, idDocente: ID!): Docente!
-  aggiungiCorsoAGruppo(idCorso: ID!, idGruppo: ID!): Gruppo!
-  aggiungiCorsoALaurea(idCorso: ID!, idLaurea: ID!): Laurea!
-  aggiungiDocenteACorso(idCorso: ID!, idDocente: ID!): Corso!
-  aggiungiDocenteAGruppo(idDocente: ID!, idGruppo: ID!): Gruppo!
   aggiungiDocenteALezione(idDocente: ID!, idLezione: ID!): Lezione!
-  aggiungiGruppoACorso(idCorso: ID!, idGruppo: ID!): Corso!
-  aggiungiGruppoADocente(idDocente: ID!, idGruppo: ID!): Docente!
-  aggiungiGruppoALaurea(idGruppo: ID!, idLaurea: ID!): Laurea!
-  aggiungiGruppoALezione(idGruppo: ID!, idLezione: ID!): Lezione!
-  aggiungiLaureaACorso(idCorso: ID!, idLaurea: ID!): Corso!
+  aggiungiInsegnamentoALaurea(idInsegnamento: ID!, idLaurea: ID!): Laurea!
   aggiungiLezioneADocente(idDocente: ID!, idLezione: ID!): Docente!
-  aggiungiLezioneAGruppo(idGruppo: ID!, idLezione: ID!): Gruppo!
   aggiungiLezioneAdAula(idAula: ID!, idLezione: ID!): Aula!
   aggiungiStudenteACorso(idCorso: ID!, idStudente: ID!): Corso!
   creaAula(id: ID, indirizzo: String!, link: String!, nome: String!): Aula!
-  creaCorso(id: ID, nome: String!): Corso!
+  creaCanale(corsi: [ID], id: ID, nome: String!): Canale!
+  creaCorso(canale: ID!, docenti: [ID!], id: ID, insegnamento: ID!, moodle: String!, nome: String!, responsabile: ID!): Corso!
+  creaDipartimento(acronimo: String!, direttore: String!, email: String!, id: ID, nome: String!, scuola: ID!, sede: String!, sito: String!, telefono: String!): Dipartimento!
   creaDocente(cognome: String!, email: String!, id: ID, nome: String!): Docente!
-  creaGruppo(adc: Int!, id: ID, idLaurea: ID!, nome: String!): Gruppo!
-  creaLaurea(id: ID, nome: String!, scuola: String!): Laurea!
-  creaLezione(durata: Int!, fine: String!, giorno: Int!, id: ID, inizio: String!, ora: Int!): Lezione!
-  creaProfilo(email: String!, id: ID!, image: String, name: String!, username: String!): Profilo
+  creaInsegnamento(adc: Int!, cfu: Int!, corsi: [ID!], curriculum: String!, id: ID, lauree: [ID!]!, lingua: String!, nome: String!, obbligatorio: Boolean!, semestre: Int!): Insegnamento!
+  creaLaurea(codice: String!, dipartimento: ID!, email: String!, id: ID, nome: String!, presidente: String!): Laurea!
+  creaLezione(durata: Int!, fine: String!, giorno: Int!, id: ID, inizio: String!): Lezione!
+  creaProfilo(email: String!, id: ID!, immagine: String, nome: String!, username: String!): Profilo
+  creaScuola(dipartimenti: [ID!], email: String!, id: ID, nome: String!, presidente: String!, sede: String!, sito: String!, telefono: String!): Scuola!
   eliminaAula(id: ID!): Aula!
+  eliminaCanale(id: ID!): Canale!
   eliminaCorso(id: ID!): Corso!
   eliminaDocente(id: ID!): Docente!
-  eliminaGruppo(id: ID!): Gruppo!
   eliminaLaurea(id: ID!): Laurea!
   eliminaLezione(id: ID!): Lezione!
   modificaAula(id: ID!, indirizzo: String, link: String, nome: String): Aula!
-  modificaCorso(id: ID!, nome: String): Corso!
+  modificaCanale(id: ID!, nome: String): Canale!
+  modificaCorso(canale: ID, docenti: [ID!], id: ID!, insegnamento: ID, moodle: String, nome: String, responsabile: ID): Corso!
   modificaDocente(cognome: String, email: String, id: ID!, nome: String): Docente!
-  modificaGruppo(adc: Int, id: ID!, nome: String): Gruppo!
-  modificaLaurea(id: ID!, nome: String, scuola: String): Laurea!
-  modificaLaureaDelGruppo(idGruppo: ID!, idLaurea: ID!): Gruppo!
-  modificaLezione(durata: Int, fine: String, giorno: Int, id: ID!, inizio: String, ora: Int): Lezione!
-  modificaProfilo(email: String, id: ID!, image: String, name: String, username: String): Profilo
+  modificaLaurea(codice: String, dipartimento: ID, email: String, id: ID!, nome: String, presidente: String): Laurea!
+  modificaLezione(durata: Int, fine: String, giorno: Int, id: ID!, inizio: String): Lezione!
+  modificaProfilo(email: String, id: ID!, immagine: String, nome: String, username: String): Profilo
   rimuoviAulaDaLezione(idAula: ID!, idLezione: ID!): Lezione!
+  rimuoviCorsoDaCanale(idCanale: ID!, idCorso: ID!): Canale!
   rimuoviCorsoDaDocente(idCorso: ID!, idDocente: ID!): Docente!
-  rimuoviCorsoDaGruppo(idCorso: ID!, idGruppo: ID!): Gruppo!
-  rimuoviCorsoDaLaurea(idCorso: ID!, idLaurea: ID!): Laurea!
-  rimuoviDocenteDaCorso(idCorso: ID!, idDocente: ID!): Corso!
-  rimuoviDocenteDaGruppo(idDocente: ID!, idGruppo: ID!): Gruppo!
   rimuoviDocenteDaLezione(idDocente: ID!, idLezione: ID!): Lezione!
-  rimuoviGruppoDaCorso(idCorso: ID!, idGruppo: ID!): Corso!
-  rimuoviGruppoDaDocente(idDocente: ID!, idGruppo: ID!): Docente!
-  rimuoviGruppoDaLaurea(idGruppo: ID!, idLaurea: ID!): Laurea!
-  rimuoviGruppoDaLezione(idGruppo: ID!, idLezione: ID!): Lezione!
-  rimuoviLaureaDaCorso(idCorso: ID!, idLaurea: ID!): Corso!
+  rimuoviInsegnamentoDaLaurea(idInsegnamento: ID!, idLaurea: ID!): Laurea!
   rimuoviLezioneDaAula(idAula: ID!, idLezione: ID!): Aula!
   rimuoviLezioneDaDocente(idDocente: ID!, idLezione: ID!): Docente!
-  rimuoviLezioneDaGruppo(idGruppo: ID!, idLezione: ID!): Gruppo!
   rimuoviStudenteDaCorso(idCorso: ID!, idStudente: ID!): Corso!
 }
 
-"""User data model"""
 type Profilo {
   corsi: [Corso!]!
   createdAt: DateTime!
-  email: String
+  email: String!
   id: ID!
-  image: String
-  name: String
+  immagine: String
+  nome: String!
   updatedAt: DateTime!
-  username: String
+  username: String!
 }
 
 type Query {
   aula(id: ID!): Aula
   aule: [Aula!]!
+  canale(id: ID!): Canale
+  canali: [Canale!]!
   corsi: [Corso!]!
   corso(id: ID!): Corso
+  dipartimenti: [Dipartimento!]!
+  dipartimento(id: ID!): Dipartimento
   docente(id: ID!): Docente
   docenti: [Docente!]!
-  gruppi: [Gruppo!]!
-  gruppo(id: ID!): Gruppo
+  insegnamenti: [Insegnamento!]!
+  insegnamento(id: ID!): Insegnamento
   laurea(id: ID!): Laurea
   lauree: [Laurea!]!
   lezione(id: ID!): Lezione
   lezioni: [Lezione!]!
   profilo(email: String, id: ID, username: String): Profilo
+  scuola(id: ID!): Scuola
+  scuole: [Scuola!]!
+}
+
+type Scuola {
+  createdAt: DateTime!
+  dipartimenti: [Dipartimento!]!
+  email: String!
+  id: ID!
+  nome: String!
+  presidente: String!
+  sede: String!
+  sito: String!
+  telefono: String!
+  updatedAt: DateTime!
 }

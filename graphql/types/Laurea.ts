@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { objectType, extendType, nonNull, stringArg, idArg } from "nexus";
 import { Laurea } from "nexus-prisma";
 
@@ -9,11 +10,13 @@ export const DegreeObject = objectType({
 		t.field(Laurea.id);
 		t.field(Laurea.createdAt);
 		t.field(Laurea.updatedAt);
+		t.field(Laurea.codice);
 		t.field(Laurea.nome);
-		t.field(Laurea.scuola);
+		t.field(Laurea.presidente);
+		t.field(Laurea.email);
 		// Relations
-		t.field(Laurea.corsi);
-		t.field(Laurea.gruppi);
+		t.field(Laurea.dipartimento);
+		t.field(Laurea.insegnamenti);
 	},
 });
 
@@ -29,7 +32,7 @@ export const DegreeQueries = extendType({
 		t.field("laurea", {
 			type: "Laurea",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.laurea.findUnique({
@@ -48,12 +51,22 @@ export const DegreeMutations = extendType({
 		t.nonNull.field("creaLaurea", {
 			type: "Laurea",
 			args: {
-				id: idArg(),
-				nome: nonNull(stringArg()),
-				scuola: nonNull(stringArg()),
+				id: "ID",
+				codice: nonNull("String"),
+				nome: nonNull("String"),
+				presidente: nonNull("String"),
+				email: nonNull("String"),
+				dipartimento: nonNull("ID"),
 			},
 			resolve(_, { id, ...args }, ctx) {
-				let data: any = { ...args };
+				let data: Prisma.LaureaCreateInput = {
+					...args,
+					dipartimento: {
+						connect: {
+							id: args.dipartimento,
+						},
+					},
+				};
 				if (id) data.id = id;
 
 				return ctx.prisma.laurea.create({
@@ -64,26 +77,39 @@ export const DegreeMutations = extendType({
 		t.nonNull.field("modificaLaurea", {
 			type: "Laurea",
 			args: {
-				id: nonNull(idArg()),
-				nome: stringArg(),
-				scuola: stringArg(),
+				id: nonNull("ID"),
+				codice: "String",
+				nome: "String",
+				presidente: "String",
+				email: "String",
+				dipartimento: "ID",
 			},
 			resolve(_, { id, ...args }, ctx) {
+				let data: Prisma.LaureaUpdateInput = {
+					codice: args.codice,
+					nome: args.nome,
+					presidente: args.presidente,
+					email: args.email,
+					dipartimento: {
+						connect: {
+							id: args.dipartimento,
+						},
+					},
+				};
+
 				return ctx.prisma.laurea.update({
 					where: {
 						id,
 					},
-					data: {
-						...args,
-					},
+					data,
 				});
 			},
 		});
-		t.nonNull.field("aggiungiCorsoALaurea", {
+		t.nonNull.field("aggiungiInsegnamentoALaurea", {
 			type: "Laurea",
 			args: {
-				idLaurea: nonNull(idArg()),
-				idCorso: nonNull(idArg()),
+				idLaurea: nonNull("ID"),
+				idInsegnamento: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.laurea.update({
@@ -91,20 +117,20 @@ export const DegreeMutations = extendType({
 						id: args.idLaurea,
 					},
 					data: {
-						corsi: {
+						insegnamenti: {
 							connect: {
-								id: args.idCorso,
+								id: args.idInsegnamento,
 							},
 						},
 					},
 				});
 			},
 		});
-		t.nonNull.field("rimuoviCorsoDaLaurea", {
+		t.nonNull.field("rimuoviInsegnamentoDaLaurea", {
 			type: "Laurea",
 			args: {
-				idLaurea: nonNull(idArg()),
-				idCorso: nonNull(idArg()),
+				idLaurea: nonNull("ID"),
+				idInsegnamento: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.laurea.update({
@@ -112,51 +138,9 @@ export const DegreeMutations = extendType({
 						id: args.idLaurea,
 					},
 					data: {
-						corsi: {
+						insegnamenti: {
 							disconnect: {
-								id: args.idCorso,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("aggiungiGruppoALaurea", {
-			type: "Laurea",
-			args: {
-				idLaurea: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.laurea.update({
-					where: {
-						id: args.idLaurea,
-					},
-					data: {
-						gruppi: {
-							connect: {
-								id: args.idGruppo,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("rimuoviGruppoDaLaurea", {
-			type: "Laurea",
-			args: {
-				idLaurea: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.laurea.update({
-					where: {
-						id: args.idLaurea,
-					},
-					data: {
-						gruppi: {
-							disconnect: {
-								id: args.idGruppo,
+								id: args.idInsegnamento,
 							},
 						},
 					},
@@ -166,7 +150,7 @@ export const DegreeMutations = extendType({
 		t.nonNull.field("eliminaLaurea", {
 			type: "Laurea",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.laurea.delete({

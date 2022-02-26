@@ -14,7 +14,6 @@ export const ProfessorObject = objectType({
 		t.field(Docente.email);
 		// Relations
 		t.field(Docente.corsi);
-		t.field(Docente.gruppi);
 		t.field(Docente.lezioni);
 	},
 });
@@ -31,7 +30,7 @@ export const ProfessorQueries = extendType({
 		t.field("docente", {
 			type: "Docente",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.findUnique({
@@ -50,10 +49,10 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("creaDocente", {
 			type: "Docente",
 			args: {
-				id: idArg(),
-				nome: nonNull(stringArg()),
-				cognome: nonNull(stringArg()),
-				email: nonNull(stringArg()),
+				id: "ID",
+				nome: nonNull("String"),
+				cognome: nonNull("String"),
+				email: nonNull("String"),
 			},
 			resolve(_, { id, ...args }, ctx) {
 				let data: any = { ...args };
@@ -67,10 +66,10 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("modificaDocente", {
 			type: "Docente",
 			args: {
-				id: nonNull(idArg()),
-				nome: stringArg(),
-				cognome: stringArg(),
-				email: stringArg(),
+				id: nonNull("ID"),
+				nome: "String",
+				cognome: "String",
+				email: "String",
 			},
 			resolve(_, { id, ...args }, ctx) {
 				return ctx.prisma.docente.update({
@@ -86,8 +85,8 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("aggiungiCorsoADocente", {
 			type: "Docente",
 			args: {
-				idDocente: nonNull(idArg()),
-				idCorso: nonNull(idArg()),
+				idDocente: nonNull("ID"),
+				idCorso: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.update({
@@ -107,8 +106,8 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("rimuoviCorsoDaDocente", {
 			type: "Docente",
 			args: {
-				idDocente: nonNull(idArg()),
-				idCorso: nonNull(idArg()),
+				idDocente: nonNull("ID"),
+				idCorso: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.update({
@@ -125,53 +124,11 @@ export const ProfessorMutations = extendType({
 				});
 			},
 		});
-		t.nonNull.field("aggiungiGruppoADocente", {
-			type: "Docente",
-			args: {
-				idDocente: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.docente.update({
-					where: {
-						id: args.idDocente,
-					},
-					data: {
-						gruppi: {
-							connect: {
-								id: args.idGruppo,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("rimuoviGruppoDaDocente", {
-			type: "Docente",
-			args: {
-				idDocente: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.docente.update({
-					where: {
-						id: args.idDocente,
-					},
-					data: {
-						gruppi: {
-							disconnect: {
-								id: args.idGruppo,
-							},
-						},
-					},
-				});
-			},
-		});
 		t.nonNull.field("aggiungiLezioneADocente", {
 			type: "Docente",
 			args: {
-				idDocente: nonNull(idArg()),
-				idLezione: nonNull(idArg()),
+				idDocente: nonNull("ID"),
+				idLezione: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.update({
@@ -191,8 +148,8 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("rimuoviLezioneDaDocente", {
 			type: "Docente",
 			args: {
-				idDocente: nonNull(idArg()),
-				idLezione: nonNull(idArg()),
+				idDocente: nonNull("ID"),
+				idLezione: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.update({
@@ -212,7 +169,7 @@ export const ProfessorMutations = extendType({
 		t.nonNull.field("eliminaDocente", {
 			type: "Docente",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.docente.delete({

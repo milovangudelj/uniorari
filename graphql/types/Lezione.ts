@@ -17,13 +17,11 @@ export const LectureObject = objectType({
 		t.field(Lezione.createdAt);
 		t.field(Lezione.updatedAt);
 		t.field(Lezione.giorno);
-		t.field(Lezione.ora);
 		t.field(Lezione.inizio);
 		t.field(Lezione.fine);
 		t.field(Lezione.durata);
 		// Relations
 		t.field(Lezione.docenti);
-		t.field(Lezione.gruppi);
 		t.field(Lezione.aule);
 	},
 });
@@ -40,7 +38,7 @@ export const LectureQueries = extendType({
 		t.field("lezione", {
 			type: "Lezione",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.lezione.findUnique({
@@ -59,11 +57,10 @@ export const LectureMutations = extendType({
 		t.nonNull.field("creaLezione", {
 			type: "Lezione",
 			args: {
-				id: idArg(),
+				id: "ID",
 				giorno: nonNull(intArg()),
-				ora: nonNull(intArg()),
-				inizio: nonNull(stringArg()),
-				fine: nonNull(stringArg()),
+				inizio: nonNull("String"),
+				fine: nonNull("String"),
 				durata: nonNull(intArg()),
 			},
 			resolve(_, { id, ...args }, ctx) {
@@ -78,11 +75,10 @@ export const LectureMutations = extendType({
 		t.nonNull.field("modificaLezione", {
 			type: "Lezione",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 				giorno: intArg(),
-				ora: intArg(),
-				inizio: stringArg(),
-				fine: stringArg(),
+				inizio: "String",
+				fine: "String",
 				durata: intArg(),
 			},
 			resolve(_, { id, ...args }, ctx) {
@@ -99,8 +95,8 @@ export const LectureMutations = extendType({
 		t.nonNull.field("aggiungiDocenteALezione", {
 			type: "Lezione",
 			args: {
-				idLezione: nonNull(idArg()),
-				idDocente: nonNull(idArg()),
+				idLezione: nonNull("ID"),
+				idDocente: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.lezione.update({
@@ -120,8 +116,8 @@ export const LectureMutations = extendType({
 		t.nonNull.field("rimuoviDocenteDaLezione", {
 			type: "Lezione",
 			args: {
-				idLezione: nonNull(idArg()),
-				idDocente: nonNull(idArg()),
+				idLezione: nonNull("ID"),
+				idDocente: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.lezione.update({
@@ -138,53 +134,11 @@ export const LectureMutations = extendType({
 				});
 			},
 		});
-		t.nonNull.field("aggiungiGruppoALezione", {
-			type: "Lezione",
-			args: {
-				idLezione: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.lezione.update({
-					where: {
-						id: args.idLezione,
-					},
-					data: {
-						gruppi: {
-							connect: {
-								id: args.idGruppo,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("rimuoviGruppoDaLezione", {
-			type: "Lezione",
-			args: {
-				idLezione: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.lezione.update({
-					where: {
-						id: args.idLezione,
-					},
-					data: {
-						gruppi: {
-							disconnect: {
-								id: args.idGruppo,
-							},
-						},
-					},
-				});
-			},
-		});
 		t.nonNull.field("aggiungiAulaALezione", {
 			type: "Lezione",
 			args: {
-				idLezione: nonNull(idArg()),
-				idAula: nonNull(idArg()),
+				idLezione: nonNull("ID"),
+				idAula: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.lezione.update({
@@ -204,8 +158,8 @@ export const LectureMutations = extendType({
 		t.nonNull.field("rimuoviAulaDaLezione", {
 			type: "Lezione",
 			args: {
-				idLezione: nonNull(idArg()),
-				idAula: nonNull(idArg()),
+				idLezione: nonNull("ID"),
+				idAula: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.lezione.update({
@@ -225,7 +179,7 @@ export const LectureMutations = extendType({
 		t.nonNull.field("eliminaLezione", {
 			type: "Lezione",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.lezione.delete({

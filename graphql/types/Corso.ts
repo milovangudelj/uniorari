@@ -1,5 +1,6 @@
-import { objectType, extendType, nonNull, stringArg, idArg } from "nexus";
-import { Corso } from "nexus-prisma";
+import { Prisma } from "@prisma/client";
+import { objectType, extendType, nonNull, stringArg, idArg, list } from "nexus";
+import { Corso, Insegnamento } from "nexus-prisma";
 
 export const CourseObject = objectType({
 	name: Corso.$name,
@@ -10,10 +11,12 @@ export const CourseObject = objectType({
 		t.field(Corso.createdAt);
 		t.field(Corso.updatedAt);
 		t.field(Corso.nome);
+		t.field(Corso.moodle);
 		// Relations
+		t.field(Corso.insegnamento);
+		t.field(Corso.responsabile);
 		t.field(Corso.docenti);
-		t.field(Corso.lauree);
-		t.field(Corso.gruppi);
+		t.field(Corso.canale);
 		t.field(Corso.studenti);
 	},
 });
@@ -30,7 +33,7 @@ export const CourseQueries = extendType({
 		t.field("corso", {
 			type: "Corso",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.corso.findUnique({
@@ -49,11 +52,50 @@ export const CourseMutations = extendType({
 		t.nonNull.field("creaCorso", {
 			type: "Corso",
 			args: {
-				id: idArg(),
-				nome: nonNull(stringArg()),
+				id: "ID",
+				nome: nonNull("String"),
+				moodle: nonNull("String"),
+				insegnamento: nonNull("ID"),
+				responsabile: nonNull("ID"),
+				docenti: list(nonNull("ID")),
+				canale: nonNull("ID"),
 			},
 			resolve(_, { id, ...args }, ctx) {
-				let data: any = { ...args };
+				const docenti = [
+					{
+						id: args.responsabile,
+					},
+				];
+
+				if (args.docenti)
+					docenti.push(
+						...args.docenti?.map((id) => {
+							return {
+								id,
+							};
+						})
+					);
+				let data: Prisma.CorsoCreateInput = {
+					...args,
+					insegnamento: {
+						connect: {
+							id: args.insegnamento,
+						},
+					},
+					responsabile: {
+						connect: {
+							id: args.responsabile,
+						},
+					},
+					docenti: {
+						connect: docenti,
+					},
+					canale: {
+						connect: {
+							id: args.canale,
+						},
+					},
+				};
 				if (id) data.id = id;
 
 				return ctx.prisma.corso.create({
@@ -64,151 +106,55 @@ export const CourseMutations = extendType({
 		t.nonNull.field("modificaCorso", {
 			type: "Corso",
 			args: {
-				id: nonNull(idArg()),
-				nome: stringArg(),
+				id: nonNull("ID"),
+				nome: "String",
+				moodle: "String",
+				insegnamento: "ID",
+				responsabile: "ID",
+				docenti: list(nonNull("ID")),
+				canale: "ID",
 			},
 			resolve(_, { id, ...args }, ctx) {
+				let data: Prisma.CorsoUpdateInput = {
+					nome: args.nome,
+					moodle: args.nome,
+					insegnamento: {
+						connect: {
+							id: args.insegnamento,
+						},
+					},
+					responsabile: {
+						connect: {
+							id: args.responsabile,
+						},
+					},
+					docenti: {
+						connect: args.docenti.map((id) => {
+							return {
+								id,
+							};
+						}),
+					},
+					canale: {
+						connect: {
+							id: args.canale,
+						},
+					},
+				};
+
 				return ctx.prisma.corso.update({
 					where: {
 						id,
 					},
-					data: {
-						...args,
-					},
-				});
-			},
-		});
-		t.nonNull.field("aggiungiDocenteACorso", {
-			type: "Corso",
-			args: {
-				idCorso: nonNull(idArg()),
-				idDocente: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.corso.update({
-					where: {
-						id: args.idCorso,
-					},
-					data: {
-						docenti: {
-							connect: {
-								id: args.idDocente,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("rimuoviDocenteDaCorso", {
-			type: "Corso",
-			args: {
-				idCorso: nonNull(idArg()),
-				idDocente: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.corso.update({
-					where: {
-						id: args.idCorso,
-					},
-					data: {
-						docenti: {
-							disconnect: {
-								id: args.idDocente,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("aggiungiLaureaACorso", {
-			type: "Corso",
-			args: {
-				idCorso: nonNull(idArg()),
-				idLaurea: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.corso.update({
-					where: {
-						id: args.idCorso,
-					},
-					data: {
-						lauree: {
-							connect: {
-								id: args.idLaurea,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("rimuoviLaureaDaCorso", {
-			type: "Corso",
-			args: {
-				idCorso: nonNull(idArg()),
-				idLaurea: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.corso.update({
-					where: {
-						id: args.idCorso,
-					},
-					data: {
-						lauree: {
-							disconnect: {
-								id: args.idLaurea,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("aggiungiGruppoACorso", {
-			type: "Corso",
-			args: {
-				idCorso: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.corso.update({
-					where: {
-						id: args.idCorso,
-					},
-					data: {
-						gruppi: {
-							connect: {
-								id: args.idGruppo,
-							},
-						},
-					},
-				});
-			},
-		});
-		t.nonNull.field("rimuoviGruppoDaCorso", {
-			type: "Corso",
-			args: {
-				idCorso: nonNull(idArg()),
-				idGruppo: nonNull(idArg()),
-			},
-			resolve(_, args, ctx) {
-				return ctx.prisma.corso.update({
-					where: {
-						id: args.idCorso,
-					},
-					data: {
-						gruppi: {
-							disconnect: {
-								id: args.idGruppo,
-							},
-						},
-					},
+					data,
 				});
 			},
 		});
 		t.nonNull.field("aggiungiStudenteACorso", {
 			type: "Corso",
 			args: {
-				idCorso: nonNull(idArg()),
-				idStudente: nonNull(idArg()),
+				idCorso: nonNull("ID"),
+				idStudente: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.corso.update({
@@ -228,8 +174,8 @@ export const CourseMutations = extendType({
 		t.nonNull.field("rimuoviStudenteDaCorso", {
 			type: "Corso",
 			args: {
-				idCorso: nonNull(idArg()),
-				idStudente: nonNull(idArg()),
+				idCorso: nonNull("ID"),
+				idStudente: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.corso.update({
@@ -249,7 +195,7 @@ export const CourseMutations = extendType({
 		t.nonNull.field("eliminaCorso", {
 			type: "Corso",
 			args: {
-				id: nonNull(idArg()),
+				id: nonNull("ID"),
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.corso.delete({

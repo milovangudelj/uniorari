@@ -1,8 +1,11 @@
 export { DateTime } from "nexus-prisma/scalars";
-export * from "./Corso";
-export * from "./Docente";
-export * from "./Gruppo";
+export * from "./Scuola";
+export * from "./Dipartimento";
 export * from "./Laurea";
+export * from "./Insegnamento";
+export * from "./Corso";
+export * from "./Canale";
+export * from "./Docente";
 export * from "./Lezione";
 export * from "./Aula";
 export * from "./Profilo";

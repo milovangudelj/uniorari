@@ -2,137 +2,200 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+   provider = "postgresql"
+   url      = env("DATABASE_URL")
 }
 
 generator client {
-  provider = "prisma-client-js"
+   provider = "prisma-client-js"
 }
 
 generator nexusPrisma {
-  provider = "nexus-prisma"
+   provider = "nexus-prisma"
 }
 
-/// Model representing each Professor
-model Docente {
-  // Scalars
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  nome      String
-  cognome   String?
-  email     String?  @unique
+model Scuola {
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
 
-  // Relations
-  corsi   Corso[]
-  gruppi  Gruppo[]
-  lezioni Lezione[]
+   nome       String @unique
+   presidente String
+   sede       String
+   sito       String
+   telefono   String
+   email      String
 
-  @@map("docenti")
+   // Relations
+   dipartimenti Dipartimento[]
+
+   @@map("scuole")
 }
 
-/// Model representing each Course
-model Corso {
-  // Scalars
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  nome      String
+model Dipartimento {
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
 
-  // Relations
-  docenti  Docente[]
-  lauree   Laurea[]
-  gruppi   Gruppo[]
-  studenti Profilo[]
+   nome      String @unique
+   acronimo  String @unique
+   direttore String
+   sede      String
+   sito      String
+   telefono  String
+   email     String
 
-  @@map("corsi")
+   // Relations
+   idScuola String   @db.Uuid
+   scuola   Scuola   @relation(fields: [idScuola], references: [id])
+   lauree   Laurea[]
+
+   @@map("dipartimenti")
 }
 
-/// Model representing each Group
-model Gruppo {
-  // Scalars
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  nome      String
-  adc       Int?
-
-  // Relations
-  docenti  Docente[]
-  idLaurea String
-  laurea   Laurea    @relation(fields: [idLaurea], references: [id])
-  corsi    Corso[]
-  lezioni  Lezione[]
-
-  @@map("gruppi")
-}
-
-/// Model representing each Degree
 model Laurea {
-  // Scalars
-  id        String   @id @default(dbgenerated("uuid_generate_v4()"))
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  nome      String
-  scuola    String
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
 
-  // Relations
-  corsi  Corso[]
-  gruppi Gruppo[]
+   codice     String @unique
+   nome       String @unique
+   presidente String
+   email      String
 
-  @@map("lauree")
+   // Relations
+   idDipartimento String         @db.Uuid
+   dipartimento   Dipartimento   @relation(fields: [idDipartimento], references: [id])
+   insegnamenti   Insegnamento[]
+
+   @@map("lauree")
 }
 
-/// Model representing each Lesson
+model Insegnamento {
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
+
+   nome         String  @unique
+   obbligatorio Boolean
+   cfu          Int
+   adc          Int
+   semestre     Int
+   lingua       String
+   curriculum   String
+
+   // Relations
+   lauree Laurea[]
+   corsi  Corso[]
+
+   @@map("insegnamenti")
+}
+
+model Corso {
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
+
+   nome   String @unique
+   moodle String
+
+   // Relations
+   idInsegnamento String       @db.Uuid
+   insegnamento   Insegnamento @relation(fields: [idInsegnamento], references: [id])
+   idCanale       String       @db.Uuid
+   canale         Canale       @relation(fields: [idCanale], references: [id])
+   idResponsabile String       @unique @db.Uuid
+   responsabile   Docente      @relation(name: "responsabile", fields: [idResponsabile], references: [id])
+   docenti        Docente[]    @relation(name: "docenti")
+   studenti       Profilo[]
+
+   @@map("corsi")
+}
+
+model Canale {
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
+
+   nome String
+
+   // Relations
+   corsi Corso[]
+
+   @@map("canali")
+}
+
+model Docente {
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
+
+   nome    String
+   cognome String
+   email   String @unique
+
+   // Relations
+   corsi          Corso[]   @relation(name: "docenti")
+   responsabileDi Corso?    @relation(name: "responsabile")
+   lezioni        Lezione[]
+
+   @@map("docenti")
+}
+
 model Lezione {
-  // Scalars
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  giorno    Int
-  ora       Int
-  inizio    String
-  fine      String
-  durata    Int
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
 
-  // Relations
-  docenti Docente[]
-  gruppi  Gruppo[]
-  aule    Aula[]
+   giorno Int
+   inizio String
+   fine   String
+   durata Int
 
-  @@map("lezioni")
+   // Relations
+   docenti Docente[]
+   aule    Aula[]
+
+   @@map("lezioni")
 }
 
-/// Model representing each Classroom
 model Aula {
-  // Scalars
-  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  nome      String
-  indirizzo String?
-  link      String?
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
 
-  // Relations
-  lezioni Lezione[]
+   nome      String  @unique
+   indirizzo String?
+   link      String?
 
-  @@map("aule")
+   // Relations
+   lezioni Lezione[]
+
+   @@map("aule")
 }
 
-/// User data model
 model Profilo {
-  // Scalars
-  id        String   @id @unique @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  createdAt DateTime @default(now())
-  updatedAt DateTime @default(now()) @updatedAt
-  name      String?
-  email     String?  @unique
-  username  String?  @unique
-  image     String?
+   // Scalars
+   id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+   createdAt DateTime @default(now())
+   updatedAt DateTime @default(now()) @updatedAt
 
-  // Relations
-  corsi Corso[]
+   nome     String
+   email    String  @unique
+   username String  @unique
+   immagine String?
 
-  @@map("profili")
+   // Relations
+   corsi Corso[]
+
+   @@map("profili")
 }

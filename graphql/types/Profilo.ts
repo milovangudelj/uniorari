@@ -9,10 +9,10 @@ export const ProfileObject = objectType({
 		t.field(Profilo.id);
 		t.field(Profilo.createdAt);
 		t.field(Profilo.updatedAt);
-		t.field(Profilo.name);
+		t.field(Profilo.nome);
 		t.field(Profilo.email);
 		t.field(Profilo.username);
-		t.field(Profilo.image);
+		t.field(Profilo.immagine);
 		// Relations
 		t.field(Profilo.corsi);
 	},
@@ -24,9 +24,9 @@ export const ProfileQuery = extendType({
 		t.field("profilo", {
 			type: "Profilo",
 			args: {
-				id: idArg(),
-				email: stringArg(),
-				username: stringArg(),
+				id: "ID",
+				email: "String",
+				username: "String",
 			},
 			resolve(_, args, ctx) {
 				if (!Object.values(args).some((arg) => arg !== null))
@@ -49,11 +49,11 @@ export const ProfileMutations = extendType({
 		t.field("creaProfilo", {
 			type: "Profilo",
 			args: {
-				id: nonNull(idArg()),
-				name: nonNull(stringArg()),
-				email: nonNull(stringArg()),
-				username: nonNull(stringArg()),
-				image: stringArg(),
+				id: nonNull("ID"),
+				nome: nonNull("String"),
+				email: nonNull("String"),
+				username: nonNull("String"),
+				immagine: "String",
 			},
 			resolve(_, args, ctx) {
 				return ctx.prisma.profilo.create({
@@ -66,11 +66,11 @@ export const ProfileMutations = extendType({
 		t.field("modificaProfilo", {
 			type: "Profilo",
 			args: {
-				id: nonNull(idArg()),
-				name: stringArg(),
-				email: stringArg(),
-				username: stringArg(),
-				image: stringArg(),
+				id: nonNull("ID"),
+				nome: "String",
+				email: "String",
+				username: "String",
+				immagine: "String",
 			},
 			resolve(_, { id, ...args }, ctx) {
 				// Checking if at least one argument is provided

@@ -14,7 +14,7 @@ export const CardCorso = ({ data }) => {
 			<div className="min-w-60 h-min bg-grey-50 shadow rounded-lg p-4">
 				<div className="flex items-center">
 					<h2 className="text-headline-m text-on-surface-he mb-2 mr-4">
-						{corso.nome}
+						{corso.insegnamento.nome}
 					</h2>
 					<Button
 						onClick={handleSave}
@@ -26,22 +26,27 @@ export const CardCorso = ({ data }) => {
 					</Button>
 				</div>
 				<span className="text-body-m text-on-surface-me">
-					{corso.docenti.length !== 0
-						? corso.docenti[0].nome + " " + corso.docenti[0].cognome
+					{corso.responsabile
+						? corso.responsabile.nome + " " + corso.responsabile.cognome
 						: "-"}{" "}
 					·{" "}
 					<a
 						className="text-accent-600"
 						href={
-							corso.docenti.length !== 0
-								? `mailto:${corso.docenti[0].email}`
+							corso.responsabile
+								? `mailto:${corso.responsabile.email}`
 								: "#"
 						}
 						target="_blank"
 						rel="noreferrer"
 					>
-						{corso.docenti.length !== 0 ? corso.docenti[0].email : "-"}
+						{corso.responsabile ? corso.responsabile.email : "-"}
 					</a>
+				</span>
+				<br />
+				<span className="text-grey-500 text-sm">
+					Canale{" "}
+					<span className="text-primary-500">{corso.canale.nome}</span>
 				</span>
 				<div className="mt-8">
 					<span className="text-label-l font-medium text-on-surface-he">
@@ -62,24 +67,21 @@ export const CardCorso = ({ data }) => {
 							</tr>
 						</thead>
 						<tbody className="align-top text-on-surface-he">
-							{corso.gruppi.length !== 0 &&
-								corso.gruppi.map((gruppo, idx) => {
-									return gruppo.lezioni.length !== 0 ? (
-										gruppo.lezioni.map((lezione, idx) => (
-											<Lezione
-												key={idx}
-												lezione={lezione}
-												last={
-													idx === gruppo.lezioni.length - 1
-														? true
-														: false
-												}
-											/>
-										))
-									) : (
-										<Lezione lezione={null} key={idx} last />
-									);
-								})}
+							{corso.responsabile.lezioni.length !== 0 ? (
+								corso.responsabile.lezioni.map((lezione, idx) => (
+									<Lezione
+										key={idx}
+										lezione={lezione}
+										last={
+											idx === corso.responsabile.lezioni.length - 1
+												? true
+												: false
+										}
+									/>
+								))
+							) : (
+								<Lezione lezione={null} last />
+							)}
 						</tbody>
 					</table>
 				</div>

@@ -131,7 +131,7 @@ export const Button = <T extends ElementType = "button">({
 		</>
 	);
 
-	return (
+	return passHref ? (
 		<Component
 			{...props}
 			href={href}
@@ -139,13 +139,18 @@ export const Button = <T extends ElementType = "button">({
 			disabled={props.disabled || loading}
 			className={style}
 		>
-			{passHref ? (
-				<a {...props} className={style}>
-					{content}
-				</a>
-			) : (
-				content
-			)}
+			<a {...props} className={style}>
+				{content}
+			</a>
+		</Component>
+	) : (
+		<Component
+			{...props}
+			href={href}
+			disabled={props.disabled || loading}
+			className={style}
+		>
+			{content}
 		</Component>
 	);
 };

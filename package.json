@@ -8,9 +8,13 @@
 		"lint": "next lint",
 		"vercel-build": "yarn prisma:generate && next build",
 		"prisma:push": "prisma db push",
+		"prisma:seed": "prisma db seed",
 		"prisma:generate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma generate",
 		"prisma:studio": "prisma studio",
 		"prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"
+	},
+	"prisma": {
+		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	},
 	"dependencies": {
 		"@apollo/client": "^3.5.5",
@@ -46,7 +50,7 @@
 		"yup": "^0.32.11"
 	},
 	"devDependencies": {
-		"@types/node": "^16.11.7",
+		"@types/node": "^17.0.21",
 		"@types/react": "^17.0.35",
 		"autoprefixer": "^10.4.2",
 		"eslint": "7",
@@ -54,7 +58,7 @@
 		"postcss": "^8.4.6",
 		"prisma": "^3.10.0",
 		"tailwindcss": "^3.0.22",
-		"ts-node": "^10.4.0",
-		"typescript": "^4.4.4"
+		"ts-node": "^10.5.0",
+		"typescript": "^4.5.5"
 	}
 }

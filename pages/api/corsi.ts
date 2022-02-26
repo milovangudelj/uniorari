@@ -5,13 +5,16 @@ const queryCorsi = gql`
 	query queryCorsi {
 		corsi {
 			nome
-			docenti {
+			insegnamento {
+				nome
+			}
+			canale {
+				nome
+			}
+			responsabile {
 				nome
 				cognome
 				email
-			}
-			gruppi {
-				nome
 				lezioni {
 					giorno
 					inizio
