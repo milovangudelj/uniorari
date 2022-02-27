@@ -123,7 +123,7 @@ model Canale {
    createdAt DateTime @default(now())
    updatedAt DateTime @default(now()) @updatedAt
 
-   nome String
+   nome String @unique
 
    // Relations
    corsi Corso[]

@@ -1,9 +1,10 @@
 import { PlusCircleIcon } from "@heroicons/react/solid";
 import { useState } from "react";
-import { Button } from ".";
+import { Button, Chip, ChipGroup } from ".";
 
 export const CardCorso = ({ data }) => {
-	const [corso, setCorso] = useState(data);
+	const [insegnamento, setInsegnamento] = useState(data);
+	const [corsi, setCorsi] = useState(data.corsi);
 
 	const handleSave = () => {
 		console.log("Saving course to user");
@@ -14,7 +15,7 @@ export const CardCorso = ({ data }) => {
 			<div className="min-w-60 h-min bg-grey-50 shadow rounded-lg p-4">
 				<div className="flex items-center">
 					<h2 className="text-headline-m text-on-surface-he mb-2 mr-4">
-						{corso.insegnamento.nome}
+						{insegnamento.nome}
 					</h2>
 					<Button
 						onClick={handleSave}
@@ -26,28 +27,20 @@ export const CardCorso = ({ data }) => {
 					</Button>
 				</div>
 				<span className="text-body-m text-on-surface-me">
-					{corso.responsabile
-						? corso.responsabile.nome + " " + corso.responsabile.cognome
-						: "-"}{" "}
-					·{" "}
+					{insegnamento.corsi[0]?.responsabile.nome +
+						" " +
+						insegnamento.corsi[0]?.responsabile.cognome +
+						" · "}
 					<a
 						className="text-accent-600"
-						href={
-							corso.responsabile
-								? `mailto:${corso.responsabile.email}`
-								: "#"
-						}
+						href={`mailto:${insegnamento.corsi[0]?.responsabile.email}`}
 						target="_blank"
 						rel="noreferrer"
 					>
-						{corso.responsabile ? corso.responsabile.email : "-"}
+						{insegnamento.corsi[0]?.responsabile.email}
 					</a>
 				</span>
-				<br />
-				<span className="text-grey-500 text-sm">
-					Canale{" "}
-					<span className="text-primary-500">{corso.canale.nome}</span>
-				</span>
+				<ChipGroup label="Canale" chips={insegnamento.corsi} />
 				<div className="mt-8">
 					<span className="text-label-l font-medium text-on-surface-he">
 						Orario
@@ -67,18 +60,24 @@ export const CardCorso = ({ data }) => {
 							</tr>
 						</thead>
 						<tbody className="align-top text-on-surface-he">
-							{corso.responsabile.lezioni.length !== 0 ? (
-								corso.responsabile.lezioni.map((lezione, idx) => (
-									<Lezione
-										key={idx}
-										lezione={lezione}
-										last={
-											idx === corso.responsabile.lezioni.length - 1
-												? true
-												: false
-										}
-									/>
-								))
+							{insegnamento.corsi[0]?.responsabile.lezioni.length !==
+							0 ? (
+								insegnamento.corsi[0]?.responsabile.lezioni.map(
+									(lezione, idx) => (
+										<Lezione
+											key={idx}
+											lezione={lezione}
+											last={
+												idx ===
+												insegnamento.corsi[0]?.responsabile.lezioni
+													.length -
+													1
+													? true
+													: false
+											}
+										/>
+									)
+								)
 							) : (
 								<Lezione lezione={null} last />
 							)}

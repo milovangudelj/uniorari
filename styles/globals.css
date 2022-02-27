@@ -22,6 +22,10 @@
 		@apply text-label-l py-2 px-4 rounded-lg;
 	}
 
+	.btn.btn-pill {
+		@apply rounded-full;
+	}
+
 	.btn-primary {
 		@apply bg-primary-500 focus:outline-1 focus:outline-primary-500 border-primary-500 hover:bg-primary-400 hover:border-primary-400 focus:bg-primary-600 focus:border-primary-600;
 	}

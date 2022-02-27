@@ -7,7 +7,7 @@ import { ThemeProvider } from "../lib/theme";
 import { DeviceProvider } from "../lib/device";
 import { Layout } from "../components";
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }) {
+function MyApp({ Component, pageProps: { session, fallback, ...pageProps } }) {
 	return (
 		<AuthProvider>
 			<SWRConfig
@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
 					refreshInterval: 3000,
 					fetcher: (resource, init) =>
 						fetch(resource, init).then((res) => res.json()),
+					fallback,
 				}}
 			>
 				<DeviceProvider>

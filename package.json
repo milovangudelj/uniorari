@@ -9,6 +9,7 @@
 		"vercel-build": "yarn prisma:generate && next build",
 		"prisma:push": "prisma db push",
 		"prisma:seed": "prisma db seed",
+		"prisma:reset": "ts-node --skip-project prisma/reset.ts",
 		"prisma:generate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma generate",
 		"prisma:studio": "prisma studio",
 		"prisma:migrate": "DATABASE_URL=\"$MIGRATE_DATABASE_URL\" prisma migrate deploy"

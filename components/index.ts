@@ -5,6 +5,8 @@ export * from "./TopBar";
 export * from "./Footer";
 export * from "./CardCorso";
 export * from "./Button";
+export * from "./Chip";
+export * from "./ChipGroup";
 export * from "./Code";
 export * from "./ComponentShowcase";
 export * from "./ConditionalWrapper";

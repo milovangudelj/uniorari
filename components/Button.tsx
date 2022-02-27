@@ -27,7 +27,7 @@ const classes = {
 	base: "btn",
 	disabled: (disabled) => (disabled ? "opacity-50 cursor-not-allowed" : ""),
 	loading: (loading) => (loading ? "cursor-wait" : ""),
-	pill: (pill) => (pill ? "rounded-full" : ""),
+	pill: (pill) => (pill ? "btn-pill" : ""),
 	size: {
 		small: "btn-sm",
 		normal: "btn-md",

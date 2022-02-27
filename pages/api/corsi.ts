@@ -1,34 +1,5 @@
-import { gql } from "@apollo/client";
 import apolloClient from "../../lib/apollo";
-
-const queryCorsi = gql`
-	query queryCorsi {
-		corsi {
-			nome
-			insegnamento {
-				nome
-			}
-			canale {
-				nome
-			}
-			responsabile {
-				nome
-				cognome
-				email
-				lezioni {
-					giorno
-					inizio
-					fine
-					aule {
-						nome
-						indirizzo
-						link
-					}
-				}
-			}
-		}
-	}
-`;
+import { queryCorsi } from "../../graphql/queries";
 
 export default async function handler(req, res) {
 	const { data, loading, error } = await apolloClient.query({
