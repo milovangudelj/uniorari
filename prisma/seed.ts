@@ -13,25 +13,21 @@ import {
 } from "./seedData";
 
 const addData = async (model: { name: string; data: any; delegate: any }) => {
-	console.log(
-		`--------------------------------------\nAdding ${model.name.toLowerCase()}s...`
-	);
+	console.log(`Adding ${model.name.toLowerCase()}s...`);
 
 	for (const d of model.data) {
-		const record = await model.delegate.create({
-			data: d,
+		const record = await model.delegate.upsert({
+			...d,
 		});
 
 		console.log(`Created ${model.name.toLowerCase()} with id: ${record.id}`);
 	}
 
-	console.log(
-		`${model.name}s added...\n--------------------------------------`
-	);
+	console.log(`${model.name}s added...\n`);
 };
 
 const main = async () => {
-	console.log(`Start seeding...`);
+	console.log(`Start seeding...\n`);
 
 	const data = [
 		{
@@ -69,16 +65,16 @@ const main = async () => {
 			data: courseData,
 			delegate: prisma.corso,
 		},
-		// {
-		// 	name: "Classroom",
-		// 	data: classroomData,
-		// 	delegate: prisma.aula,
-		// },
-		// {
-		// 	name: "Lecture",
-		// 	data: lectureData,
-		// 	delegate: prisma.lezione,
-		// },
+		{
+			name: "Classroom",
+			data: classroomData,
+			delegate: prisma.aula,
+		},
+		{
+			name: "Lecture",
+			data: lectureData,
+			delegate: prisma.lezione,
+		},
 	];
 
 	for (const el of data) {

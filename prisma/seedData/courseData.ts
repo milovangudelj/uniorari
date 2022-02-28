@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const courseData: Prisma.CorsoCreateInput[] = [
+const data: Prisma.CorsoCreateInput[] = [
 	{
 		nome: "ANALISI MATEMATICA 1 (A)",
 		moodle:
@@ -140,3 +140,11 @@ export const courseData: Prisma.CorsoCreateInput[] = [
 		},
 	},
 ];
+
+export const courseData: Prisma.CorsoUpsertArgs[] = data.map((corso) => ({
+	where: {
+		nome: corso.nome,
+	},
+	update: {},
+	create: corso,
+}));

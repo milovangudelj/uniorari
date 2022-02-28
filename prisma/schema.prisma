@@ -109,7 +109,7 @@ model Corso {
    insegnamento   Insegnamento @relation(fields: [idInsegnamento], references: [id])
    idCanale       String       @db.Uuid
    canale         Canale       @relation(fields: [idCanale], references: [id])
-   idResponsabile String       @unique @db.Uuid
+   idResponsabile String       @db.Uuid
    responsabile   Docente      @relation(name: "responsabile", fields: [idResponsabile], references: [id])
    docenti        Docente[]    @relation(name: "docenti")
    studenti       Profilo[]

@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const teachingData: Prisma.InsegnamentoCreateInput[] = [
+const data: Prisma.InsegnamentoCreateInput[] = [
 	{
 		nome: "Analisi Matematica 1",
 		obbligatorio: true,
@@ -82,3 +82,13 @@ export const teachingData: Prisma.InsegnamentoCreateInput[] = [
 		},
 	},
 ];
+
+export const teachingData: Prisma.InsegnamentoUpsertArgs[] = data.map(
+	(insegnamento) => ({
+		where: {
+			nome: insegnamento.nome,
+		},
+		update: {},
+		create: insegnamento,
+	})
+);

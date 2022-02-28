@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const schoolData: Prisma.ScuolaCreateInput[] = [
+const data: Prisma.ScuolaCreateInput[] = [
 	{
 		nome: "Scuola di Ingegneria",
 		presidente: "Franco Bonollo",
@@ -10,3 +10,11 @@ export const schoolData: Prisma.ScuolaCreateInput[] = [
 		email: "ingegneria@unipd.it",
 	},
 ];
+
+export const schoolData: Prisma.ScuolaUpsertArgs[] = data.map((scuola) => ({
+	where: {
+		nome: scuola.nome,
+	},
+	update: {},
+	create: scuola,
+}));

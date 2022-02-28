@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const channelData: Prisma.CanaleCreateInput[] = [
+const data: Prisma.CanaleCreateInput[] = [
 	{
 		nome: "A",
 	},
@@ -17,3 +17,11 @@ export const channelData: Prisma.CanaleCreateInput[] = [
 		nome: "E",
 	},
 ];
+
+export const channelData: Prisma.CanaleUpsertArgs[] = data.map((canale) => ({
+	where: {
+		nome: canale.nome,
+	},
+	update: {},
+	create: canale,
+}));

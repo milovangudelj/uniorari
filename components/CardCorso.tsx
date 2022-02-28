@@ -2,7 +2,7 @@ import { PlusCircleIcon } from "@heroicons/react/solid";
 import { useState } from "react";
 import { Button, Chip, ChipGroup } from ".";
 
-export const CardCorso = ({ data }) => {
+export const CardCorso = ({ data, className = "" }) => {
 	const [insegnamento, setInsegnamento] = useState(data);
 	const [corsi, setCorsi] = useState(data.corsi);
 
@@ -11,10 +11,10 @@ export const CardCorso = ({ data }) => {
 	};
 
 	return (
-		<div>
-			<div className="min-w-60 h-min bg-grey-50 shadow rounded-lg p-4">
-				<div className="flex items-center">
-					<h2 className="text-headline-m text-on-surface-he mb-2 mr-4">
+		<div className={`flex flex-col ${className}`}>
+			<div className="min-w-60 h-min bg-grey-50 shadow rounded-lg p-4 flex-1">
+				<div className="flex items-start justify-between mb-2">
+					<h2 className="text-headline-m text-on-surface-he mr-4">
 						{insegnamento.nome}
 					</h2>
 					<Button
@@ -26,7 +26,7 @@ export const CardCorso = ({ data }) => {
 						Save
 					</Button>
 				</div>
-				<span className="text-body-m text-on-surface-me">
+				<span className="text-body-m text-on-surface-me mb-2 inline-block">
 					{insegnamento.corsi[0]?.responsabile.nome +
 						" " +
 						insegnamento.corsi[0]?.responsabile.cognome +

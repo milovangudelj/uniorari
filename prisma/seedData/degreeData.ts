@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const degreeData: Prisma.LaureaCreateInput[] = [
+const data: Prisma.LaureaCreateInput[] = [
 	{
 		codice: "IN0508",
 		nome: "Ingegneria Informatica",
@@ -46,3 +46,11 @@ export const degreeData: Prisma.LaureaCreateInput[] = [
 		},
 	},
 ];
+
+export const degreeData: Prisma.LaureaUpsertArgs[] = data.map((laurea) => ({
+	where: {
+		codice: laurea.codice,
+	},
+	update: {},
+	create: laurea,
+}));

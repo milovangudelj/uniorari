@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 
-export const departmentData: Prisma.DipartimentoCreateInput[] = [
+const data: Prisma.DipartimentoCreateInput[] = [
 	{
 		nome: "Dipartimento di Ingegneria dell'informazione",
 		acronimo: "DEI",
@@ -44,3 +44,13 @@ export const departmentData: Prisma.DipartimentoCreateInput[] = [
 		},
 	},
 ];
+
+export const departmentData: Prisma.DipartimentoUpsertArgs[] = data.map(
+	(dipartimento) => ({
+		where: {
+			acronimo: dipartimento.acronimo,
+		},
+		update: {},
+		create: dipartimento,
+	})
+);

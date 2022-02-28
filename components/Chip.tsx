@@ -10,14 +10,13 @@ const classes = {
 };
 
 export const Chip = (props) => {
-	const [selected, setSelected] = useState(props.selected);
 	const [style, setStyle] = useState<string>(
-		cls(`${classes.base} ${classes.selected(selected)}`)
+		cls(`${classes.base} ${classes.selected(props.selected)}`)
 	);
 
 	useEffect(() => {
-		setStyle(cls(`${classes.base} ${classes.selected(selected)}`));
-	}, [selected]);
+		setStyle(cls(`${classes.base} ${classes.selected(props.selected)}`));
+	});
 
 	return (
 		<span className={style} onClick={props.onClick}>
