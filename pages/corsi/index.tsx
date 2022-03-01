@@ -94,8 +94,8 @@ const Corsi = () => {
 			</div>
 			<section className="flex justify-center">
 				<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-					{insegnamenti.map((insegnamento, idx) => (
-						<CardCorso key={idx} data={insegnamento} />
+					{insegnamenti.map((insegnamento) => (
+						<CardCorso key={insegnamento.id} data={insegnamento} />
 					))}
 				</div>
 			</section>

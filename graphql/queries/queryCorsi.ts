@@ -3,6 +3,7 @@ import { gql } from "@apollo/client";
 export const queryCorsi = gql`
 	query queryCorsi {
 		insegnamenti {
+			id
 			nome
 			semestre
 			corsi {
