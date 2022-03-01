@@ -4,6 +4,8 @@ import useSWR, { useSWRConfig } from "swr";
 import apolloClient from "../../lib/apollo";
 import { queryCorsi } from "../../graphql/queries";
 import { CardCorso } from "../../components";
+import { useEffect, useState } from "react";
+import { FilterIcon, ViewGridIcon, ViewListIcon } from "@heroicons/react/solid";
 
 const API = "/api/corsi";
 
@@ -21,19 +23,78 @@ export async function getServerSideProps() {
 	};
 }
 
+enum orderingType {
+	default,
+	alphabetical,
+	reverse,
+}
+
 const Corsi = () => {
 	const { data, error } = useSWR(API);
+	const [ordering, setOrdering] = useState(orderingType.default);
+	const [insegnamenti, setInsegnamenti] = useState<any[]>(data.insegnamenti);
+
+	useEffect(() => {
+		setInsegnamenti((current) =>
+			ordering === orderingType.default
+				? [...data.insegnamenti]
+				: [...current].sort(sortFunction)
+		);
+	}, [data, ordering]);
+
+	const changeOrdering = () => {
+		setOrdering((current) => {
+			switch (current) {
+				case orderingType.alphabetical:
+					return orderingType.reverse;
+					break;
+				case orderingType.reverse:
+					return orderingType.default;
+					break;
+				default:
+					return orderingType.alphabetical;
+					break;
+			}
+		});
+	};
+
+	const sortFunction = (a, b) => {
+		switch (ordering) {
+			case orderingType.alphabetical:
+				return a.nome.localeCompare(b.nome);
+				break;
+			case orderingType.reverse:
+				return -a.nome.localeCompare(b.nome);
+				break;
+			default:
+				return 1;
+				break;
+		}
+	};
 
 	return (
-		<div className="">
+		<div>
 			<Head>
 				<title>Corsi | UniOrari</title>
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
-			<h1 className="text-4xl font-bold mb-6">Corsi</h1>
+			<div className="flex justify-between items-end mb-6">
+				<h1 className="text-4xl font-bold">Corsi</h1>
+				<div className="flex space-x-4 text-on-surface-me">
+					<span className="text-on-surface-he">
+						<ViewGridIcon className="w-5 h-5 cursor-pointer" />
+					</span>
+					<span>
+						<ViewListIcon className="w-5 h-5 cursor-pointer" />
+					</span>
+					<span onClick={changeOrdering}>
+						<FilterIcon className="w-5 h-5 cursor-pointer" />
+					</span>
+				</div>
+			</div>
 			<section className="flex justify-center">
 				<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-					{data?.insegnamenti.map((insegnamento, idx) => (
+					{insegnamenti.map((insegnamento, idx) => (
 						<CardCorso key={idx} data={insegnamento} />
 					))}
 				</div>

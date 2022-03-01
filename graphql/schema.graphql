@@ -21,11 +21,12 @@ type Canale {
 }
 
 type Corso {
-  canale: Canale!
+  canale: Canale
   createdAt: DateTime!
   docenti: [Docente!]!
   id: ID!
   insegnamento: Insegnamento!
+  lezioni: [Lezione!]!
   moodle: String!
   nome: String!
   responsabile: Docente!
@@ -59,6 +60,7 @@ type Docente {
   createdAt: DateTime!
   email: String!
   id: ID!
+  immagine: String
   lezioni: [Lezione!]!
   nome: String!
   updatedAt: DateTime!
@@ -93,6 +95,7 @@ type Laurea {
 
 type Lezione {
   aule: [Aula!]!
+  corso: Corso!
   createdAt: DateTime!
   docenti: [Docente!]!
   durata: Int!
@@ -114,12 +117,12 @@ type Mutation {
   aggiungiStudenteACorso(idCorso: ID!, idStudente: ID!): Corso!
   creaAula(id: ID, indirizzo: String!, link: String!, nome: String!): Aula!
   creaCanale(corsi: [ID], id: ID, nome: String!): Canale!
-  creaCorso(canale: ID!, docenti: [ID!], id: ID, insegnamento: ID!, moodle: String!, nome: String!, responsabile: ID!): Corso!
+  creaCorso(canale: ID, docenti: [ID!], id: ID, insegnamento: ID!, lezioni: [ID!], moodle: String!, nome: String!, responsabile: ID!): Corso!
   creaDipartimento(acronimo: String!, direttore: String!, email: String!, id: ID, nome: String!, scuola: ID!, sede: String!, sito: String!, telefono: String!): Dipartimento!
-  creaDocente(cognome: String!, email: String!, id: ID, nome: String!): Docente!
+  creaDocente(cognome: String!, email: String!, id: ID, immagine: String, nome: String!): Docente!
   creaInsegnamento(adc: Int!, cfu: Int!, corsi: [ID!], curriculum: String!, id: ID, lauree: [ID!]!, lingua: String!, nome: String!, obbligatorio: Boolean!, semestre: Int!): Insegnamento!
   creaLaurea(codice: String!, dipartimento: ID!, email: String!, id: ID, nome: String!, presidente: String!): Laurea!
-  creaLezione(durata: Int!, fine: String!, giorno: Int!, id: ID, inizio: String!): Lezione!
+  creaLezione(corso: ID!, durata: Int!, fine: String!, giorno: Int!, id: ID, inizio: String!): Lezione!
   creaProfilo(email: String!, id: ID!, immagine: String, nome: String!, username: String!): Profilo
   creaScuola(dipartimenti: [ID!], email: String!, id: ID, nome: String!, presidente: String!, sede: String!, sito: String!, telefono: String!): Scuola!
   eliminaAula(id: ID!): Aula!
@@ -130,8 +133,8 @@ type Mutation {
   eliminaLezione(id: ID!): Lezione!
   modificaAula(id: ID!, indirizzo: String, link: String, nome: String): Aula!
   modificaCanale(id: ID!, nome: String): Canale!
-  modificaCorso(canale: ID, docenti: [ID!], id: ID!, insegnamento: ID, moodle: String, nome: String, responsabile: ID): Corso!
-  modificaDocente(cognome: String, email: String, id: ID!, nome: String): Docente!
+  modificaCorso(canale: ID, docenti: [ID!], id: ID!, insegnamento: ID, lezioni: [ID!], moodle: String, nome: String, responsabile: ID): Corso!
+  modificaDocente(cognome: String, email: String, id: ID!, immagine: String, nome: String): Docente!
   modificaLaurea(codice: String, dipartimento: ID, email: String, id: ID!, nome: String, presidente: String): Laurea!
   modificaLezione(durata: Int, fine: String, giorno: Int, id: ID!, inizio: String): Lezione!
   modificaProfilo(email: String, id: ID!, immagine: String, nome: String, username: String): Profilo

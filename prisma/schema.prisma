@@ -107,8 +107,9 @@ model Corso {
    // Relations
    idInsegnamento String       @db.Uuid
    insegnamento   Insegnamento @relation(fields: [idInsegnamento], references: [id])
-   idCanale       String       @db.Uuid
-   canale         Canale       @relation(fields: [idCanale], references: [id])
+   idCanale       String?       @db.Uuid
+   canale         Canale?       @relation(fields: [idCanale], references: [id])
+   lezioni        Lezione[]
    idResponsabile String       @db.Uuid
    responsabile   Docente      @relation(name: "responsabile", fields: [idResponsabile], references: [id])
    docenti        Docente[]    @relation(name: "docenti")
@@ -140,6 +141,7 @@ model Docente {
    nome    String
    cognome String
    email   String @unique
+   immagine   String?
 
    // Relations
    corsi          Corso[]   @relation(name: "docenti")
@@ -163,6 +165,8 @@ model Lezione {
    // Relations
    docenti Docente[]
    aule    Aula[]
+   idCorso String @db.Uuid
+   corso   Corso @relation(fields: [idCorso], references: [id])
 
    @@map("lezioni")
 }

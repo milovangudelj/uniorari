@@ -21,6 +21,7 @@ export const LectureObject = objectType({
 		t.field(Lezione.fine);
 		t.field(Lezione.durata);
 		// Relations
+		t.field(Lezione.corso);
 		t.field(Lezione.docenti);
 		t.field(Lezione.aule);
 	},
@@ -62,6 +63,7 @@ export const LectureMutations = extendType({
 				inizio: nonNull("String"),
 				fine: nonNull("String"),
 				durata: nonNull(intArg()),
+				corso: nonNull("ID"),
 			},
 			resolve(_, { id, ...args }, ctx) {
 				let data: any = { ...args };

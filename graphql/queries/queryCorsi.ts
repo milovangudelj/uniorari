@@ -4,6 +4,7 @@ export const queryCorsi = gql`
 	query queryCorsi {
 		insegnamenti {
 			nome
+			semestre
 			corsi {
 				nome
 				canale {
@@ -13,15 +14,15 @@ export const queryCorsi = gql`
 					nome
 					cognome
 					email
-					lezioni {
-						giorno
-						inizio
-						fine
-						aule {
-							nome
-							indirizzo
-							link
-						}
+				}
+				lezioni {
+					giorno
+					inizio
+					fine
+					aule {
+						nome
+						indirizzo
+						link
 					}
 				}
 			}

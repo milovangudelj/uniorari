@@ -20,7 +20,7 @@ export const AuthForm = (props: propsType) => {
 
 	return (
 		<div className="min-h-screen flex md:items-center w-full px-4 py-8 md:py-32 ">
-			<div className="min-w-200 w-full max-w-400 mx-auto">
+			<div className="min-w-[200px] w-full max-w-[400px] mx-auto">
 				<Link href="/">
 					<img
 						src="/logo.svg"

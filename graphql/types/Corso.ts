@@ -17,6 +17,7 @@ export const CourseObject = objectType({
 		t.field(Corso.responsabile);
 		t.field(Corso.docenti);
 		t.field(Corso.canale);
+		t.field(Corso.lezioni);
 		t.field(Corso.studenti);
 	},
 });
@@ -58,7 +59,8 @@ export const CourseMutations = extendType({
 				insegnamento: nonNull("ID"),
 				responsabile: nonNull("ID"),
 				docenti: list(nonNull("ID")),
-				canale: nonNull("ID"),
+				lezioni: list(nonNull("ID")),
+				canale: "ID",
 			},
 			resolve(_, { id, ...args }, ctx) {
 				const docenti = [
@@ -90,6 +92,13 @@ export const CourseMutations = extendType({
 					docenti: {
 						connect: docenti,
 					},
+					lezioni: {
+						connect: args.lezioni?.map((id) => {
+							return {
+								id,
+							};
+						}),
+					},
 					canale: {
 						connect: {
 							id: args.canale,
@@ -112,6 +121,7 @@ export const CourseMutations = extendType({
 				insegnamento: "ID",
 				responsabile: "ID",
 				docenti: list(nonNull("ID")),
+				lezioni: list(nonNull("ID")),
 				canale: "ID",
 			},
 			resolve(_, { id, ...args }, ctx) {
@@ -130,6 +140,13 @@ export const CourseMutations = extendType({
 					},
 					docenti: {
 						connect: args.docenti.map((id) => {
+							return {
+								id,
+							};
+						}),
+					},
+					lezioni: {
+						connect: args.lezioni.map((id) => {
 							return {
 								id,
 							};

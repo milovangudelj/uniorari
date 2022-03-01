@@ -12,6 +12,7 @@ export const ProfessorObject = objectType({
 		t.field(Docente.nome);
 		t.field(Docente.cognome);
 		t.field(Docente.email);
+		t.field(Docente.immagine);
 		// Relations
 		t.field(Docente.corsi);
 		t.field(Docente.lezioni);
@@ -53,6 +54,7 @@ export const ProfessorMutations = extendType({
 				nome: nonNull("String"),
 				cognome: nonNull("String"),
 				email: nonNull("String"),
+				immagine: "String",
 			},
 			resolve(_, { id, ...args }, ctx) {
 				let data: any = { ...args };
@@ -70,6 +72,7 @@ export const ProfessorMutations = extendType({
 				nome: "String",
 				cognome: "String",
 				email: "String",
+				immagine: "String",
 			},
 			resolve(_, { id, ...args }, ctx) {
 				return ctx.prisma.docente.update({

@@ -139,6 +139,61 @@ const data: Prisma.CorsoCreateInput[] = [
 			],
 		},
 	},
+	{
+		nome: "ALGEBRA LINEARE E GEOMETRIA (A)",
+		moodle:
+			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN2374-000ZZ-2021-IN06100061-G5GR1",
+		insegnamento: {
+			connect: {
+				nome: "Algebra lineare e Geometria",
+			},
+		},
+		canale: {
+			connect: {
+				nome: "A",
+			},
+		},
+		responsabile: {
+			connect: {
+				email: "francesco.bottacin@unipd.it",
+			},
+		},
+		docenti: {
+			connect: [
+				{
+					email: "francesco.bottacin@unipd.it",
+				},
+				{
+					email: "alessandro.goffi@unipd.it",
+				},
+			],
+		},
+	},
+	{
+		nome: "ELETTRONICA DEI SISTEMI DIGITALI",
+		moodle:
+			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN0507-000ZZ-2020-INL1001826-N0",
+		insegnamento: {
+			connect: {
+				nome: "Elettronica dei Sistemi Digitali",
+			},
+		},
+		responsabile: {
+			connect: {
+				email: "daniele.vogrig@unipd.it",
+			},
+		},
+		docenti: {
+			connect: [
+				{
+					email: "daniele.vogrig@unipd.it",
+				},
+				{
+					email: "andrea.stanco@unipd.it",
+				},
+			],
+		},
+	},
 ];
 
 export const courseData: Prisma.CorsoUpsertArgs[] = data.map((corso) => ({

@@ -81,6 +81,22 @@ const data: Prisma.InsegnamentoCreateInput[] = [
 			],
 		},
 	},
+	{
+		nome: "Elettronica dei Sistemi Digitali",
+		obbligatorio: true,
+		cfu: 9,
+		adc: 2,
+		semestre: 2,
+		lingua: "Italiano",
+		curriculum: "Comune",
+		lauree: {
+			connect: [
+				{
+					codice: "IN0507",
+				},
+			],
+		},
+	},
 ];
 
 export const teachingData: Prisma.InsegnamentoUpsertArgs[] = data.map(
