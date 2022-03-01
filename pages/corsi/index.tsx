@@ -5,7 +5,13 @@ import apolloClient from "../../lib/apollo";
 import { queryCorsi } from "../../graphql/queries";
 import { CardCorso } from "../../components";
 import { useEffect, useState } from "react";
-import { FilterIcon, ViewGridIcon, ViewListIcon } from "@heroicons/react/solid";
+import {
+	FilterIcon,
+	SortAscendingIcon,
+	SortDescendingIcon,
+	ViewGridIcon,
+	ViewListIcon,
+} from "@heroicons/react/solid";
 
 const API = "/api/corsi";
 
@@ -80,15 +86,24 @@ const Corsi = () => {
 			</Head>
 			<div className="flex justify-between items-end mb-6">
 				<h1 className="text-4xl font-bold">Corsi</h1>
-				<div className="flex space-x-4 text-on-surface-me">
-					<span className="text-on-surface-he">
+				<div className="flex space-x-4">
+					{/* <span className="text-on-surface-he">
 						<ViewGridIcon className="w-5 h-5 cursor-pointer" />
 					</span>
-					<span>
+					<span className="text-on-surface-me hover:text-on-surface-he transition">
 						<ViewListIcon className="w-5 h-5 cursor-pointer" />
-					</span>
-					<span onClick={changeOrdering}>
-						<FilterIcon className="w-5 h-5 cursor-pointer" />
+					</span> */}
+					<span
+						onClick={changeOrdering}
+						className="text-on-surface-me hover:text-on-surface-he transition"
+					>
+						{ordering === orderingType.default ? (
+							<FilterIcon className="w-5 h-5 cursor-pointer" />
+						) : ordering === orderingType.alphabetical ? (
+							<SortAscendingIcon className="w-5 h-5 cursor-pointer" />
+						) : (
+							<SortDescendingIcon className="w-5 h-5 cursor-pointer" />
+						)}
 					</span>
 				</div>
 			</div>
