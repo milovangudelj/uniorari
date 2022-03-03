@@ -1,6 +1,6 @@
 import { SearchIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { useAuth } from "../../lib/auth";
 import { Logo } from "../Logo";
@@ -9,6 +9,10 @@ import ProfileMenu from "../Navbar/ProfileMenu";
 export const TopBar = (props) => {
 	const { user, signOut } = useAuth();
 	const [inputFocused, setInputFocused] = useState(false);
+
+	useEffect(() => {
+		console.log(user);
+	}, [user]);
 
 	const handleInputFocus = (focused) => {
 		setInputFocused(focused);
@@ -45,7 +49,7 @@ export const TopBar = (props) => {
 					<span className="ml-3 text-on-surface-le">ctrl + f</span>
 				</form>
 			</div>
-			{/* <ProfileMenu user={user} signOut={signOut} /> */}
+			<ProfileMenu user={user} signOut={signOut} />
 		</div>
 	);
 };

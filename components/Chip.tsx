@@ -5,7 +5,7 @@ const classes = {
 	base: "px-2 cursor-pointer text-xs border rounded-full transition",
 	selected: (selected) =>
 		selected
-			? "bg-primary-500 border-primary-500 text-white hover:bg-primary-400"
+			? "bg-primary-500 border-primary-500 text-white hover:bg-primary-400 hover:border-primary-400"
 			: "bg-transparent border-primary-500 text-primary-500 hover:bg-primary-500/5 focus:bg-primary-600/10",
 };
 

@@ -1,9 +1,10 @@
 import { gql } from "@apollo/client";
 
-export const queryCorsi = gql`
-	query queryCorsi {
+export const queryInsegnamenti = gql`
+	query queryInsegnamenti {
 		insegnamenti {
 			id
+			createdAt
 			nome
 			semestre
 			corsi {

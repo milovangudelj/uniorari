@@ -63,6 +63,48 @@ export const ProfileMutations = extendType({
 				});
 			},
 		});
+		t.field("aggiungiCorsoAProfilo", {
+			type: "Profilo",
+			args: {
+				idProfilo: nonNull("ID"),
+				idCorso: nonNull("ID"),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.profilo.update({
+					where: {
+						id: args.idProfilo,
+					},
+					data: {
+						corsi: {
+							connect: {
+								id: args.idCorso,
+							},
+						},
+					},
+				});
+			},
+		});
+		t.field("rimuoviCorsoDaProfilo", {
+			type: "Profilo",
+			args: {
+				idProfilo: nonNull("ID"),
+				idCorso: nonNull("ID"),
+			},
+			resolve(_, args, ctx) {
+				return ctx.prisma.profilo.update({
+					where: {
+						id: args.idProfilo,
+					},
+					data: {
+						corsi: {
+							disconnect: {
+								id: args.idCorso,
+							},
+						},
+					},
+				});
+			},
+		});
 		t.field("modificaProfilo", {
 			type: "Profilo",
 			args: {

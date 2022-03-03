@@ -5,7 +5,7 @@ import apolloClient from "../../lib/apollo";
 
 const queryEmailUtente = gql`
 	query ($email: String) {
-		utente(email: $email) {
+		profilo(email: $email) {
 			email
 		}
 	}
@@ -13,7 +13,7 @@ const queryEmailUtente = gql`
 
 const queryUsernameUtente = gql`
 	query ($username: String) {
-		utente(username: $username) {
+		profilo(username: $username) {
 			username
 		}
 	}
@@ -32,12 +32,15 @@ const handler = async (req, res) => {
 		variables: { username: username },
 	});
 
-	const output = {};
+	const output: {
+		email?: boolean;
+		username?: boolean;
+	} = {};
 	if (email)
-		output["email"] = emailCheck.data.utente !== null && !emailCheck.error;
+		output.email = emailCheck.data.profilo !== null && !emailCheck.error;
 	if (username)
-		output["username"] =
-			usernameCheck.data.utente !== null && !usernameCheck.error;
+		output.username =
+			usernameCheck.data.profilo !== null && !usernameCheck.error;
 
 	res.status(200).json(output);
 };

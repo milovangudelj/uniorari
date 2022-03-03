@@ -1,30 +1,24 @@
+import Head from "next/head";
 import { gql } from "@apollo/client";
 
 import apolloClient from "../../lib/apollo";
-import { useAuth } from "../../lib/auth";
 import { supabase } from "../../lib/supabase";
+import { Layout } from "../../components";
 
-const getCoursesIds = gql`
-	query ($idUtente: String) {
-		utente(id: $idUtente) {
+const getCourses = gql`
+	query ($idProfilo: ID) {
+		profilo(id: $idProfilo) {
 			corsi {
 				id
-			}
-		}
-	}
-`;
-
-const getCourseInfo = gql`
-	query ($idCorso: String!) {
-		corso(idCorso: $idCorso) {
-			nome
-			docenti {
 				nome
-				cognome
-				email
-			}
-			gruppi {
-				nome
+				canale {
+					nome
+				}
+				responsabile {
+					nome
+					cognome
+					email
+				}
 				lezioni {
 					giorno
 					inizio
@@ -52,22 +46,14 @@ export const getServerSideProps = async (ctx) => {
 	}
 
 	const { data, error } = await apolloClient.query({
-		query: getCoursesIds,
+		query: getCourses,
 		variables: {
-			idUtente: user.id,
+			idProfilo: user.id,
 		},
 	});
 	if (error) return { props: {} };
 
-	const corsi = data.utente.corsi?.map(async (id) => {
-		const res = await apolloClient.query({
-			query: getCourseInfo,
-			variables: {
-				idCorso: id,
-			},
-		});
-		return res.data.corso;
-	});
+	const corsi = data.profilo.corsi;
 
 	return {
 		props: {
@@ -76,12 +62,20 @@ export const getServerSideProps = async (ctx) => {
 	};
 };
 
-const Salvati = (props) => {
+const Salvati = ({ corsi }) => {
 	return (
-		<div>
+		<Layout>
+			<Head>
+				<title>I miei corsi – UniOrari</title>
+				<meta name="description" content="Orari delle lezioni" />
+			</Head>
 			<h1>I miei corsi</h1>
-			<div>{JSON.stringify(props.corsi)}</div>
-		</div>
+			<div>
+				{corsi.map((corso) => {
+					return <div key={corso.id}>{corso.nome}</div>;
+				})}
+			</div>
+		</Layout>
 	);
 };
 

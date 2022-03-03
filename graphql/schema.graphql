@@ -110,6 +110,7 @@ type Mutation {
   aggiungiAulaALezione(idAula: ID!, idLezione: ID!): Lezione!
   aggiungiCorsoACanale(idCanale: ID!, idCorso: ID!): Canale!
   aggiungiCorsoADocente(idCorso: ID!, idDocente: ID!): Docente!
+  aggiungiCorsoAProfilo(idCorso: ID!, idProfilo: ID!): Profilo
   aggiungiDocenteALezione(idDocente: ID!, idLezione: ID!): Lezione!
   aggiungiInsegnamentoALaurea(idInsegnamento: ID!, idLaurea: ID!): Laurea!
   aggiungiLezioneADocente(idDocente: ID!, idLezione: ID!): Docente!
@@ -141,6 +142,7 @@ type Mutation {
   rimuoviAulaDaLezione(idAula: ID!, idLezione: ID!): Lezione!
   rimuoviCorsoDaCanale(idCanale: ID!, idCorso: ID!): Canale!
   rimuoviCorsoDaDocente(idCorso: ID!, idDocente: ID!): Docente!
+  rimuoviCorsoDaProfilo(idCorso: ID!, idProfilo: ID!): Profilo
   rimuoviDocenteDaLezione(idDocente: ID!, idLezione: ID!): Lezione!
   rimuoviInsegnamentoDaLaurea(idInsegnamento: ID!, idLaurea: ID!): Laurea!
   rimuoviLezioneDaAula(idAula: ID!, idLezione: ID!): Aula!
@@ -154,9 +156,9 @@ type Profilo {
   email: String!
   id: ID!
   immagine: String
-  nome: String!
+  nome: String
   updatedAt: DateTime!
-  username: String!
+  username: String
 }
 
 type Query {

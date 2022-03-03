@@ -3,7 +3,7 @@ export * from "./Navbar";
 export * from "./SideMenu";
 export * from "./TopBar";
 export * from "./Footer";
-export * from "./CardCorso";
+export * from "./CardInsegnamento";
 export * from "./Button";
 export * from "./Chip";
 export * from "./ChipGroup";

@@ -12,14 +12,15 @@ export default function Home() {
 				<title>UniOrari</title>
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
-			{user && `Welcome ${user.name}.`}
-			<div className="bg-grey-100 w-full h-full flex items-center justify-center">
-				<img
-					src="/johntravolta.png"
-					alt="Confused John Travolta"
-					className="opacity-10 pointer-events-none select-none"
-				/>
-			</div>
+			<Layout>
+				<div className="bg-grey-100 w-full h-full flex items-center justify-center">
+					<img
+						src="/johntravolta.png"
+						alt="Confused John Travolta"
+						className="opacity-10 pointer-events-none select-none"
+					/>
+				</div>
+			</Layout>
 		</>
 	);
 }

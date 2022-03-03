@@ -4,10 +4,36 @@ import { gql } from "@apollo/client";
 
 import { supabase } from "./supabase";
 import apolloClient from "./apollo";
+import { Profilo } from "../graphql/types/ts";
+import { ApiError, Session } from "@supabase/supabase-js";
 
 const AuthContext = createContext(undefined);
 
-export function useAuth() {
+export function useAuth(): {
+	user: Profilo;
+	session: Session;
+	loading: boolean;
+	signOut: () => Promise<void>;
+	signInWithMagic: (email: any) => Promise<{
+		error: ApiError;
+	}>;
+	signInWithGoogle: () => Promise<void>;
+	signInWithPassword: ({
+		email,
+		password,
+	}: {
+		email: any;
+		password: any;
+	}) => Promise<{
+		error: ApiError;
+	}>;
+	signUpWithPassword: (userData: {
+		name: string;
+		username: string;
+		email: string;
+		password: string;
+	}) => Promise<void>;
+} {
 	return useContext(AuthContext);
 }
 
@@ -18,7 +44,7 @@ export function AuthProvider({ children }) {
 }
 
 function useProvideAuth() {
-	const [user, setUser] = useState(null);
+	const [user, setUser] = useState<Profilo>(null);
 	const [session, setSession] = useState(null);
 	const [loading, setLoading] = useState(true);
 
@@ -53,7 +79,7 @@ function useProvideAuth() {
 	// TODO: Add user handling logic to remove everything not necessary
 	const handleUser = async (rawUser) => {
 		if (rawUser) {
-			const user = await formatUser(rawUser);
+			const user: Profilo = await formatUser(rawUser);
 
 			setUser(user);
 		} else {
@@ -86,6 +112,11 @@ function useProvideAuth() {
 		router.push("/verifica-email");
 	};
 
+	/**
+	 * @param email Address to which the verification email gets sent
+	 * @deprecated Don't use this, it will fail on the database
+	 * @returns The error if any
+	 */
 	const signInWithMagic = async (email) => {
 		let { error } = await supabase.auth.signIn({
 			email,
@@ -133,20 +164,20 @@ function useProvideAuth() {
 }
 
 const formatUser = async (rawUser) => {
-	const queryUtente = gql`
-		query Utente($id: String) {
-			utente(id: $id) {
+	const queryProfilo = gql`
+		query Profilo($id: ID!) {
+			profilo(id: $id) {
 				id
-				name
+				nome
 				username
 				email
-				image
+				immagine
 			}
 		}
 	`;
 
 	const { data, error } = await apolloClient.query({
-		query: queryUtente,
+		query: queryProfilo,
 		variables: {
 			id: rawUser.id,
 		},
@@ -154,5 +185,5 @@ const formatUser = async (rawUser) => {
 
 	if (error) throw error;
 
-	return data.utente;
+	return data.profilo;
 }; 

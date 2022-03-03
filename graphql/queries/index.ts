@@ -1,1 +1,1 @@
-export * from "./queryCorsi";
+export * from "./queryInsegnamenti";

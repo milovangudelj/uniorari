@@ -40,12 +40,20 @@ const ProfileMenu = ({ user, signOut }) => {
 							<ThemeSwitch className="inline-block w-full py-1 px-2" />
 						</li>
 						<li className="py-1">
-							<button
-								onClick={signOut}
-								className="inline-block w-full text-left py-1 px-2 hover:bg-grey-50"
-							>
-								Log Out
-							</button>
+							{user ? (
+								<button
+									onClick={signOut}
+									className="inline-block w-full text-left py-1 px-2 hover:bg-grey-50"
+								>
+									Log Out
+								</button>
+							) : (
+								<Link href="/accedi" passHref>
+									<a className="inline-block w-full text-left py-1 px-2 hover:bg-grey-50">
+										Log In
+									</a>
+								</Link>
+							)}
 						</li>
 					</ul>
 				</div>

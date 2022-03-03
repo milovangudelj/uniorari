@@ -15,15 +15,12 @@ function MyApp({ Component, pageProps: { session, fallback, ...pageProps } }) {
 					refreshInterval: 3000,
 					fetcher: (resource, init) =>
 						fetch(resource, init).then((res) => res.json()),
-					fallback,
 				}}
 			>
 				<DeviceProvider>
 					<ThemeProvider>
 						{true ? (
-							<Layout>
-								<Component {...pageProps} />
-							</Layout>
+							<Component {...pageProps} />
 						) : (
 							<div className="bg-grey-100 w-screen h-screen flex items-center justify-center">
 								<img

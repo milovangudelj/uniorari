@@ -140,6 +140,90 @@ const data: Prisma.CorsoCreateInput[] = [
 		},
 	},
 	{
+		nome: "FONDAMENTI DI INFORMATICA (A)",
+		moodle:
+			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN0508-000ZZ-2021-INP3053372-G3GR1",
+		insegnamento: {
+			connect: {
+				nome: "Fondamenti di Informatica",
+			},
+		},
+		canale: {
+			connect: {
+				nome: "A",
+			},
+		},
+		responsabile: {
+			connect: {
+				email: "cinzia.pizzi@unipd.it",
+			},
+		},
+		docenti: {
+			connect: [
+				{
+					email: "cinzia.pizzi@unipd.it",
+				},
+			],
+		},
+	},
+	{
+		nome: "FONDAMENTI DI INFORMATICA (B)",
+		moodle:
+			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN0508-000ZZ-2021-INP3053372-G3GR2",
+		insegnamento: {
+			connect: {
+				nome: "Fondamenti di Informatica",
+			},
+		},
+		canale: {
+			connect: {
+				nome: "B",
+			},
+		},
+		responsabile: {
+			connect: {
+				email: "andrea.loreggia@unipd.it",
+			},
+		},
+		docenti: {
+			connect: [
+				{
+					email: "andrea.loreggia@unipd.it",
+				},
+				{
+					email: "mauro.pullin@unipd.it",
+				},
+			],
+		},
+	},
+	{
+		nome: "FONDAMENTI DI INFORMATICA (C)",
+		moodle:
+			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN0513-001PD-2021-INP3053372-G3GR3",
+		insegnamento: {
+			connect: {
+				nome: "Fondamenti di Informatica",
+			},
+		},
+		canale: {
+			connect: {
+				nome: "C",
+			},
+		},
+		responsabile: {
+			connect: {
+				email: "laura.bazzanella@unipd.it",
+			},
+		},
+		docenti: {
+			connect: [
+				{
+					email: "laura.bazzanella@unipd.it",
+				},
+			],
+		},
+	},
+	{
 		nome: "ALGEBRA LINEARE E GEOMETRIA (A)",
 		moodle:
 			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN2374-000ZZ-2021-IN06100061-G5GR1",
@@ -165,6 +249,60 @@ const data: Prisma.CorsoCreateInput[] = [
 				},
 				{
 					email: "alessandro.goffi@unipd.it",
+				},
+			],
+		},
+	},
+	{
+		nome: "ARCHITETTURA DEGLI ELABORATORI (A)",
+		moodle:
+			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN0508-000ZZ-2021-IN05122464-G2GR1",
+		insegnamento: {
+			connect: {
+				nome: "Architettura degli Elaboratori",
+			},
+		},
+		canale: {
+			connect: {
+				nome: "A",
+			},
+		},
+		responsabile: {
+			connect: {
+				email: "matteo.comin@unipd.it",
+			},
+		},
+		docenti: {
+			connect: [
+				{
+					email: "matteo.comin@unipd.it",
+				},
+			],
+		},
+	},
+	{
+		nome: "ARCHITETTURA DEGLI ELABORATORI (B)",
+		moodle:
+			"https://elearning.dei.unipd.it/course/view.php?idnumber=2021-IN0508-000ZZ-2021-IN05122464-G2GR2",
+		insegnamento: {
+			connect: {
+				nome: "Architettura degli Elaboratori",
+			},
+		},
+		canale: {
+			connect: {
+				nome: "B",
+			},
+		},
+		responsabile: {
+			connect: {
+				email: "francesco.silvestri@unipd.it",
+			},
+		},
+		docenti: {
+			connect: [
+				{
+					email: "francesco.silvestri@unipd.it",
 				},
 			],
 		},

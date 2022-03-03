@@ -12,6 +12,21 @@ import { Prisma } from "@prisma/client";
 			email: "cinzia.pizzi@unipd.it",
 		},
 		{
+			nome: "Andrea",
+			cognome: "Loreggia",
+			email: "andrea.loreggia@unipd.it",
+		},
+		{
+			nome: "Mauro",
+			cognome: "Pullin",
+			email: "mauro.pullin@unipd.it",
+		},
+		{
+			nome: "Laura",
+			cognome: "Bazzanella",
+			email: "laura.bazzanella@unipd.it",
+		},
+		{
 			nome: "Francesco",
 			cognome: "Bottacin",
 			email: "francesco.bottacin@unipd.it",
@@ -45,6 +60,16 @@ import { Prisma } from "@prisma/client";
 			nome: "Monica",
 			cognome: "Motta",
 			email: "monica.motta@unipd.it",
+		},
+		{
+			nome: "Matteo",
+			cognome: "Comin",
+			email: "matteo.comin@unipd.it",
+		},
+		{
+			nome: "Francesco",
+			cognome: "Silvestri",
+			email: "francesco.silvestri@unipd.it",
 		},
 		{
 			nome: "Francesco",

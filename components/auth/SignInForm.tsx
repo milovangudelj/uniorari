@@ -27,9 +27,9 @@ const schema = yup
 	})
 	.required();
 
-const queryUtente = gql`
-	query Utente($email: String) {
-		utente(email: $email) {
+const queryProfilo = gql`
+	query Profilo($email: String) {
+		profilo(email: $email) {
 			email
 		}
 	}
@@ -68,11 +68,11 @@ export const SignInForm = () => {
 		// }
 
 		const { data, loading, error } = await apolloClient.query({
-			query: queryUtente,
+			query: queryProfilo,
 			variables: { email: formData.email },
 		});
 
-		if (error || data.utente === null) {
+		if (error || data.profilo === null) {
 			setError("email", {
 				type: "manual",
 				message:

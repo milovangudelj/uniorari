@@ -1,21 +1,25 @@
 import { PlusCircleIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
-import { Button, Chip, ChipGroup } from ".";
+import { Button, Chip, ChipGroup } from "..";
+import { Insegnamento } from "../../graphql/types/ts";
+import { useInsegnamento } from "../../lib/hooks/useInsegnamento";
 
-export const CardCorso = ({ data, className = "" }) => {
-	const [insegnamento, setInsegnamento] = useState(data);
-	const [corsi, setCorsi] = useState(data.corsi);
+type CardInsegnamentoProps = {
+	data: Insegnamento;
+	className?: string;
+};
+
+export const CardInsegnamento = ({
+	data,
+	className = "",
+}: CardInsegnamentoProps) => {
+	const { nome, semestre, corsi } = useInsegnamento(data);
+
 	const [selectedChannel, setSelectedChannel] = useState(0);
-	const [lectures, setLectures] = useState(
-		data.corsi[selectedChannel]?.lezioni
-	);
-
-	// useEffect(() => {
-	// 	console.log(corsi);
-	// }, []);
+	const [lectures, setLectures] = useState(corsi[selectedChannel]?.lezioni);
 
 	useEffect(() => {
-		setLectures(data.corsi[selectedChannel]?.lezioni);
+		setLectures(corsi[selectedChannel]?.lezioni);
 	}, [selectedChannel]);
 
 	const handleSave = () => {
@@ -30,9 +34,9 @@ export const CardCorso = ({ data, className = "" }) => {
 		<div className={`flex flex-col ${className}`}>
 			<div className="min-w-60 h-min bg-grey-50 shadow rounded-lg p-4 flex-1">
 				<div className="flex items-start justify-between mb-2">
-					<h2 className="text-headline-m text-on-surface-he mr-4">
-						<span>{insegnamento.nome}</span>
-						<span className="text-xl text-on-surface-me">{` - ${insegnamento.semestre}° Semestre`}</span>
+					<h2 className="text-2xl text-on-surface-he mr-4">
+						<span>{nome}</span>
+						<span className="text-xl text-on-surface-me">{` - ${semestre}° Semestre`}</span>
 					</h2>
 					<Button
 						onClick={handleSave}
@@ -46,24 +50,24 @@ export const CardCorso = ({ data, className = "" }) => {
 				<div className="text-grey-500 text-sm">
 					<span className="mr-2">Responsabile: </span>
 					<span>
-						{insegnamento.corsi[selectedChannel]?.responsabile.nome +
+						{corsi[selectedChannel]?.responsabile.nome +
 							" " +
-							insegnamento.corsi[selectedChannel]?.responsabile.cognome +
+							corsi[selectedChannel]?.responsabile.cognome +
 							" · "}
 						<a
 							className="text-accent-600"
-							href={`mailto:${insegnamento.corsi[selectedChannel]?.responsabile.email}`}
+							href={`mailto:${corsi[selectedChannel]?.responsabile.email}`}
 							target="_blank"
 							rel="noreferrer"
 						>
-							{insegnamento.corsi[selectedChannel]?.responsabile.email}
+							{corsi[selectedChannel]?.responsabile.email}
 						</a>
 					</span>
 				</div>
 				<ChipGroup
 					label="Canale"
 					emptyMessage="Nessun partizionamento"
-					chips={insegnamento.corsi}
+					chips={corsi}
 					onChange={handleChange}
 				/>
 				<div className="mt-8">

@@ -193,9 +193,9 @@ model Profilo {
    createdAt DateTime @default(now())
    updatedAt DateTime @default(now()) @updatedAt
 
-   nome     String
+   nome     String?
    email    String  @unique
-   username String  @unique
+   username String?  @unique
    immagine String?
 
    // Relations

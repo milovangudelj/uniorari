@@ -7,16 +7,17 @@ export function useTheme() {
 }
 
 export function ThemeProvider({ children }) {
-	const [theme, setTheme] = useState("dark");
-	const [dark, setDark] = useState(false);
+	const initialTheme = "light";
+	const [theme, setTheme] = useState(initialTheme);
+	const [dark, setDark] = useState(theme === "dark");
 
 	useEffect(() => {
 		let defaultTheme = window.matchMedia("(prefers-color-scheme: light)")
 			.matches
 			? "light"
 			: "dark";
-		setTheme(localStorage.themeUniOrari || "dark");
-		setDark(localStorage.themeUniOrari === "dark" || defaultTheme === "dark");
+		setTheme(localStorage.themeUniOrari || initialTheme);
+		setDark(localStorage.themeUniOrari === "dark" || theme === "dark");
 	}, []);
 
 	useEffect(() => {
