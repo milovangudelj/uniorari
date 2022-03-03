@@ -85,7 +85,7 @@ const Corsi = () => {
 				</section>
 			</div>
 			<span className="inline-block mt-6 text-sm text-gray-500">
-				I dati mostrati fanno riferimento all'anno accademico 2021/2022
+				I dati mostrati fanno riferimento all&apos;anno accademico 2021/2022
 			</span>
 		</Layout>
 	);
