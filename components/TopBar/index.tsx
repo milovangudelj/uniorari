@@ -1,6 +1,7 @@
 import { SearchIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { Button } from "..";
 
 import { useAuth } from "../../lib/auth";
 import { Logo } from "../Logo";
@@ -20,7 +21,7 @@ export const TopBar = (props) => {
 
 	return (
 		<div
-			className={`flex justify-between bg-grey-50 py-4 px-10 shadow-sm ${props.className}`}
+			className={`flex justify-between items-center bg-grey-50 py-4 px-10 shadow-sm ${props.className}`}
 		>
 			<div className="flex items-center">
 				<Link href="/" passHref>
@@ -49,7 +50,13 @@ export const TopBar = (props) => {
 					<span className="ml-3 text-on-surface-le">ctrl + f</span>
 				</form>
 			</div>
-			<ProfileMenu user={user} signOut={signOut} />
+			{user ? (
+				<ProfileMenu user={user} signOut={signOut} />
+			) : (
+				<Button as={Link} href="/accedi" passHref>
+					Accedi
+				</Button>
+			)}
 		</div>
 	);
 };
