@@ -23,7 +23,7 @@ export const CardInsegnamento = ({
 	const [lectures, setLectures] = useState(corsi[selectedChannel]?.lezioni);
 	const [savingCourse, setSavingCourse] = useState(false);
 	const [savedCourses, setSavedCourses] = useState<string[]>(
-		user?.corsi.map((corso) => corso.id)
+		user?.corsi.map((corso) => corso.id) || []
 	);
 
 	useEffect(() => {
