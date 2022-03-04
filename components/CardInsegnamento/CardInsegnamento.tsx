@@ -1,6 +1,7 @@
 import { CheckIcon, PlusCircleIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
-import { Button, Chip, ChipGroup } from "..";
+
+import { Button, ChipGroup, Lezione } from "..";
 import { Insegnamento } from "../../graphql/types/ts";
 import { useAuth } from "../../lib/auth";
 import { useInsegnamento } from "../../lib/hooks/useInsegnamento";
@@ -8,13 +9,16 @@ import { useInsegnamento } from "../../lib/hooks/useInsegnamento";
 type CardInsegnamentoProps = {
 	data: Insegnamento;
 	className?: string;
-	handleSave: (idCorso: string) => Promise<boolean>;
+	handleSave?: (idCorso: string) => Promise<boolean>;
 };
 
 export const CardInsegnamento = ({
 	data,
 	className = "",
-	handleSave,
+	handleSave = async (idCorso) => {
+		console.log(idCorso);
+		return false;
+	},
 }: CardInsegnamentoProps) => {
 	const { user } = useAuth();
 	const { nome, semestre, corsi } = useInsegnamento(data);
@@ -41,7 +45,7 @@ export const CardInsegnamento = ({
 				if (!current.includes(idCorso)) {
 					current.push(idCorso);
 				}
-				console.log(current);
+
 				return current;
 			});
 		setSavingCourse(false);
@@ -149,41 +153,3 @@ export const CardInsegnamento = ({
 		</div>
 	);
 };
-
-const Lezione = ({ lezione, last = false }) => {
-	return (
-		<tr>
-			<td
-				className={`py-3 px-2 border-r ${
-					!last && "border-b"
-				} border-grey-300`}
-			>
-				{lezione ? days[lezione.giorno] : "-"}
-			</td>
-			<td
-				className={`py-3 px-2 border-r ${
-					!last && "border-b"
-				} border-grey-300`}
-			>
-				{lezione ? lezione.inizio + " - " + lezione.fine : "-"}
-			</td>
-			<td
-				className={`py-3 px-2 ${
-					!last && "border-b"
-				} border-grey-300 flex flex-col`}
-			>
-				<span>{lezione ? lezione.aule[0].nome : "-"}</span>
-				<a
-					href={lezione?.aule[0].link || "#"}
-					target="_blank"
-					rel="noreferrer"
-					className="text-xs text-primary-700 mt-1"
-				>
-					{lezione ? lezione.aule[0].indirizzo : "-"}
-				</a>
-			</td>
-		</tr>
-	);
-};
-
-const days = ["Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"];
