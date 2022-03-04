@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 const main = async () => {
-	console.log("Started resetting the database...");
+	console.log("Started resetting database...");
 
 	const deleteProfile = prisma.profilo.deleteMany();
 	const deleteLecture = prisma.lezione.deleteMany();
@@ -18,7 +18,7 @@ const main = async () => {
 
 	// The transaction runs synchronously so deleteUsers must run last.
 	await prisma.$transaction([
-		deleteProfile,
+		// deleteProfile,
 		deleteLecture,
 		deleteClassroom,
 		deleteCourse,
@@ -40,5 +40,5 @@ main()
 	})
 	.finally(async () => {
 		await prisma.$disconnect();
-		console.log("Prisma client disconected.");
+		console.log("Prisma client disconnected.");
 	});

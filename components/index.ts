@@ -4,6 +4,7 @@ export * from "./SideMenu";
 export * from "./Footer";
 export * from "./CardInsegnamento";
 export * from "./CardCorso";
+export * from "./CardDocente";
 export * from "./TabellaOrario";
 export * from "./Button";
 export * from "./Chip";

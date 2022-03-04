@@ -11,5 +11,5 @@ export type Docente = {
 	immagine?: string;
 	// Relations
 	corsi?: Corso[];
-	lezioni?: Lezione;
+	lezioni?: Lezione[];
 };

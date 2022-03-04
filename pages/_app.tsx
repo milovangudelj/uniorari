@@ -1,4 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
+import Image from "next/image";
 import { SWRConfig } from "swr";
 
 import "../styles/globals.css";
@@ -26,10 +27,12 @@ function MyApp({ Component, pageProps: { session, fallback, ...pageProps } }) {
 								<Component {...pageProps} />
 							) : (
 								<div className="bg-grey-100 w-screen h-screen flex items-center justify-center">
-									<img
-										src="/johntravolta.png"
+									<Image
+										src="/assets/images/johntravolta.webp"
 										alt="Confused John Travolta"
 										className="opacity-10"
+										width={224}
+										height={230}
 									/>
 								</div>
 							)}

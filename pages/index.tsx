@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 
 import { useAuth } from "../lib/auth";
 import { Layout } from "../components";
@@ -14,10 +15,12 @@ export default function Home() {
 			</Head>
 			<Layout>
 				<div className="bg-grey-100 w-full h-full flex items-center justify-center">
-					<img
-						src="/johntravolta.png"
+					<Image
+						src="/assets/images/johntravolta.webp"
 						alt="Confused John Travolta"
-						className="opacity-10 pointer-events-none select-none"
+						className="opacity-10"
+						width={224}
+						height={230}
 					/>
 				</div>
 			</Layout>

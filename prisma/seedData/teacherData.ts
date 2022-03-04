@@ -85,15 +85,11 @@ import { Prisma } from "@prisma/client";
 			nome: "Daniele",
 			cognome: "Vogrig",
 			email: "daniele.vogrig@unipd.it",
-			immagine:
-				"https://persone.csia.unipd.it/persone/foto/D7CA2C22319D73C1AC305A72727AF10C.jpg",
 		},
 		{
 			nome: "Andrea",
 			cognome: "Stanco",
 			email: "andrea.stanco@unipd.it",
-			immagine:
-				"https://persone.csia.unipd.it/persone/foto/0BC64B80408C0E58D6C2CC9628852D48.jpg",
 		},
 		{
 			nome: "Tomaso",
@@ -108,6 +104,13 @@ import { Prisma } from "@prisma/client";
 			email: "leopoldo.rossetto@unipd.it",
 			immagine:
 				"https://persone.csia.unipd.it/persone/foto/06D1B42898E26F4F82B9E83CACAD66CC.jpg",
+		},
+		{
+			nome: "Giorgio Maria",
+			cognome: "Di Nunzio",
+			email: "giorgiomaria.dinunzio@unipd.it",
+			immagine:
+				"https://persone.csia.unipd.it/persone/foto/B7D48BA95AFD879BF7692148F97AD30B.jpg",
 		},
  ];
 

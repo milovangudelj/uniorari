@@ -8,6 +8,9 @@ const { withSentryConfig } = require("@sentry/nextjs");
 const moduleExports = {
 	reactStrictMode: true,
 	outputFileTracing: false,
+	images: {
+		domains: ["persone.csia.unipd.it"],
+	},
 };
 
 const sentryWebpackPluginOptions = {
