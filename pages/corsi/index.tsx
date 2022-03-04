@@ -1,6 +1,7 @@
-import Head from "next/head";
-import useSWR, { Key, Fetcher } from "swr";
 import { useEffect, useState } from "react";
+import Head from "next/head";
+import { useMutation } from "@apollo/client";
+import useSWR, { Key, Fetcher } from "swr";
 import {
 	FilterIcon,
 	SortAscendingIcon,
@@ -12,13 +13,17 @@ import {
 	CardInsegnamentoSkeleton,
 	Layout,
 } from "../../components";
-import { Insegnamento } from "../../graphql/types/ts";
 import { order, sortInsegnamenti, useSorting } from "../../lib/hooks";
+import { useAuth } from "../../lib/auth";
+import { addCourseToProfile } from "../../graphql/queries";
 
 const API: string = "/api/corsi";
 
 const Corsi = () => {
+	const { user } = useAuth();
 	const { data, error } = useSWR(API);
+	const [addCourse, { data: mutationData, loading, error: mutationError }] =
+		useMutation(addCourseToProfile);
 	const {
 		sortedItems: sortedInsegnamenti,
 		ordering,
@@ -34,6 +39,15 @@ const Corsi = () => {
 		if (!data) return;
 		setSortedItems(data.insegnamenti);
 	}, [data]);
+
+	const handleSave = async (idCorso: string): Promise<boolean> => {
+		addCourse({
+			variables: { idProfilo: user.id, idCorso },
+		});
+
+		if (mutationError) return false;
+		return true;
+	};
 
 	return (
 		<Layout>
@@ -72,6 +86,7 @@ const Corsi = () => {
 								<CardInsegnamento
 									key={insegnamento.id}
 									data={insegnamento}
+									handleSave={handleSave}
 								/>
 							))
 						) : (

@@ -1,11 +1,11 @@
 import router from "next/router";
 import { createContext, useContext, useState, useEffect } from "react";
+import { ApiError, Session } from "@supabase/supabase-js";
 import { gql } from "@apollo/client";
 
 import { supabase } from "./supabase";
 import apolloClient from "./apollo";
 import { Profilo } from "../graphql/types/ts";
-import { ApiError, Session } from "@supabase/supabase-js";
 
 const AuthContext = createContext(undefined);
 
@@ -172,6 +172,9 @@ const formatUser = async (rawUser) => {
 				username
 				email
 				immagine
+				corsi {
+					id
+				}
 			}
 		}
 	`;

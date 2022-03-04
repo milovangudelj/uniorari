@@ -1,19 +1,15 @@
-import { SearchIcon } from "@heroicons/react/solid";
+import { LoginIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Button } from "..";
 
 import { useAuth } from "../../lib/auth";
 import { Logo } from "../Logo";
-import ProfileMenu from "../Navbar/ProfileMenu";
+import ProfileMenu from "./ProfileMenu";
 
-export const TopBar = (props) => {
+export const Navbar = (props) => {
 	const { user, signOut } = useAuth();
 	const [inputFocused, setInputFocused] = useState(false);
-
-	useEffect(() => {
-		console.log(user);
-	}, [user]);
 
 	const handleInputFocus = (focused) => {
 		setInputFocused(focused);
@@ -53,7 +49,12 @@ export const TopBar = (props) => {
 			{user ? (
 				<ProfileMenu user={user} signOut={signOut} />
 			) : (
-				<Button as={Link} href="/accedi" passHref>
+				<Button
+					as={Link}
+					href="/accedi"
+					passHref
+					endIcon={<LoginIcon className="w-4 h-4" />}
+				>
 					Accedi
 				</Button>
 			)}

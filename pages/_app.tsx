@@ -1,3 +1,4 @@
+import { ApolloProvider } from "@apollo/client";
 import { SWRConfig } from "swr";
 
 import "../styles/globals.css";
@@ -6,34 +7,37 @@ import { AuthProvider } from "../lib/auth";
 import { ThemeProvider } from "../lib/theme";
 import { DeviceProvider } from "../lib/device";
 import { Layout } from "../components";
+import apolloClient from "../lib/apollo";
 
 function MyApp({ Component, pageProps: { session, fallback, ...pageProps } }) {
 	return (
-		<AuthProvider>
-			<SWRConfig
-				value={{
-					refreshInterval: 3000,
-					fetcher: (resource, init) =>
-						fetch(resource, init).then((res) => res.json()),
-				}}
-			>
-				<DeviceProvider>
-					<ThemeProvider>
-						{true ? (
-							<Component {...pageProps} />
-						) : (
-							<div className="bg-grey-100 w-screen h-screen flex items-center justify-center">
-								<img
-									src="/johntravolta.png"
-									alt="Confused John Travolta"
-									className="opacity-10"
-								/>
-							</div>
-						)}
-					</ThemeProvider>
-				</DeviceProvider>
-			</SWRConfig>
-		</AuthProvider>
+		<ApolloProvider client={apolloClient}>
+			<AuthProvider>
+				<SWRConfig
+					value={{
+						refreshInterval: 3000,
+						fetcher: (resource, init) =>
+							fetch(resource, init).then((res) => res.json()),
+					}}
+				>
+					<DeviceProvider>
+						<ThemeProvider>
+							{true ? (
+								<Component {...pageProps} />
+							) : (
+								<div className="bg-grey-100 w-screen h-screen flex items-center justify-center">
+									<img
+										src="/johntravolta.png"
+										alt="Confused John Travolta"
+										className="opacity-10"
+									/>
+								</div>
+							)}
+						</ThemeProvider>
+					</DeviceProvider>
+				</SWRConfig>
+			</AuthProvider>
+		</ApolloProvider>
 	);
 }
 

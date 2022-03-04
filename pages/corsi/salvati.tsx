@@ -1,11 +1,12 @@
 import Head from "next/head";
-import { gql } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
 import apolloClient from "../../lib/apollo";
 import { supabase } from "../../lib/supabase";
 import { Layout } from "../../components";
+import { useEffect, useState } from "react";
 
-const getCourses = gql`
+const getMyCoursesQuery = gql`
 	query ($idProfilo: ID) {
 		profilo(id: $idProfilo) {
 			corsi {
@@ -45,36 +46,40 @@ export const getServerSideProps = async (ctx) => {
 		};
 	}
 
-	const { data, error } = await apolloClient.query({
-		query: getCourses,
-		variables: {
-			idProfilo: user.id,
-		},
-	});
-	if (error) return { props: {} };
-
-	const corsi = data.profilo.corsi;
-
 	return {
 		props: {
-			corsi,
+			idProfilo: user.id,
 		},
 	};
 };
 
-const Salvati = ({ corsi }) => {
+const Salvati = ({ idProfilo }) => {
+	const { data, loading, error } = useQuery(getMyCoursesQuery, {
+		variables: {
+			idProfilo,
+		},
+	});
+	const [corsi, setCorsi] = useState(data?.profilo.corsi);
+
+	useEffect(() => {
+		setCorsi(data?.profilo.corsi);
+	}, [data]);
+
 	return (
 		<Layout>
 			<Head>
 				<title>I miei corsi – UniOrari</title>
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
-			<h1>I miei corsi</h1>
-			<div>
-				{corsi.map((corso) => {
-					return <div key={corso.id}>{corso.nome}</div>;
-				})}
-			</div>
+			<h1 className="text-4xl font-bold mb-6">I miei corsi</h1>
+			<section className="flex justify-center">
+				<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
+					{corsi &&
+						corsi.map((corso) => {
+							return <div key={corso.id}>{corso.nome}</div>;
+						})}
+				</div>
+			</section>
 		</Layout>
 	);
 };

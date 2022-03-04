@@ -1,7 +1,6 @@
 export * from "./Layout";
 export * from "./Navbar";
 export * from "./SideMenu";
-export * from "./TopBar";
 export * from "./Footer";
 export * from "./CardInsegnamento";
 export * from "./Button";

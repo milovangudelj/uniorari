@@ -1,3 +1,9 @@
+import {
+	BookmarkIcon,
+	CogIcon,
+	LoginIcon,
+	LogoutIcon,
+} from "@heroicons/react/solid";
 import Link from "next/link";
 import { useEffect } from "react";
 
@@ -20,37 +26,49 @@ const ProfileMenu = ({ user, signOut }) => {
 				/>
 			)}
 			<div className="hidden group-hover:block absolute top-full">
-				<div className="mt-1 rounded-lg w-max bg-white dark:bg-gray-800 border border-grey-100 elevation-1">
-					<ul className="text-body-m">
-						<li className="border-b border-grey-100 py-1">
+				<div className="mt-1 rounded-lg w-max bg-white dark:bg-gray-800 border border-grey-100 shadow-sm">
+					<ul className="text-body-m text-on-surface-me">
+						<li className="border-b border-grey-100 py-1 hover:text-on-surface-he transition">
 							<Link href="/corsi/salvati">
-								<a className="inline-block w-full py-1 px-2 hover:bg-grey-50">
-									I miei corsi
+								<a className="inline-flex items-center w-full py-1 px-2 hover:bg-grey-50">
+									<span className="inline-block mr-1.5">
+										<BookmarkIcon className="w-4 h-4" />
+									</span>
+									<span>I miei corsi</span>
 								</a>
 							</Link>
 						</li>
-						<li className="border-b border-grey-100 py-1">
+						<li className="border-b border-grey-100 py-1 hover:text-on-surface-he transition">
 							<Link href="#">
-								<a className="inline-block w-full py-1 px-2 hover:bg-grey-50">
-									Impostazioni
+								<a className="inline-flex items-center w-full py-1 px-2 hover:bg-grey-50">
+									<span className="inline-block mr-1.5">
+										<CogIcon className="w-4 h-4" />
+									</span>
+									<span>Impostazioni</span>
 								</a>
 							</Link>
 						</li>
-						<li className="border-b border-grey-100 py-1">
+						<li className="border-b border-grey-100 py-1 hover:text-on-surface-he transition">
 							<ThemeSwitch className="inline-block w-full py-1 px-2" />
 						</li>
-						<li className="py-1">
+						<li className="py-1 hover:text-on-surface-he transition">
 							{user ? (
 								<button
 									onClick={signOut}
-									className="inline-block w-full text-left py-1 px-2 hover:bg-grey-50"
+									className="inline-flex items-center w-full text-left py-1 px-2 hover:bg-grey-50"
 								>
-									Log Out
+									<span className="inline-block mr-1.5">
+										<LogoutIcon className="w-4 h-4" />
+									</span>
+									<span>Log Out</span>
 								</button>
 							) : (
 								<Link href="/accedi" passHref>
 									<a className="inline-block w-full text-left py-1 px-2 hover:bg-grey-50">
-										Log In
+										<span className="inline-block mr-1.5">
+											<LoginIcon className="w-4 h-4" />
+										</span>
+										<span>Log In</span>
 									</a>
 								</Link>
 							)}

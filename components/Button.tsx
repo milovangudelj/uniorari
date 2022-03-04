@@ -3,10 +3,13 @@ import {
 	ComponentPropsWithoutRef,
 	ReactNode,
 	useState,
+	useEffect,
 } from "react";
 
 import { cls } from "../utils/helpers";
 import { ConditionalWrapper } from ".";
+
+type SizeType = "small" | "normal" | "large";
 
 interface ButtonProps<T extends ElementType> {
 	as?: T;
@@ -18,7 +21,7 @@ interface ButtonProps<T extends ElementType> {
 	loading?: boolean;
 	variant?: "text" | "contained" | "outlined";
 	color?: "primary" | "accent" | "success" | "error";
-	size?: "small" | "normal" | "large";
+	size?: SizeType;
 	startIcon?: ReactNode;
 	endIcon?: ReactNode;
 }
@@ -32,6 +35,25 @@ const classes = {
 		small: "btn-sm",
 		normal: "btn-md",
 		large: "btn-lg",
+	},
+	iconSpacing: (size: SizeType) => {
+		switch (size) {
+			case "small":
+				return {
+					start: "mr-1.5",
+					end: "ml-1.5",
+				};
+			case "normal":
+				return {
+					start: "mr-2",
+					end: "ml-2",
+				};
+			case "large":
+				return {
+					start: "mr-3",
+					end: "ml-3",
+				};
+		}
 	},
 	variant: (color) => {
 		let c = "";
@@ -71,6 +93,8 @@ export const Button = <T extends ElementType = "button">({
 	loading = false,
 	startIcon,
 	endIcon,
+	disabled,
+	className,
 	...props
 }: ButtonProps<T> &
 	Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) => {
@@ -81,11 +105,25 @@ export const Button = <T extends ElementType = "button">({
 					`${classes.base} ${classes.size[size]} ${
 						classes.variant(color)[variant]
 					} ${classes.pill(pill)} ${classes.disabled(
-						props.disabled
-					)} ${classes.loading(loading)} ${props.className}`
+						disabled
+					)} ${classes.loading(loading)} ${className}`
 			  )
-			: props.className
+			: className
 	);
+
+	useEffect(() => {
+		setStyle(
+			!external
+				? cls(
+						`${classes.base} ${classes.size[size]} ${
+							classes.variant(color)[variant]
+						} ${classes.pill(pill)} ${classes.disabled(
+							disabled
+						)} ${classes.loading(loading)} ${className}`
+				  )
+				: className
+		);
+	}, [size, color, variant, pill, disabled, loading, className]);
 
 	const content = (
 		<>
@@ -116,13 +154,19 @@ export const Button = <T extends ElementType = "button">({
 						</svg>
 					)}
 					<span
-						className={`${
-							loading ? "invisible" : ""
-						} flex gap-2 items-center`}
+						className={`${loading ? "invisible" : ""} flex items-center`}
 					>
-						{startIcon && <span>{startIcon}</span>}
-						{props.children}
-						{endIcon && <span>{endIcon}</span>}
+						{startIcon && (
+							<span className={`${classes.iconSpacing(size).start}`}>
+								{startIcon}
+							</span>
+						)}
+						<span>{props.children}</span>
+						{endIcon && (
+							<span className={`${classes.iconSpacing(size).end}`}>
+								{endIcon}
+							</span>
+						)}
 					</span>
 				</>
 			) : (
@@ -136,7 +180,7 @@ export const Button = <T extends ElementType = "button">({
 			{...props}
 			href={href}
 			passHref={passHref}
-			disabled={props.disabled || loading}
+			disabled={disabled || loading}
 			className={style}
 		>
 			<a {...props} className={style}>
@@ -147,7 +191,7 @@ export const Button = <T extends ElementType = "button">({
 		<Component
 			{...props}
 			href={href}
-			disabled={props.disabled || loading}
+			disabled={disabled || loading}
 			className={style}
 		>
 			{content}

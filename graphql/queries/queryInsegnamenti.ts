@@ -8,6 +8,7 @@ export const queryInsegnamenti = gql`
 			nome
 			semestre
 			corsi {
+				id
 				nome
 				canale {
 					nome

@@ -3,4 +3,3 @@ export const Footer = () => {
 		<footer className="absolute bottom-0">&copy; All rights reserved.</footer>
 	);
 };
- 

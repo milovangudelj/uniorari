@@ -1,29 +1,50 @@
-import { PlusCircleIcon } from "@heroicons/react/solid";
+import { CheckIcon, PlusCircleIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
 import { Button, Chip, ChipGroup } from "..";
 import { Insegnamento } from "../../graphql/types/ts";
+import { useAuth } from "../../lib/auth";
 import { useInsegnamento } from "../../lib/hooks/useInsegnamento";
 
 type CardInsegnamentoProps = {
 	data: Insegnamento;
 	className?: string;
+	handleSave: (idCorso: string) => Promise<boolean>;
 };
 
 export const CardInsegnamento = ({
 	data,
 	className = "",
+	handleSave,
 }: CardInsegnamentoProps) => {
+	const { user } = useAuth();
 	const { nome, semestre, corsi } = useInsegnamento(data);
 
 	const [selectedChannel, setSelectedChannel] = useState(0);
 	const [lectures, setLectures] = useState(corsi[selectedChannel]?.lezioni);
+	const [savingCourse, setSavingCourse] = useState(false);
+	const [savedCourses, setSavedCourses] = useState<string[]>(
+		user?.corsi.map((corso) => corso.id)
+	);
 
 	useEffect(() => {
 		setLectures(corsi[selectedChannel]?.lezioni);
 	}, [selectedChannel]);
 
-	const handleSave = () => {
-		console.log("Saving course to user");
+	const saveCourse = async () => {
+		setSavingCourse(true);
+
+		const idCorso = corsi[selectedChannel].id;
+		const success = await handleSave(idCorso);
+
+		if (success)
+			setSavedCourses((current) => {
+				if (!current.includes(idCorso)) {
+					current.push(idCorso);
+				}
+				console.log(current);
+				return current;
+			});
+		setSavingCourse(false);
 	};
 
 	const handleChange = (channelIdx) => {
@@ -38,14 +59,35 @@ export const CardInsegnamento = ({
 						<span>{nome}</span>
 						<span className="text-xl text-on-surface-me">{` - ${semestre}° Semestre`}</span>
 					</h2>
-					<Button
-						onClick={handleSave}
-						variant="text"
-						startIcon={<PlusCircleIcon className="w-5 h-5" />}
-						size="small"
-					>
-						Save
-					</Button>
+					{user &&
+						(savedCourses.includes(corsi[selectedChannel]?.id) ? (
+							<Button
+								as="span"
+								color="success"
+								variant="text"
+								size="small"
+								startIcon={
+									<CheckIcon className="w-5 h-5" aria-hidden={true} />
+								}
+							>
+								Salvato
+							</Button>
+						) : (
+							<Button
+								onClick={saveCourse}
+								loading={savingCourse}
+								variant="text"
+								startIcon={
+									<PlusCircleIcon
+										className="w-5 h-5"
+										aria-hidden={true}
+									/>
+								}
+								size="small"
+							>
+								Salva
+							</Button>
+						))}
 				</div>
 				<div className="text-grey-500 text-sm">
 					<span className="mr-2">Responsabile: </span>
