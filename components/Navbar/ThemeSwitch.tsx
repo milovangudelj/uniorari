@@ -16,7 +16,7 @@ const ThemeSwitch = (props) => {
 
 	return (
 		<div className={`${props.className} flex justify-between items-center`}>
-			Theme{" "}
+			Tema{" "}
 			<div className="flex items-center relative ml-4 bg-transparent border border-gray-100 rounded py-1 cursor-pointer">
 				<select
 					ref={selectRef}
@@ -26,8 +26,8 @@ const ThemeSwitch = (props) => {
 					onChange={handleThemeChange}
 				>
 					<option value="default">Default</option>
-					<option value="light">Light</option>
-					<option value="dark">Dark</option>
+					<option value="light">Chiaro</option>
+					<option value="dark">Scuro</option>
 				</select>
 				<span className="absolute self-center right-1 pointer-events-none">
 					<ChevronDownIcon className="w-4 text-gray-700" />
