@@ -13,16 +13,16 @@ import ThemeSwitch from "./ThemeSwitch";
 const ProfileMenu = ({ user, signOut }) => {
 	return (
 		<div className="group self-center relative flex justify-end">
-			{user?.image ? (
+			{user?.immagine ? (
 				<Avatar
-					src={user?.image}
-					alt={user?.name || user?.email}
-					title={user?.name || user?.email}
+					src={user?.immagine}
+					alt={user?.nome || user?.email}
+					title={user?.nome || user?.email}
 				/>
 			) : (
 				<Avatar
-					title={user?.name || user?.email}
-					letter={user?.name?.charAt(0) || user?.email?.charAt(0)}
+					title={user?.nome || user?.email}
+					letter={user?.nome?.charAt(0) || user?.email?.charAt(0)}
 				/>
 			)}
 			<div className="hidden group-hover:block absolute top-full">
@@ -60,7 +60,7 @@ const ProfileMenu = ({ user, signOut }) => {
 									<span className="inline-block mr-1.5">
 										<LogoutIcon className="w-4 h-4" />
 									</span>
-									<span>Log Out</span>
+									<span>Esci</span>
 								</button>
 							) : (
 								<Link href="/accedi" passHref>
@@ -68,7 +68,7 @@ const ProfileMenu = ({ user, signOut }) => {
 										<span className="inline-block mr-1.5">
 											<LoginIcon className="w-4 h-4" />
 										</span>
-										<span>Log In</span>
+										<span>Accedi</span>
 									</a>
 								</Link>
 							)}
