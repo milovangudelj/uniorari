@@ -10,6 +10,7 @@ export const queryDocenti = gql`
 			immagine
 			corsi {
 				id
+				nome
 				insegnamento {
 					nome
 				}
