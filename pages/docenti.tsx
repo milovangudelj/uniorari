@@ -45,7 +45,7 @@ const Docenti = () => {
 				<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
 					{docenti.length !== 0 ? (
 						docenti.map((docente) => {
-							return <CardDocente data={docente} />;
+							return <CardDocente key={docente.id} data={docente} />;
 						})
 					) : (
 						<span>Nessun docente trovato...</span>
