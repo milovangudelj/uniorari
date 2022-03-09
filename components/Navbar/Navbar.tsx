@@ -15,7 +15,7 @@ export const Navbar = (props) => {
 
 	return (
 		<div
-			className={`flex justify-between items-center bg-grey-50 dark:bg-grey-800 py-4 px-10 shadow-md ${props.className}`}
+			className={`flex justify-between items-center bg-grey-50 dark:bg-grey-800 py-4 px-10 shadow-sm dark:shadow-md ${props.className}`}
 		>
 			<div className="flex items-center">
 				<Link href="/" passHref>
