@@ -3,9 +3,11 @@ import Image from "next/image";
 
 import { useAuth } from "../lib/auth";
 import { Layout } from "../components";
+import { useScreen } from "../lib/hooks/useScreen";
 
 export default function Home() {
 	const { user, loading } = useAuth();
+	const screen = useScreen();
 
 	return (
 		<>
@@ -14,7 +16,7 @@ export default function Home() {
 				<meta name="description" content="Orari delle lezioni" />
 			</Head>
 			<Layout>
-				<div className="bg-grey-100 w-full h-full flex items-center justify-center">
+				<div className="w-full h-full flex items-center justify-center">
 					<Image
 						src="/assets/images/johntravolta.webp"
 						alt="Confused John Travolta"

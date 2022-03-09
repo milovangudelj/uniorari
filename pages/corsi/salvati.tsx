@@ -36,6 +36,9 @@ const getMyCoursesQuery = gql`
 						link
 					}
 				}
+				insegnamento {
+					semestre
+				}
 			}
 		}
 	}

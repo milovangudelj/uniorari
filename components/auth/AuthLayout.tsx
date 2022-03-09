@@ -6,7 +6,7 @@ export const AuthLayout = (props) => {
 
 	return (
 		<div className="h-screen flex">
-			<div className="h-full lg:w-3/5 w-full bg-grey-50 relative overflow-auto">
+			<div className="h-full lg:w-3/5 w-full bg-grey-50 dark:bg-grey-900 relative overflow-auto">
 				{props.children}
 			</div>
 			{width > 1024 && (

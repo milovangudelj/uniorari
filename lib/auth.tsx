@@ -9,7 +9,7 @@ import { Profilo } from "../graphql/types/ts";
 
 const AuthContext = createContext(undefined);
 
-export function useAuth(): {
+type AuthProviderValue = {
 	user: Profilo;
 	session: Session;
 	loading: boolean;
@@ -33,7 +33,9 @@ export function useAuth(): {
 		email: string;
 		password: string;
 	}) => Promise<void>;
-} {
+};
+
+export function useAuth(): AuthProviderValue {
 	return useContext(AuthContext);
 }
 
@@ -126,14 +128,14 @@ function useProvideAuth() {
 		router.push("/verifica-email");
 	};
 
-	const signInWithPassword = async ({ email, password }) => {
+	const signInWithPassword = async ({ email, password, redirect = "/" }) => {
 		let { error } = await supabase.auth.signIn({
 			email,
 			password,
 		});
 		if (error) return { error };
 
-		router.push("/");
+		router.push(redirect);
 	};
 
 	const signInWithGoogle = async () => {

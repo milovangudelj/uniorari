@@ -23,8 +23,8 @@ const classes = {
 	},
 	selected: (selected) =>
 		selected
-			? "bg-primary-500 border-primary-500 text-white hover:bg-primary-400 hover:border-primary-400"
-			: "bg-transparent border-primary-500 text-primary-500 hover:bg-primary-500/5 focus:bg-primary-600/10",
+			? "bg-primary-500 border-primary-500 text-on-primary-he hover:bg-primary-400 hover:border-primary-400 dark:bg-primary-400 dark:border-primary-400 dark:text-on-surface-he dark:hover:bg-primary-300 dark:hover:border-primary-300"
+			: "bg-transparent border-primary-500 text-primary-500 hover:bg-primary-500/5 focus:bg-primary-600/10 dark:bg-transparent dark:border-primary-400 dark:text-primary-400 dark:hover:bg-primary-400/5 dark:focus:bg-primary-500/10",
 };
 
 export const Chip = (props) => {

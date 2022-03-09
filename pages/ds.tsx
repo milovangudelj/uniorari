@@ -1,14 +1,14 @@
 import Link from "next/link";
 
-import { Button, ComponentShowcase } from "../components";
+import { Button, ComponentShowcase, Layout } from "../components";
 
 const Ds = () => {
 	return (
-		<>
-			<div className="px-4 pt-4 bg-grey-100">
+		<Layout>
+			<div className="px-4 pt-4">
 				<div className="mb-8">
 					<h1 className="text-4xl mb-2 font-bold">Design system</h1>
-					<p>
+					<p className="text-on-surface-me dark:text-on-primary-me">
 						Guidelines on how and where to use all the different
 						components.
 					</p>
@@ -16,7 +16,7 @@ const Ds = () => {
 				<div className="flex flex-col space-y-8">
 					<section>
 						<h2 className="text-3xl mb-2 font-bold">Buttons</h2>
-						<p>
+						<p className="text-on-surface-me dark:text-on-primary-me">
 							Labels allow users to take actions, and make choices, with
 							a single tap.
 						</p>
@@ -25,7 +25,7 @@ const Ds = () => {
 								<h3 className="text-2xl mb-1 font-medium">
 									Basic button
 								</h3>
-								<p>
+								<p className="text-on-surface-me dark:text-on-primary-me">
 									The Button comes with three variants: text (default),
 									contained, and outlined.
 								</p>
@@ -39,7 +39,7 @@ const Ds = () => {
 								<h3 className="text-2xl mb-1 font-medium">
 									Text button
 								</h3>
-								<p>
+								<p className="text-on-surface-me dark:text-on-primary-me">
 									Text buttons are typically used for less-pronounced
 									actions, including those located: in dialogs, in
 									cards. In cards, text buttons help maintain an
@@ -64,7 +64,7 @@ const Ds = () => {
 								<h3 className="text-2xl mb-1 font-medium">
 									Contained button
 								</h3>
-								<p>
+								<p className="text-on-surface-me dark:text-on-primary-me">
 									Contained buttons are high-emphasis, distinguished by
 									their use of elevation and fill. They contain actions
 									that are primary to your app.
@@ -81,12 +81,12 @@ const Ds = () => {
 								<h3 className="text-2xl mb-1 font-medium">
 									Outlined button
 								</h3>
-								<p>
+								<p className="text-on-surface-me dark:text-on-primary-me">
 									Outlined buttons are medium-emphasis buttons. They
 									contain actions that are important but aren&apos;t
 									the primary action in an app.
 								</p>
-								<p>
+								<p className="text-on-surface-me dark:text-on-primary-me">
 									Outlined buttons are also a lower emphasis
 									alternative to contained buttons, or a higher
 									emphasis alternative to text buttons.
@@ -122,7 +122,9 @@ const Ds = () => {
 							</div>
 							<div>
 								<h3 className="text-2xl mb-1 font-medium">Sizes</h3>
-								<p>For larger or smaller buttons, use the size prop.</p>
+								<p className="text-on-surface-me dark:text-on-primary-me">
+									For larger or smaller buttons, use the size prop.
+								</p>
 								<ComponentShowcase className="flex-col mt-4">
 									<div className="flex space-x-2 items-center">
 										<Button variant="text" size="small">
@@ -154,20 +156,52 @@ const Ds = () => {
 								<h3 className="text-2xl mb-1 font-medium">
 									Loading button
 								</h3>
-								<p>
+								<p className="text-on-surface-me dark:text-on-primary-me">
 									The loading buttons can show loading state and
 									disable interactions.
 								</p>
-								<ComponentShowcase className="mt-4" showCode>
-									<Button variant="text" loading>
-										Label
-									</Button>
-									<Button color="success" loading>
-										Label
-									</Button>
-									<Button variant="outlined" color="error" loading>
-										Label
-									</Button>
+								<ComponentShowcase className="flex-col mt-4">
+									<div className="flex space-x-2 items-center">
+										<Button variant="text" loading>
+											Label
+										</Button>
+										<Button variant="outlined" loading>
+											Label
+										</Button>
+										<Button variant="contained" loading>
+											Label
+										</Button>
+									</div>
+									<div className="flex space-x-2 items-center">
+										<Button color="success" variant="text" loading>
+											Label
+										</Button>
+										<Button
+											color="success"
+											variant="outlined"
+											loading
+										>
+											Label
+										</Button>
+										<Button
+											color="success"
+											variant="contained"
+											loading
+										>
+											Label
+										</Button>
+									</div>
+									<div className="flex space-x-2 items-center">
+										<Button color="error" variant="text" loading>
+											Label
+										</Button>
+										<Button color="error" variant="outlined" loading>
+											Label
+										</Button>
+										<Button color="error" variant="contained" loading>
+											Label
+										</Button>
+									</div>
 								</ComponentShowcase>
 							</div>
 						</div>
@@ -175,9 +209,11 @@ const Ds = () => {
 					<section>
 						<div className="mb-4">
 							<h2 className="text-3xl mb-1 font-bold">Shadows</h2>
-							<p>A collection of all shadow styles</p>
+							<p className="text-on-surface-me dark:text-on-primary-me">
+								A collection of all shadow styles
+							</p>
 						</div>
-						<div className="flex gap-2 border border-gray-200 p-4 items-center justify-center rounded-lg">
+						<div className="flex gap-2 border border-grey-200 dark:border-grey-800 p-4 items-center justify-center rounded-lg">
 							<div className="flex flex-wrap gap-4 items-center justify-center">
 								<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-none"></div>
 								<div className="bg-primary-500 rounded-xl w-24 h-24 shadow-sm"></div>
@@ -194,7 +230,7 @@ const Ds = () => {
 					</section>
 				</div>
 			</div>
-		</>
+		</Layout>
 	);
 };
 

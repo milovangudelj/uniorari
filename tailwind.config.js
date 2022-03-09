@@ -1,4 +1,19 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+
+const grey = {
+	// 50: "#F8FAFC",
+	// 100: "#F1F5F9",
+	// 200: "#E2E8F0",
+	// 300: "#CBD5E1",
+	// 400: "#94A3B8",
+	// 500: "#64748B",
+	// 600: "#475569",
+	// 700: "#334155",
+	// 800: "#1E293B",
+	// 900: "#0F172A",
+	...colors.gray,
+};
 
 module.exports = {
 	content: [
@@ -26,18 +41,7 @@ module.exports = {
 		},
 		extend: {
 			colors: {
-				grey: {
-					50: "#F8FAFC",
-					100: "#F1F5F9",
-					200: "#E2E8F0",
-					300: "#CBD5E1",
-					400: "#94A3B8",
-					500: "#64748B",
-					600: "#475569",
-					700: "#334155",
-					800: "#1E293B",
-					900: "#0F172A",
-				},
+				grey,
 				primary: {
 					50: "#EEF2FF",
 					100: "#E0E7FF",
@@ -87,14 +91,14 @@ module.exports = {
 					900: "#7F1D1D",
 				},
 				"on-surface": {
-					he: "rgba(0, 0, 0, 0.87)",
-					me: "rgba(0, 0, 0, 0.60)",
-					le: "rgba(0, 0, 0, 0.38)",
+					he: grey[900],
+					me: grey[500],
+					le: grey[400],
 				},
 				"on-primary": {
-					he: "rgba(255, 255, 255, 1)",
-					me: "rgba(255, 255, 255, 0.74)",
-					le: "rgba(255, 255, 255, 0.38)",
+					he: grey[50],
+					me: grey[300],
+					le: grey[500],
 				},
 				google: {
 					lightBg: "#FFFFFF",

@@ -12,3 +12,7 @@ export * from "./ChipGroup";
 export * from "./Code";
 export * from "./ComponentShowcase";
 export * from "./ConditionalWrapper";
+export * from "./ProfileMenu";
+export * from "./ThemeSwitch";
+export * from "./Avatar";
+export * from "./Logo";

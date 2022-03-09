@@ -1,11 +1,9 @@
 import { LoginIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Button } from "..";
 
 import { useAuth } from "../../lib/auth";
-import { Logo } from "../Logo";
-import ProfileMenu from "./ProfileMenu";
+import { Button, Logo, ProfileMenu } from "..";
 
 export const Navbar = (props) => {
 	const { user, signOut } = useAuth();
@@ -17,7 +15,7 @@ export const Navbar = (props) => {
 
 	return (
 		<div
-			className={`flex justify-between items-center bg-grey-50 py-4 px-10 shadow-sm ${props.className}`}
+			className={`flex justify-between items-center bg-grey-50 dark:bg-grey-800 py-4 px-10 shadow-md ${props.className}`}
 		>
 			<div className="flex items-center">
 				<Link href="/" passHref>
@@ -27,23 +25,26 @@ export const Navbar = (props) => {
 				</Link>
 				<form
 					action=""
-					className="hidden lg:flex group p-2 shadow-sm w-max transition text-on-surface-le rounded-lg bg-grey-100"
+					className="hidden lg:flex group p-2 shadow-sm w-max transition text-on-surface-le dark:text-on-primary-le rounded-lg bg-grey-100 dark:bg-grey-700"
 				>
 					<span>
 						<SearchIcon
 							className={`w-5 mr-3 transition ${
-								inputFocused && "text-on-surface-me"
+								inputFocused &&
+								"text-on-surface-me dark:text-on-primary-me"
 							}`}
 						/>
 					</span>
 					<input
 						type="text"
 						placeholder="Cerca..."
-						className="bg-transparent transition placeholder-on-surface-me focus:placeholder-on-surface-le text-on-surface-me outline-none"
+						className="bg-transparent transition placeholder-on-surface-me dark:placeholder-on-primary-me focus:placeholder-on-surface-le dark:focus:placeholder-on-primary-le text-on-surface-me dark:text-on-primary-me outline-none"
 						onFocus={() => handleInputFocus(true)}
 						onBlur={() => handleInputFocus(false)}
 					/>
-					<span className="ml-3 text-on-surface-le">ctrl + f</span>
+					<span className="ml-3 text-on-surface-le dark:text-on-primary-le">
+						ctrl + f
+					</span>
 				</form>
 			</div>
 			{user ? (

@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { Navbar, Footer, SideMenu } from ".";
-import { useTheme } from "../lib/theme";
-
-const excPaths = ["/accedi", "/iscriviti", "/verifica-email"];
 
 export const Layout = (props) => {
-	const { dark } = useTheme();
-
 	return (
-		<div className={`${dark && "dark "}relative min-h-screen bg-grey-50`}>
+		<div className={`relative min-h-screen bg-grey-100 dark:bg-grey-900`}>
 			<Head>
 				<link
 					rel="apple-touch-icon"
@@ -38,7 +31,7 @@ export const Layout = (props) => {
 				<meta name="msapplication-TileColor" content="#da532c" />
 				<meta name="theme-color" content="#6366F1" />
 			</Head>
-			<div className="grid grid-cols-layout grid-rows-layout h-screen bg-grey-100 border-collapse">
+			<div className="grid grid-cols-layout grid-rows-layout h-screen border-collapse">
 				<Navbar className="row-start-1 row-span-1 col-start-1 sticky z-10 top-0 col-span-2" />
 				<main className="lg:col-span-1 col-span-2 row-span-1 col-start-1 lg:col-start-2 max-h-full overflow-auto px-10 py-6 row-start-2">
 					{props.children}

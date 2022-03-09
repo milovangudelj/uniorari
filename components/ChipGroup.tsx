@@ -23,7 +23,7 @@ export const ChipGroup = ({
 	};
 
 	return (
-		<div className="text-grey-500 text-sm flex">
+		<div className="text-on-surface-me dark:text-on-primary-me text-sm flex">
 			<span className="mr-2">{label}:</span>
 			<ul className="flex space-x-1">
 				{chips.length ? (

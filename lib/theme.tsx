@@ -1,32 +1,49 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+	createContext,
+	Dispatch,
+	SetStateAction,
+	useContext,
+	useEffect,
+	useLayoutEffect,
+	useState,
+} from "react";
 
 const ThemeContext = createContext(undefined);
 
-export function useTheme() {
+type Theme = "system" | "light" | "dark";
+interface UseThemeValue {
+	dark: boolean;
+	theme: Theme;
+	setTheme: Dispatch<SetStateAction<Theme>>;
+}
+
+export function useTheme(): UseThemeValue {
 	return useContext(ThemeContext);
 }
 
+const MEDIA_QUERY = "(prefers-color-scheme: dark)";
+
 export function ThemeProvider({ children }) {
-	const initialTheme = "light";
-	const [theme, setTheme] = useState(initialTheme);
+	const [theme, setTheme] = useState(null);
 	const [dark, setDark] = useState(theme === "dark");
 
-	useEffect(() => {
-		let defaultTheme = window.matchMedia("(prefers-color-scheme: light)")
-			.matches
-			? "light"
-			: "dark";
-		setTheme(localStorage.themeUniOrari || initialTheme);
-		setDark(localStorage.themeUniOrari === "dark" || theme === "dark");
+	useLayoutEffect(() => {
+		let preferredTheme = localStorage.themeUniOrari;
+		let systemTheme = window.matchMedia(MEDIA_QUERY).matches
+			? "dark"
+			: "light";
+
+		setTheme(preferredTheme || "system");
+		setDark(preferredTheme === "dark" || systemTheme === "dark");
 	}, []);
 
 	useEffect(() => {
-		if (theme !== "default") {
+		if (theme !== "system") {
 			localStorage.themeUniOrari = theme;
 			setDark(theme === "dark");
 		} else {
 			localStorage.removeItem("themeUniOrari");
-			setDark(window.matchMedia("(prefers-color-scheme: dark)").matches);
+			setDark(window.matchMedia(MEDIA_QUERY).matches);
 		}
 	}, [theme]);
 

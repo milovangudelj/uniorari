@@ -1,8 +1,8 @@
 import { ChevronDownIcon, SunIcon } from "@heroicons/react/solid";
-import { useEffect, useRef } from "react";
-import { useTheme } from "../../lib/theme";
+import { useEffect, useLayoutEffect, useRef } from "react";
+import { useTheme } from "next-themes";
 
-const ThemeSwitch = (props) => {
+export const ThemeSwitch = (props) => {
 	const { theme, setTheme } = useTheme();
 	const selectRef = useRef(null);
 
@@ -11,7 +11,7 @@ const ThemeSwitch = (props) => {
 	}, []);
 
 	const handleThemeChange = () => {
-		setTheme(selectRef.current?.value || "default");
+		setTheme(selectRef.current?.value || "system");
 	};
 
 	return (
@@ -20,7 +20,7 @@ const ThemeSwitch = (props) => {
 				<SunIcon className="w-4 h-4" />
 			</span>
 			<span className="cursor-default">Tema</span>{" "}
-			<div className="flex items-center relative ml-4 bg-transparent border border-gray-100 dark:border-gray-700 rounded py-1 cursor-pointer">
+			<div className="flex items-center relative ml-4 bg-transparent border border-grey-100 hover:border-grey-300 dark:border-grey-700 dark:hover:border-grey-500 transition duration-100 rounded py-1 cursor-pointer">
 				<select
 					ref={selectRef}
 					name="theme"
@@ -28,22 +28,20 @@ const ThemeSwitch = (props) => {
 					className="appearance-none bg-transparent outline-none pl-2 pr-7 cursor-pointer"
 					onChange={handleThemeChange}
 				>
-					<option className="bg-white dark:bg-gray-800" value="default">
-						Default
+					<option className="bg-white dark:bg-grey-800" value="system">
+						Sistema
 					</option>
-					<option className="bg-white dark:bg-gray-800" value="light">
+					<option className="bg-white dark:bg-grey-800" value="light">
 						Chiaro
 					</option>
-					<option className="bg-white dark:bg-gray-800" value="dark">
+					<option className="bg-white dark:bg-grey-800" value="dark">
 						Scuro
 					</option>
 				</select>
 				<span className="absolute self-center right-1 pointer-events-none">
-					<ChevronDownIcon className="w-4 text-gray-700" />
+					<ChevronDownIcon className="w-4 text-grey-700" />
 				</span>
 			</div>
 		</div>
 	);
 };
-
-export default ThemeSwitch;

@@ -1,4 +1,3 @@
-import { withSentry } from "@sentry/nextjs";
 import { gql } from "@apollo/client";
 
 import apolloClient from "../../lib/apollo";
@@ -45,5 +44,4 @@ const handler = async (req, res) => {
 	res.status(200).json(output);
 };
 
-export default withSentry(handler);
- 
+export default handler;

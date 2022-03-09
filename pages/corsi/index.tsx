@@ -67,7 +67,7 @@ const Corsi = () => {
 					</span> */}
 						<span
 							onClick={changeOrdering}
-							className="text-on-surface-me hover:text-on-surface-he transition"
+							className="text-on-surface-me hover:text-on-surface-he dark:text-on-primary-me dark:hover:text-on-primary-he transition"
 						>
 							{ordering === order.initial ? (
 								<FilterIcon className="w-5 h-5 cursor-pointer" />
@@ -99,7 +99,7 @@ const Corsi = () => {
 					</div>
 				</section>
 			</div>
-			<span className="inline-block mt-6 text-sm text-gray-500">
+			<span className="inline-block mt-6 text-sm text-on-surface-le dark:text-on-primary-le">
 				I dati mostrati fanno riferimento all&apos;anno accademico 2021/2022
 			</span>
 		</Layout>

@@ -8,7 +8,7 @@ export const GoogleButton = (props) => {
 			<Button
 				onClick={props.onClick || signInWithGoogle}
 				external
-				className="w-full text-sm font-roboto font-medium text-white uppercase flex justify-center items-center rounded-lg px-2 h-10 bg-google-darkBg shadow-none hover:shadow-google focus:bg-google-darkBgFocus focus:shadow-none transition"
+				className="w-full text-sm font-roboto font-medium text-white uppercase flex justify-center items-center rounded-lg px-2 h-10 bg-google-darkBg shadow-none outline-none outline-offset-0 hover:outline-[3px] hover:outline-google-darkBg/40 focus:outline-google-darkBg/40 focus:bg-google-darkBgFocus focus:shadow-none transition"
 			>
 				<span className="mr-5 bg-white rounded-full p-1">
 					<svg

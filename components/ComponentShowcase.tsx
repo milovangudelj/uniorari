@@ -43,7 +43,7 @@ export const ComponentShowcase = ({
 	return (
 		<>
 			<div
-				className={`flex gap-2 border border-gray-200 p-4 items-center justify-center rounded-lg ${className}`}
+				className={`flex gap-2 border border-grey-200 dark:border-grey-800 p-4 items-center justify-center rounded-lg ${className}`}
 			>
 				{children}
 			</div>
