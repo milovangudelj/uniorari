@@ -1,9 +1,12 @@
 const classes = {
-	base: "inline-block rounded-lg",
+	base: "inline-block rounded-lg bg-skeleton animate-skeleton",
 	shade: {
-		lighter: "bg-grey-300 dark:bg-grey-600",
-		normal: "bg-grey-200 dark:bg-grey-700",
-		darker: "bg-grey-100 dark:bg-grey-800",
+		emphasized:
+			"bg-grey-300 bg-skeleton-darker dark:bg-grey-600 dark:bg-dark-skeleton-lighter",
+		normal:
+			"bg-grey-200 bg-skeleton-normal dark:bg-grey-700 dark:bg-dark-skeleton-normal",
+		deemphasized:
+			"bg-grey-100 bg-skeleton-lighter dark:bg-grey-800 dark:bg-dark-skeleton-darker",
 	},
 	size: {
 		xs: { inner: "h-3", outer: "h-4" },
@@ -37,7 +40,7 @@ export const Placeholder = ({
 };
 
 type PlaceholderProps = {
-	shade?: "lighter" | "normal" | "darker";
+	shade?: "emphasized" | "normal" | "deemphasized";
 	size?:
 		| "xs"
 		| "sm"
