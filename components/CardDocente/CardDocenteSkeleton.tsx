@@ -14,8 +14,8 @@ export const CardDocenteSkeleton = () => {
 					/>
 				</span>
 				<div className="w-min flex flex-col md:w-max">
-					<Placeholder size="2xl" shade="lighter" className="w-40" />
-					<Placeholder size="sm" shade="lighter" />
+					<Placeholder size="2xl" shade="emphasized" className="w-40" />
+					<Placeholder size="sm" shade="emphasized" />
 				</div>
 			</div>
 			<div className="p-4 h-full bg-grey-100 dark:bg-grey-800">
