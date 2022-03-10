@@ -109,6 +109,25 @@ module.exports = {
 			backgroundImage: {
 				"unsplash-random":
 					"url('https://source.unsplash.com/random/?calendar')",
+				"skeleton-lighter": `linear-gradient(110deg, ${grey[100]} 8%, ${grey[50]} 18%, ${grey[100]} 33%)`,
+				"skeleton-normal": `linear-gradient(110deg, ${grey[200]} 8%, ${grey[100]} 18%, ${grey[200]} 33%)`,
+				"skeleton-darker": `linear-gradient(110deg, ${grey[300]} 8%, ${grey[200]} 18%, ${grey[300]} 33%)`,
+				"dark-skeleton-lighter": `linear-gradient(110deg, ${grey[600]} 8%, ${grey[500]} 18%, ${grey[600]} 33%)`,
+				"dark-skeleton-normal": `linear-gradient(110deg, ${grey[700]} 8%, ${grey[600]} 18%, ${grey[700]} 33%)`,
+				"dark-skeleton-darker": `linear-gradient(110deg, ${grey[800]} 8%, ${grey[700]} 18%, ${grey[800]} 33%)`,
+			},
+			backgroundSize: {
+				skeleton: "200% 100%",
+			},
+			keyframes: {
+				loading: {
+					to: {
+						backgroundPositionX: "-200%",
+					},
+				},
+			},
+			animation: {
+				skeleton: "1.5s loading linear infinite",
 			},
 			fontSize: {
 				"display-l": "3.5625rem",
