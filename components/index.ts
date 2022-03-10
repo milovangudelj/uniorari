@@ -16,3 +16,4 @@ export * from "./ProfileMenu";
 export * from "./ThemeSwitch";
 export * from "./Avatar";
 export * from "./Logo";
+export * from "./Skeleton";
