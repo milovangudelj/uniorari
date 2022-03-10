@@ -1,27 +1,29 @@
+import { Placeholder } from "..";
+
 export const CardInsegnamentoSkeleton = () => {
 	return (
 		<div className={`flex flex-col`}>
 			<div className="min-w-60 h-min bg-grey-50 dark:bg-grey-800 shadow rounded-lg p-4 flex-1">
 				<div className="flex items-start justify-between mb-2">
 					<h2 className="text-2xl text-on-surface-he dark:text-on-primary-he mr-4">
-						<span className="inline-block rounded-lg w-48 h-6 bg-grey-200 dark:bg-grey-700"></span>
+						<Placeholder size="2xl" className="w-48" />
 						<span className="text-xl text-on-surface-me dark:text-on-primary-me">
 							{" - "}
 						</span>
-						<span className="inline-block rounded-lg w-32 h-5 bg-grey-200 dark:bg-grey-700"></span>
+						<Placeholder size="xl" />
 					</h2>
 				</div>
 				<div className="text-on-surface-me dark:text-on-primary-me text-sm">
 					<span className="mr-2">Responsabile: </span>
 					<span>
-						<span className="inline-block rounded-lg w-32 h-[0.875rem] bg-grey-200 dark:bg-grey-700"></span>
+						<Placeholder size="sm" />
 						<span>{" · "}</span>
-						<span className="inline-block rounded-lg w-32 h-[0.875rem] bg-grey-200 dark:bg-grey-700"></span>
+						<Placeholder size="sm" />
 					</span>
 				</div>
 				<div className="text-on-surface-me dark:text-on-primary-me text-sm">
 					<span className="mr-2">Canali: </span>
-					<span className="inline-block rounded-lg w-32 h-[0.875rem] bg-grey-200 dark:bg-grey-700"></span>
+					<Placeholder size="sm" />
 				</div>
 				<div className="mt-8">
 					<span className="text-label-l font-medium text-on-surface-he dark:text-on-primary-he">
@@ -46,18 +48,18 @@ export const CardInsegnamentoSkeleton = () => {
 								<td
 									className={`py-3 px-2 border-r border-grey-300 dark:border-grey-600`}
 								>
-									<span className="inline-block rounded-lg w-16 h-4 bg-grey-200 dark:bg-grey-700"></span>
+									<Placeholder className="w-24" />
 								</td>
 								<td
 									className={`py-3 px-2 border-r border-grey-300 dark:border-grey-600`}
 								>
-									<span className="inline-block rounded-lg w-16 h-4 bg-grey-200 dark:bg-grey-700"></span>
+									<Placeholder className="w-24" />
 								</td>
 								<td
 									className={`py-3 px-2 border-grey-300 dark:border-grey-600 flex flex-col`}
 								>
-									<span className="inline-block rounded-lg w-auto h-4 bg-grey-200 dark:bg-grey-700"></span>
-									<span className="inline-block rounded-lg w-auto h-3 bg-grey-200 dark:bg-grey-700 mt-1"></span>
+									<Placeholder className="w-full" />
+									<Placeholder size="xs" className="w-full" />
 								</td>
 							</tr>
 						</tbody>
