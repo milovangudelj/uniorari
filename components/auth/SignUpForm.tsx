@@ -111,7 +111,10 @@ export const SignUpForm = () => {
 							htmlFor="name"
 							className="text-body-l inline-block mb-2"
 						>
-							Nome<span className="text-accent-500">*</span>
+							Nome
+							<span className="text-accent-500 dark:text-accent-400">
+								*
+							</span>
 						</label>
 						<input
 							type="text"
@@ -121,11 +124,13 @@ export const SignUpForm = () => {
 							autoComplete="off"
 							{...register("name")}
 							className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-								errors.name ? "border-error-500" : "border-grey-200"
-							} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+								errors.name
+									? "border-error-500 dark:border-error-400"
+									: "border-grey-200 dark:border-grey-700"
+							} bg-grey-50 dark:bg-grey-900 hover:border-grey-300 dark:hover:border-grey-600 hover:bg-grey-100 dark:hover:bg-grey-800 focus:border-primary-300 dark:focus:border-primary-700 focus:bg-grey-100 dark:focus:bg-grey-800 transition w-full leading-5`}
 						/>
 						{errors.name && (
-							<span className="text-label-l text-error-500">
+							<span className="text-label-l text-error-500 dark:text-error-400">
 								{errors.name.message}
 							</span>
 						)}
@@ -135,7 +140,10 @@ export const SignUpForm = () => {
 							htmlFor="username"
 							className="text-body-l inline-block mb-2"
 						>
-							Username<span className="text-accent-500">*</span>
+							Username
+							<span className="text-accent-500 dark:text-accent-400">
+								*
+							</span>
 						</label>
 						<input
 							type="text"
@@ -145,11 +153,13 @@ export const SignUpForm = () => {
 							autoComplete="off"
 							{...register("username")}
 							className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-								errors.username ? "border-error-500" : "border-grey-200"
-							} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+								errors.username
+									? "border-error-500 dark:border-error-400"
+									: "border-grey-200 dark:border-grey-700"
+							} bg-grey-50 dark:bg-grey-900 hover:border-grey-300 dark:hover:border-grey-600 hover:bg-grey-100 dark:hover:bg-grey-800 focus:border-primary-300 dark:focus:border-primary-700 focus:bg-grey-100 dark:focus:bg-grey-800 transition w-full leading-5`}
 						/>
 						{errors.username && (
-							<span className="text-label-l text-error-500">
+							<span className="text-label-l text-error-500 dark:text-error-400">
 								{errors.username.message}
 							</span>
 						)}
@@ -157,7 +167,10 @@ export const SignUpForm = () => {
 				</div>
 				<div className="mb-4">
 					<label htmlFor="email" className="text-body-l inline-block mb-2">
-						Email<span className="text-accent-500">*</span>
+						Email
+						<span className="text-accent-500 dark:text-accent-400">
+							*
+						</span>
 					</label>
 					<input
 						type="email"
@@ -167,11 +180,13 @@ export const SignUpForm = () => {
 						autoComplete="off"
 						{...register("email")}
 						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-							errors.email ? "border-error-500" : "border-grey-200"
-						} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+							errors.email
+								? "border-error-500 dark:border-error-400"
+								: "border-grey-200 dark:border-grey-700"
+						} bg-grey-50 dark:bg-grey-900 hover:border-grey-300 dark:hover:border-grey-600 hover:bg-grey-100 dark:hover:bg-grey-800 focus:border-primary-300 dark:focus:border-primary-700 focus:bg-grey-100 dark:focus:bg-grey-800 transition w-full leading-5`}
 					/>
 					{errors.email && (
-						<span className="text-label-l text-error-500">
+						<span className="text-label-l text-error-500 dark:text-error-400">
 							{errors.email.message}
 						</span>
 					)}
@@ -181,7 +196,10 @@ export const SignUpForm = () => {
 						htmlFor="password"
 						className="text-body-l inline-block mb-2"
 					>
-						Password<span className="text-accent-500">*</span>
+						Password
+						<span className="text-accent-500 dark:text-accent-400">
+							*
+						</span>
 					</label>
 					<input
 						type="password"
@@ -191,11 +209,13 @@ export const SignUpForm = () => {
 						autoComplete="off"
 						{...register("password")}
 						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-							errors.password ? "border-error-500" : "border-grey-200"
-						} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+							errors.password
+								? "border-error-500 dark:border-error-400"
+								: "border-grey-200 dark:border-grey-700"
+						} bg-grey-50 dark:bg-grey-900 hover:border-grey-300 dark:hover:border-grey-600 hover:bg-grey-100 dark:hover:bg-grey-800 focus:border-primary-300 dark:focus:border-primary-700 focus:bg-grey-100 dark:focus:bg-grey-800 transition w-full leading-5`}
 					/>
 					{errors.password && (
-						<span className="text-label-l text-error-500">
+						<span className="text-label-l text-error-500 dark:text-error-400">
 							{errors.password.message}
 						</span>
 					)}

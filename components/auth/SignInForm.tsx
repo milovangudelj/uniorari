@@ -103,9 +103,12 @@ export const SignInForm = () => {
 	return (
 		<form onSubmit={handleSubmit(onSubmitWithReCAPTCHA)} noValidate>
 			<div>
-				<div className="mt-2 mb-4">
+				<div className="mt-2 group mb-4">
 					<label htmlFor="email" className="text-body-l inline-block mb-2">
-						Email<span className="text-accent-500">*</span>
+						Email
+						<span className="text-accent-500 dark:text-accent-400">
+							*
+						</span>
 					</label>
 					<input
 						type="email"
@@ -114,11 +117,13 @@ export const SignInForm = () => {
 						placeholder="email@example.com"
 						{...register("email")}
 						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-							errors.email ? "border-error-500" : "border-grey-200"
-						} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+							errors.email
+								? "border-error-500 dark:border-error-400"
+								: "border-grey-200 dark:border-grey-700"
+						} bg-grey-50 dark:bg-grey-900 group-hover:border-grey-300 dark:group-hover:border-grey-600 group-hover:bg-grey-100 dark:group-hover:bg-grey-800 focus:border-primary-300 dark:focus:border-primary-700 focus:bg-grey-100 dark:focus:bg-grey-800 transition w-full leading-5`}
 					/>
 					{errors.email && (
-						<span className="text-label-l text-error-500">
+						<span className="text-label-l text-error-500 dark:text-error-400">
 							{errors.email.message}
 						</span>
 					)}
@@ -128,7 +133,10 @@ export const SignInForm = () => {
 						htmlFor="password"
 						className="text-body-l inline-block mb-2"
 					>
-						Password<span className="text-accent-500">*</span>
+						Password
+						<span className="text-accent-500 dark:text-accent-400">
+							*
+						</span>
 					</label>
 					<input
 						type="password"
@@ -137,11 +145,13 @@ export const SignInForm = () => {
 						placeholder="8-32 caratteri"
 						{...register("password")}
 						className={`outline-none text-body-m py-3 px-4 rounded-lg border ${
-							errors.password ? "border-error-500" : "border-grey-200"
-						} bg-grey-100 hover:border-grey-300 hover:bg-white focus:border-primary-300 focus:bg-white transition w-full leading-5`}
+							errors.password
+								? "border-error-500 dark:border-error-400"
+								: "border-grey-200 dark:border-grey-700"
+						} bg-grey-50 dark:bg-grey-900 hover:border-grey-300 dark:hover:border-grey-600 hover:bg-grey-100 dark:hover:bg-grey-800 focus:border-primary-300 dark:focus:border-primary-700 focus:bg-grey-100 dark:focus:bg-grey-800 transition w-full leading-5`}
 					/>
 					{errors.password && (
-						<span className="text-label-l text-error-500">
+						<span className="text-label-l text-error-500 dark:text-error-400">
 							{errors.password.message}
 						</span>
 					)}

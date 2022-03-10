@@ -37,11 +37,11 @@ export const AuthForm = (props: propsType) => {
 				<AuthDivider />
 				{isSignin ? <SignInForm /> : <SignUpForm />}
 
-				<div className="text-body-m text-on-surface-he md:absolute md:top-8 md:left-8 md:my-0 my-6">
+				<div className="text-body-m text-on-surface-he dark:text-on-primary-he md:absolute md:top-8 md:left-8 md:my-0 my-6">
 					{isSignin ? "Non hai un account?" : "Hai già un account?"}
 					{` `}
 					<Link href={isSignin ? "/iscriviti" : "/accedi"}>
-						<a className="text-accent-500 hover:text-accent-400 transition">
+						<a className="text-accent-500 dark:text-accent-400 hover:text-accent-400 dark:hover:text-accent-300 transition">
 							{isSignin ? "Iscriviti" : "Accedi"}
 						</a>
 					</Link>
