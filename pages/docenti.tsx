@@ -2,7 +2,7 @@ import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 
-import { CardDocente, Layout } from "../components";
+import { CardDocente, CardDocenteSkeleton, Layout } from "../components";
 import { queryDocenti } from "../graphql/queries";
 import { Docente } from "../graphql/types/ts";
 
@@ -48,7 +48,11 @@ const Docenti = () => {
 							return <CardDocente key={docente.id} data={docente} />;
 						})
 					) : (
-						<span>Nessun docente trovato...</span>
+						<>
+							<CardDocenteSkeleton />
+							<CardDocenteSkeleton />
+							<CardDocenteSkeleton />
+						</>
 					)}
 				</div>
 			</section>
