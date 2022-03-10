@@ -109,12 +109,12 @@ module.exports = {
 			backgroundImage: {
 				"unsplash-random":
 					"url('https://source.unsplash.com/random/?calendar')",
-				"skeleton-lighter": `linear-gradient(110deg, ${grey[100]} 8%, ${grey[50]} 18%, ${grey[100]} 33%)`,
-				"skeleton-normal": `linear-gradient(110deg, ${grey[200]} 8%, ${grey[100]} 18%, ${grey[200]} 33%)`,
-				"skeleton-darker": `linear-gradient(110deg, ${grey[300]} 8%, ${grey[200]} 18%, ${grey[300]} 33%)`,
-				"dark-skeleton-lighter": `linear-gradient(110deg, ${grey[600]} 8%, ${grey[500]} 18%, ${grey[600]} 33%)`,
-				"dark-skeleton-normal": `linear-gradient(110deg, ${grey[700]} 8%, ${grey[600]} 18%, ${grey[700]} 33%)`,
-				"dark-skeleton-darker": `linear-gradient(110deg, ${grey[800]} 8%, ${grey[700]} 18%, ${grey[800]} 33%)`,
+				"skeleton-lighter": `linear-gradient(100deg, ${grey[100]} 8%, ${grey[50]} 24%, ${grey[100]} 40%)`,
+				"skeleton-normal": `linear-gradient(100deg, ${grey[200]} 8%, ${grey[100]} 24%, ${grey[200]} 40%)`,
+				"skeleton-darker": `linear-gradient(100deg, ${grey[300]} 8%, ${grey[200]} 24%, ${grey[300]} 40%)`,
+				"dark-skeleton-lighter": `linear-gradient(100deg, ${grey[600]} 8%, ${grey[500]} 24%, ${grey[600]} 40%)`,
+				"dark-skeleton-normal": `linear-gradient(100deg, ${grey[700]} 8%, ${grey[600]} 24%, ${grey[700]} 40%)`,
+				"dark-skeleton-darker": `linear-gradient(100deg, ${grey[800]} 8%, ${grey[700]} 24%, ${grey[800]} 40%)`,
 			},
 			backgroundSize: {
 				skeleton: "200% 100%",
