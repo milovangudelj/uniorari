@@ -23,8 +23,8 @@ const API_SAVED: string = "/api/corsi-salvati";
 const Corsi = () => {
 	const { user } = useAuth();
 	const { data: coursesData, error: coursesError } = useSWR(API_COURSES);
-	const { data: savedData, error: savedError } = useSWR(
-		`${API_SAVED}?onlyIds=true`
+	const { data: savedData, error: savedError } = useSWR(() =>
+		user ? `${API_SAVED}?onlyIds=true` : null
 	);
 	const [saved, setSaved] = useState<string[]>([]);
 	const [
