@@ -44,7 +44,7 @@ const Salvati = () => {
 	);
 	const [removeCourse, { loading: mutationLoading, error: mutationError }] =
 		useMutation(removeCourseFromProfile);
-	const [corsi, setCorsi] = useState<Corso[]>(data?.profilo.corsi);
+	const [corsi, setCorsi] = useState<Corso[]>(data?.profilo?.corsi || []);
 
 	useEffect(() => {
 		setCorsi(data?.profilo.corsi);
