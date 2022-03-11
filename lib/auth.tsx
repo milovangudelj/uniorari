@@ -59,6 +59,13 @@ function useProvideAuth() {
 		const { data: authListener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
 				setSession(session);
+				await fetch("/api/auth", {
+					method: "POST",
+					body: JSON.stringify({ event, session }),
+					headers: {
+						"Content-Type": "application/json",
+					},
+				});
 
 				await handleUser(session?.user ?? null);
 			}
