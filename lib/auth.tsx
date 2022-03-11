@@ -47,41 +47,32 @@ export function AuthProvider({ children }) {
 
 function useProvideAuth() {
 	const [user, setUser] = useState<Profilo>(null);
-	const [session, setSession] = useState(null);
-	const [loading, setLoading] = useState(true);
+	const [session, setSession] = useState<Session>(null);
+	const [loading, setLoading] = useState<boolean>(true);
 
 	useEffect(() => {
-		// get session for user
-		const session = supabase.auth.session();
-		setSession(session);
-
-		handleUser(session?.user);
+		// Get session and user
+		setSession(supabase.auth.session());
+		handleUser(supabase.auth.user());
 
 		// Listen for changes on auth state (logged in, signed out, etc.)
-		const { data: listener } = supabase.auth.onAuthStateChange(
+		const { data: authListener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
 				setSession(session);
-				await fetch("/api/auth", {
-					method: "POST",
-					body: JSON.stringify({ event, session }),
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
 
-				await handleUser(session?.user);
+				await handleUser(session?.user ?? null);
 			}
 		);
 
 		return () => {
-			listener?.unsubscribe();
+			authListener.unsubscribe();
 		};
 	}, []);
 
 	// TODO: Add user handling logic to remove everything not necessary
 	const handleUser = async (rawUser) => {
 		if (rawUser) {
-			const user: Profilo = await formatUser(rawUser);
+			const user = await formatUser(rawUser);
 
 			setUser(user);
 		} else {
@@ -91,13 +82,18 @@ function useProvideAuth() {
 		setLoading(false);
 	};
 
-	const signUpWithPassword = async (userData: {
-		name: string;
-		username: string;
-		email: string;
-		password: string;
-	}) => {
-		const auth = await supabase.auth.signUp(
+	const signUpWithPassword = async (
+		userData: {
+			name: string;
+			username: string;
+			email: string;
+			password: string;
+		},
+		options?: {
+			redirectTo?: string;
+		}
+	) => {
+		const { error } = await supabase.auth.signUp(
 			{
 				email: userData.email,
 				password: userData.password,
@@ -109,9 +105,9 @@ function useProvideAuth() {
 				},
 			}
 		);
-		if (auth.error) throw auth.error;
+		if (error) throw error;
 
-		router.push("/verifica-email");
+		router.push(options?.redirectTo ?? "/verifica-email");
 	};
 
 	/**
@@ -128,24 +124,27 @@ function useProvideAuth() {
 		router.push("/verifica-email");
 	};
 
-	const signInWithPassword = async ({ email, password, redirect = "/" }) => {
-		let { error } = await supabase.auth.signIn({
-			email,
-			password,
-		});
-		if (error) return { error };
+	// Sign in users given their credentials
+	const signInWithPassword = async (
+		credentials: { email: string; password: string },
+		options?: {
+			redirectTo?: string;
+		}
+	): Promise<void> => {
+		let { error } = await supabase.auth.signIn(credentials, options);
+		if (error) throw error;
 
-		router.push(redirect);
+		router.push(options?.redirectTo ?? "/");
 	};
 
-	const signInWithGoogle = async () => {
+	const signInWithGoogle = async (): Promise<void> => {
 		let auth = await supabase.auth.signIn({
 			provider: "google",
 		});
 		if (auth.error) throw auth.error;
 	};
 
-	const signOut = async () => {
+	const signOut = async (): Promise<void> => {
 		let { error } = await supabase.auth.signOut();
 		if (error) throw error;
 
@@ -165,7 +164,7 @@ function useProvideAuth() {
 	};
 }
 
-const formatUser = async (rawUser) => {
+const formatUser = async (rawUser): Promise<Profilo> => {
 	const queryProfilo = gql`
 		query Profilo($id: ID!) {
 			profilo(id: $id) {
@@ -191,4 +190,4 @@ const formatUser = async (rawUser) => {
 	if (error) throw error;
 
 	return data.profilo;
-}; 
+};
