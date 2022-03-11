@@ -8,12 +8,14 @@ import { useInsegnamento } from "../../lib/hooks/useInsegnamento";
 
 type CardInsegnamentoProps = {
 	data: Insegnamento;
+	saved: string[];
 	className?: string;
 	handleSave?: (idCorso: string) => Promise<boolean>;
 };
 
 export const CardInsegnamento = ({
 	data,
+	saved,
 	className = "",
 	handleSave = async (idCorso) => {
 		console.log(idCorso);
@@ -26,14 +28,15 @@ export const CardInsegnamento = ({
 	const [selectedChannel, setSelectedChannel] = useState(0);
 	const [lectures, setLectures] = useState(corsi[selectedChannel]?.lezioni);
 	const [savingCourse, setSavingCourse] = useState(false);
-	const [savedCourses, setSavedCourses] = useState<string[]>(
-		user?.corsi.map((corso) => corso.id) || []
-	);
+	const [savedCourses, setSavedCourses] = useState<string[]>(saved);
 
 	useEffect(() => {
 		setLectures(corsi[selectedChannel]?.lezioni);
-		setSavedCourses(user?.corsi.map((corso) => corso.id));
 	}, [corsi, selectedChannel]);
+
+	useEffect(() => {
+		setSavedCourses(saved);
+	}, [saved]);
 
 	const saveCourse = async () => {
 		setSavingCourse(true);
