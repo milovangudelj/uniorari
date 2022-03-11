@@ -1,13 +1,21 @@
+import { MinusCircleIcon } from "@heroicons/react/solid";
 import { useEffect, useState } from "react";
-import { ChipGroup, TabellaOrario } from "..";
+import { Button, ChipGroup, TabellaOrario } from "..";
 import { Corso } from "../../graphql/types/ts";
 
-export const CardCorso = ({ data, ...props }) => {
+export const CardCorso = ({ data, removable, handleRemove, ...props }) => {
 	const [corso, setCorso] = useState<Corso>(data);
+	const [removingCourse, setRemovingCourse] = useState(false);
 
 	useEffect(() => {
 		setCorso(data);
 	}, [data]);
+
+	const removeCourse = async () => {
+		setRemovingCourse(true);
+
+		const success = await handleRemove(corso.id);
+	};
 
 	return (
 		<div className={`flex flex-col ${props.className}`}>
@@ -17,6 +25,23 @@ export const CardCorso = ({ data, ...props }) => {
 						<span>{corso.nome}</span>
 						<span className="text-xl text-on-surface-me dark:text-on-ry-me">{` - ${corso.insegnamento.semestre}° Semestre`}</span>
 					</h2>
+					{removable && (
+						<Button
+							onClick={removeCourse}
+							loading={removingCourse}
+							variant="text"
+							color="error"
+							startIcon={
+								<MinusCircleIcon
+									className="w-5 h-5"
+									aria-hidden={true}
+								/>
+							}
+							size="small"
+						>
+							Rimuovi
+						</Button>
+					)}
 				</div>
 				<div className="text-on-surface-me dark:text-on-primary-me text-sm">
 					<span className="mr-2">Responsabile: </span>
