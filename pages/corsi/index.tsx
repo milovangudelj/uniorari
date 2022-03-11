@@ -22,8 +22,10 @@ const API: string = "/api/corsi";
 const Corsi = () => {
 	const { user } = useAuth();
 	const { data, error } = useSWR(API);
-	const [addCourse, { data: mutationData, loading, error: mutationError }] =
-		useMutation(addCourseToProfile);
+	const [
+		addCourse,
+		{ data: mutationData, loading: mutationLoading, error: mutationError },
+	] = useMutation(addCourseToProfile);
 	const {
 		sortedItems: sortedInsegnamenti,
 		ordering,
