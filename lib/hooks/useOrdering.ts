@@ -22,9 +22,9 @@ export const useSorting = ({
 	const [sortedItems, setSortedItems] = useState(items);
 
 	useEffect(() => {
-		if (!items) return;
-
 		setSortedItems((current) => {
+			if (!items || !current) return;
+
 			return [...current].sort((a, b) => {
 				return compareFn(a, b, ordering);
 			});
