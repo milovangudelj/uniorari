@@ -20,7 +20,7 @@ function MyApp({ Component, pageProps: { session, fallback, ...pageProps } }) {
 				<AuthProvider>
 					<SWRConfig
 						value={{
-							refreshInterval: 3000,
+							refreshInterval: 5000,
 							fetcher: (resource, init) =>
 								fetch(resource, init).then((res) => res.json()),
 						}}
