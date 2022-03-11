@@ -32,6 +32,7 @@ export const CardInsegnamento = ({
 
 	useEffect(() => {
 		setLectures(corsi[selectedChannel]?.lezioni);
+		setSavedCourses(user?.corsi.map((corso) => corso.id));
 	}, [corsi, selectedChannel]);
 
 	const saveCourse = async () => {
