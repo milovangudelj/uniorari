@@ -6,6 +6,7 @@ export const addCourseToProfile = gql`
 			id
 			username
 			corsi {
+				id
 				nome
 			}
 		}
