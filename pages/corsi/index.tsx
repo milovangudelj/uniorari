@@ -17,11 +17,16 @@ import { order, sortInsegnamenti, useSorting } from "../../lib/hooks";
 import { useAuth } from "../../lib/auth";
 import { addCourseToProfile } from "../../graphql/queries";
 
-const API: string = "/api/corsi";
+const API_COURSES: string = "/api/corsi";
+const API_SAVED: string = "/api/corsi-salvati";
 
 const Corsi = () => {
 	const { user } = useAuth();
-	const { data, error } = useSWR(API);
+	const { data: coursesData, error: coursesError } = useSWR(API_COURSES);
+	const { data: savedData, error: savedError } = useSWR(
+		`${API_SAVED}?onlyIds=true`
+	);
+	const [saved, setSaved] = useState<string[]>([]);
 	const [
 		addCourse,
 		{ data: mutationData, loading: mutationLoading, error: mutationError },
@@ -33,14 +38,18 @@ const Corsi = () => {
 		setSortedItems,
 	} = useSorting({
 		type: order.az,
-		items: data?.insegnamenti,
+		items: coursesData?.insegnamenti,
 		compareFn: sortInsegnamenti,
 	});
 
 	useEffect(() => {
-		if (!data) return;
-		setSortedItems(data.insegnamenti);
-	}, [data, setSortedItems]);
+		if (!coursesData) return;
+		setSortedItems(coursesData.insegnamenti);
+	}, [coursesData, setSortedItems]);
+
+	useEffect(() => {
+		setSaved(savedData?.profilo?.corsi || []);
+	}, [savedData]);
 
 	const handleSave = async (idCorso: string): Promise<boolean> => {
 		addCourse({
@@ -88,6 +97,7 @@ const Corsi = () => {
 								<CardInsegnamento
 									key={insegnamento.id}
 									data={insegnamento}
+									saved={saved}
 									handleSave={handleSave}
 								/>
 							))
