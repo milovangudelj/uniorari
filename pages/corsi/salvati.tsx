@@ -18,7 +18,10 @@ import { ExclamationIcon } from "@heroicons/react/solid";
 import Link from "next/link";
 
 export const getServerSideProps = async (ctx) => {
-	const { user } = await supabase.auth.api.getUserByCookie(ctx.req);
+	const { user, error } = await supabase.auth.api.getUserByCookie(ctx.req);
+
+	if (error) console.log(error);
+
 	if (!user) {
 		return {
 			redirect: {
