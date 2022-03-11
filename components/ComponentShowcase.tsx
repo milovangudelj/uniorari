@@ -38,7 +38,7 @@ export const ComponentShowcase = ({
 				})
 			).join("\n")
 		);
-	}, [children]);
+	}, [children, ignoreTags]);
 
 	return (
 		<>

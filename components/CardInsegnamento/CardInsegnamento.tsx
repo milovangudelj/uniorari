@@ -32,7 +32,7 @@ export const CardInsegnamento = ({
 
 	useEffect(() => {
 		setLectures(corsi[selectedChannel]?.lezioni);
-	}, [selectedChannel]);
+	}, [corsi, selectedChannel]);
 
 	const saveCourse = async () => {
 		setSavingCourse(true);

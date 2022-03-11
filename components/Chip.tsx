@@ -42,7 +42,7 @@ export const Chip = (props) => {
 				)}`
 			)
 		);
-	}, [props]);
+	}, [size, selected]);
 
 	return (
 		<span className={style} onClick={props.onClick}>

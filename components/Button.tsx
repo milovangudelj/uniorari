@@ -123,7 +123,7 @@ export const Button = <T extends ElementType = "button">({
 				  )
 				: className
 		);
-	}, [size, color, variant, pill, disabled, loading, className]);
+	}, [size, color, variant, pill, disabled, loading, className, external]);
 
 	const content = (
 		<>

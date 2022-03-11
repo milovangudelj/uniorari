@@ -40,7 +40,7 @@ const Corsi = () => {
 	useEffect(() => {
 		if (!data) return;
 		setSortedItems(data.insegnamenti);
-	}, [data]);
+	}, [data, setSortedItems]);
 
 	const handleSave = async (idCorso: string): Promise<boolean> => {
 		addCourse({

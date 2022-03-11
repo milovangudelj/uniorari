@@ -8,7 +8,7 @@ export const ThemeSwitch = (props) => {
 
 	useEffect(() => {
 		selectRef.current.value = theme;
-	}, []);
+	}, [theme]);
 
 	const handleThemeChange = () => {
 		setTheme(selectRef.current?.value || "system");

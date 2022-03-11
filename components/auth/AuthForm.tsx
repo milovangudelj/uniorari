@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -21,13 +22,15 @@ export const AuthForm = (props: propsType) => {
 	return (
 		<div className="min-h-screen flex md:items-center w-full px-4 py-8 md:py-32 ">
 			<div className="min-w-[200px] w-full max-w-[400px] mx-auto">
-				<Link href="/">
-					<img
-						src="/logo.svg"
-						alt="Logo UniOrari"
-						title="UniOrari"
-						className="mr-8 cursor-pointer"
-					/>
+				<Link href="/" passHref>
+					<a>
+						<Image
+							src="/logo.svg"
+							alt="Logo UniOrari"
+							title="UniOrari"
+							className="mr-8 cursor-pointer"
+						/>
+					</a>
 				</Link>
 				<h1 className="text-headline-m font-semibold mt-8 mb-8">
 					{isSignin ? "Accedi a UniOrari" : "Iscriviti a UniOrari"}
