@@ -73,8 +73,8 @@ const Salvati = () => {
 							<ExclamationIcon className="h-5 w-5" />
 						</span>
 						<span>
-							C'è stato un errore durante il recupero dei tuoi corsi.
-							Riprova più tardi.
+							C&apos;è stato un errore durante il recupero dei tuoi
+							corsi. Riprova più tardi.
 						</span>
 					</span>
 				)}
