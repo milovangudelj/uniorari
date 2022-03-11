@@ -29,6 +29,8 @@ export const AuthForm = (props: propsType) => {
 							alt="Logo UniOrari"
 							title="UniOrari"
 							className="mr-8 cursor-pointer"
+							width={40}
+							height={25}
 						/>
 					</a>
 				</Link>
