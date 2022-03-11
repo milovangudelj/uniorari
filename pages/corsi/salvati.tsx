@@ -97,7 +97,7 @@ const Salvati = () => {
 								/>
 							);
 						})}
-					{data && corsi.length === 0 && (
+					{data && corsi?.length === 0 && (
 						<span className="text-on-surface-me dark:text-on-primary-me">
 							Non hai ancora salvato nessun corso. Puoi farlo dalla
 							pagina dei{" "}
