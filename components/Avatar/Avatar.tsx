@@ -37,7 +37,7 @@ export const Avatar = ({ image, who = "?", ...props }) => {
 			{avatarUrl ? (
 				<Image src={avatarUrl} alt={who} layout="fill" objectFit="cover" />
 			) : (
-				<span className="inline-block w-full h-full text-title-l font-medium leading-none text-primary-900 bg-primary-100">
+				<span className="inline-flex items-center justify-center w-full h-full text-title-l font-medium leading-none text-primary-900 bg-primary-100">
 					{who.charAt(0).toUpperCase()}
 				</span>
 			)}
