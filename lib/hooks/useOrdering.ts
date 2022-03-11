@@ -29,7 +29,7 @@ export const useSorting = ({
 				return compareFn(a, b, ordering);
 			});
 		});
-	}, [ordering, compareFn]);
+	}, [ordering, compareFn, items]);
 
 	const changeOrdering = () => {
 		setOrdering((current) => {
