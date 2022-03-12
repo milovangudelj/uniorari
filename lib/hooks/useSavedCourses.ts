@@ -1,11 +1,12 @@
 import { useMutation } from "@apollo/client";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
+
+import { Corso } from "../../graphql/types/ts";
 import {
 	addCourseToProfile,
 	removeCourseFromProfile,
 } from "../../graphql/queries";
-import { Corso } from "../../graphql/types/ts";
 
 const API = "/api/corsi-salvati";
 
