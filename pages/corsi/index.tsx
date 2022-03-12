@@ -21,7 +21,7 @@ import {
 
 const Corsi = () => {
 	const { user } = useAuth();
-	const { teachings } = useTeachings();
+	const { teachings, isLoading } = useTeachings();
 	const { savedCoursesIds, saveCourse } = useSavedCourses(user?.id);
 	const {
 		sortedItems: sortedTeachings,
@@ -74,7 +74,14 @@ const Corsi = () => {
 				</div>
 				<section className="flex justify-center">
 					<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-						{sortedTeachings ? (
+						{isLoading && (
+							<>
+								<CardInsegnamentoSkeleton />
+								<CardInsegnamentoSkeleton />
+								<CardInsegnamentoSkeleton />
+							</>
+						)}
+						{sortedTeachings &&
 							sortedTeachings.map((insegnamento) => (
 								<CardInsegnamento
 									key={insegnamento.id}
@@ -82,14 +89,7 @@ const Corsi = () => {
 									saved={savedCoursesIds}
 									handleSave={handleSave}
 								/>
-							))
-						) : (
-							<>
-								<CardInsegnamentoSkeleton />
-								<CardInsegnamentoSkeleton />
-								<CardInsegnamentoSkeleton />
-							</>
-						)}
+							))}
 					</div>
 				</section>
 			</div>
