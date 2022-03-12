@@ -1,21 +1,11 @@
 import Head from "next/head";
-import { gql, useMutation, useQuery } from "@apollo/client";
-
-import apolloClient from "../../lib/apollo";
-import { supabase } from "../../lib/supabase";
-import {
-	CardCorso,
-	CardInsegnamento,
-	CardInsegnamentoSkeleton,
-	Layout,
-} from "../../components";
-import { useEffect, useState } from "react";
-import { Corso } from "../../graphql/types/ts";
-import { useAuth } from "../../lib/auth";
-import { removeCourseFromProfile } from "../../graphql/queries/removeCourseFromProfile";
-import useSWR from "swr";
-import { ExclamationIcon } from "@heroicons/react/solid";
 import Link from "next/link";
+import { ExclamationIcon } from "@heroicons/react/solid";
+
+import { supabase } from "../../lib/supabase";
+import { useAuth } from "../../lib/auth";
+import { useSavedCourses } from "../../lib/hooks";
+import { CardCorso, CardInsegnamentoSkeleton, Layout } from "../../components";
 
 export const getServerSideProps = async (ctx) => {
 	const { user, error } = await supabase.auth.api.getUserByCookie(ctx.req);
@@ -33,33 +23,19 @@ export const getServerSideProps = async (ctx) => {
 
 	return {
 		props: {
-			idProfilo: user.id,
+			profileId: user.id,
 		},
 	};
 };
 
-const API: string = "/api/corsi-salvati";
-
 const Salvati = () => {
 	const { user } = useAuth();
-	const { data, error } = useSWR(() =>
-		user ? `${API}?idProfilo=${user.id}` : null
+	const { savedCourses, isLoading, isError, removeCourse } = useSavedCourses(
+		user?.id
 	);
-	const [removeCourse, { loading: mutationLoading, error: mutationError }] =
-		useMutation(removeCourseFromProfile);
-	const [corsi, setCorsi] = useState<Corso[]>(data?.profilo?.corsi || []);
-
-	useEffect(() => {
-		setCorsi(data?.profilo.corsi);
-	}, [data]);
 
 	const handleRemove = async (idCorso: string): Promise<boolean> => {
-		removeCourse({
-			variables: { idProfilo: user.id, idCorso },
-		});
-
-		if (mutationError) return false;
-		return true;
+		return await removeCourse(idCorso);
 	};
 
 	return (
@@ -70,7 +46,7 @@ const Salvati = () => {
 			</Head>
 			<h1 className="text-4xl font-bold mb-6">I miei corsi</h1>
 			<section className="">
-				{error && (
+				{isError && (
 					<span className="inline-flex gap-3 items-center px-4 py-2 h-min bg-red-50 text-red-900 border border-red-900 rounded-lg dark:bg-red-500/10 dark:text-red-400 dark:border-red-400">
 						<span>
 							<ExclamationIcon className="h-5 w-5" />
@@ -82,25 +58,25 @@ const Salvati = () => {
 					</span>
 				)}
 				<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-					{!data && (
+					{isLoading && (
 						<>
 							<CardInsegnamentoSkeleton />
 							<CardInsegnamentoSkeleton />
 							<CardInsegnamentoSkeleton />
 						</>
 					)}
-					{corsi &&
-						corsi.map((corso) => {
+					{savedCourses &&
+						savedCourses.map((course) => {
 							return (
 								<CardCorso
-									key={corso.id}
-									data={corso}
+									key={course.id}
+									data={course}
 									removable
 									handleRemove={handleRemove}
 								/>
 							);
 						})}
-					{data && corsi?.length === 0 && (
+					{savedCourses?.length === 0 && (
 						<span className="text-on-surface-me dark:text-on-primary-me">
 							Non hai ancora salvato nessun corso. Puoi farlo dalla
 							pagina dei{" "}
