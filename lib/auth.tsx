@@ -112,7 +112,7 @@ function useProvideAuth() {
 				},
 			}
 		);
-		if (error) throw error;
+		if (error) return { error };
 
 		router.push(options?.redirectTo ?? "/verifica-email");
 	};
@@ -122,7 +122,9 @@ function useProvideAuth() {
 	 * @deprecated Don't use this, it will fail on the database
 	 * @returns The error if any
 	 */
-	const signInWithMagic = async (email) => {
+	const signInWithMagic = async (
+		email: string
+	): Promise<void | { error: ApiError }> => {
 		let { error } = await supabase.auth.signIn({
 			email,
 		});
@@ -137,18 +139,18 @@ function useProvideAuth() {
 		options?: {
 			redirectTo?: string;
 		}
-	): Promise<void> => {
+	): Promise<void | { error: ApiError }> => {
 		let { error } = await supabase.auth.signIn(credentials, options);
-		if (error) throw error;
+		if (error) return { error };
 
 		router.push(options?.redirectTo ?? "/");
 	};
 
-	const signInWithGoogle = async (): Promise<void> => {
-		let auth = await supabase.auth.signIn({
+	const signInWithGoogle = async (): Promise<void | { error: ApiError }> => {
+		let { error } = await supabase.auth.signIn({
 			provider: "google",
 		});
-		if (auth.error) throw auth.error;
+		if (error) return { error };
 	};
 
 	const signOut = async (): Promise<void> => {
