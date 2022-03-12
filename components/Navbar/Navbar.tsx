@@ -19,8 +19,8 @@ export const Navbar = (props) => {
 		>
 			<div className="flex items-center">
 				<Link href="/" passHref>
-					<a>
-						<Logo className="h-6 mr-8" variant="full" />
+					<a className="mr-8">
+						<Logo className="h-6" variant="full" />
 					</a>
 				</Link>
 				<form
