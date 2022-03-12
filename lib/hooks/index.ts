@@ -10,3 +10,5 @@ export * from "./useScreen";
 export * from "./useTernaryDarkMode";
 export * from "./useUpdateEffect";
 export * from "./useWindowSize";
+export * from "./useTeachings";
+export * from "./useSavedCourses";
