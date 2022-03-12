@@ -7,7 +7,7 @@
 
 @layer components {
 	.btn {
-		@apply text-label-m cursor-pointer font-medium min-w-16 tracking-wide uppercase outline-none text-on-primary-he dark:text-on-surface-he relative transition-all border h-max inline-flex items-center justify-center w-max;
+		@apply text-label-m cursor-pointer font-medium min-w-[max(4rem,max-content)] tracking-wide uppercase outline-none text-on-primary-he dark:text-on-surface-he relative transition-all border h-max inline-flex items-center justify-center w-max;
 	}
 
 	.btn.btn-sm {
