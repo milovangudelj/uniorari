@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
-import { useMutation } from "@apollo/client";
-import useSWR, { Key, Fetcher } from "swr";
 import {
 	FilterIcon,
 	SortAscendingIcon,
@@ -13,51 +11,35 @@ import {
 	CardInsegnamentoSkeleton,
 	Layout,
 } from "../../components";
-import { order, sortInsegnamenti, useSorting } from "../../lib/hooks";
 import { useAuth } from "../../lib/auth";
-import { addCourseToProfile } from "../../graphql/queries";
-
-const API_COURSES: string = "/api/corsi";
-const API_SAVED: string = "/api/corsi-salvati";
+import {
+	sortTeachings,
+	useSorting,
+	useTeachings,
+	useSavedCourses,
+} from "../../lib/hooks";
 
 const Corsi = () => {
 	const { user } = useAuth();
-	const { data: coursesData, error: coursesError } = useSWR(API_COURSES);
-	const { data: savedData, error: savedError } = useSWR(() =>
-		user ? `${API_SAVED}?onlyIds=true` : null
-	);
-	const [saved, setSaved] = useState<string[]>([]);
-	const [
-		addCourse,
-		{ data: mutationData, loading: mutationLoading, error: mutationError },
-	] = useMutation(addCourseToProfile);
+	const { teachings } = useTeachings();
+	const { savedCoursesIds, saveCourse } = useSavedCourses(user?.id);
 	const {
-		sortedItems: sortedInsegnamenti,
+		sortedItems: sortedTeachings,
 		ordering,
 		changeOrdering,
 		setSortedItems,
 	} = useSorting({
-		type: order.az,
-		items: coursesData?.insegnamenti,
-		compareFn: sortInsegnamenti,
+		type: "az",
+		items: teachings,
+		compareFn: sortTeachings,
 	});
 
 	useEffect(() => {
-		if (!coursesData) return;
-		setSortedItems(coursesData.insegnamenti);
-	}, [coursesData, setSortedItems]);
+		setSortedItems(teachings);
+	}, [teachings, setSortedItems]);
 
-	useEffect(() => {
-		setSaved(savedData?.profilo?.corsi || []);
-	}, [savedData]);
-
-	const handleSave = async (idCorso: string): Promise<boolean> => {
-		addCourse({
-			variables: { idProfilo: user.id, idCorso },
-		});
-
-		if (mutationError) return false;
-		return true;
+	const handleSave = async (idCorso: string) => {
+		return await saveCourse(idCorso);
 	};
 
 	return (
@@ -80,9 +62,9 @@ const Corsi = () => {
 							onClick={changeOrdering}
 							className="text-on-surface-me hover:text-on-surface-he dark:text-on-primary-me dark:hover:text-on-primary-he transition"
 						>
-							{ordering === order.initial ? (
+							{ordering === "initial" ? (
 								<FilterIcon className="w-5 h-5 cursor-pointer" />
-							) : ordering === order.az ? (
+							) : ordering === "az" ? (
 								<SortAscendingIcon className="w-5 h-5 cursor-pointer" />
 							) : (
 								<SortDescendingIcon className="w-5 h-5 cursor-pointer" />
@@ -92,12 +74,12 @@ const Corsi = () => {
 				</div>
 				<section className="flex justify-center">
 					<div className="w-full grid grid-cols-1 md:grid-cols-2 gap-6">
-						{sortedInsegnamenti ? (
-							sortedInsegnamenti.map((insegnamento) => (
+						{sortedTeachings ? (
+							sortedTeachings.map((insegnamento) => (
 								<CardInsegnamento
 									key={insegnamento.id}
 									data={insegnamento}
-									saved={saved}
+									saved={savedCoursesIds}
 									handleSave={handleSave}
 								/>
 							))
