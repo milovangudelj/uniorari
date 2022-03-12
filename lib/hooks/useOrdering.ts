@@ -1,22 +1,26 @@
 import { useEffect, useState } from "react";
 import { Insegnamento } from "../../graphql/types/ts";
 
-export enum order {
-	initial,
-	az,
-	za,
-}
+type Order = "initial" | "az" | "za";
+type OrderMapType = {
+	[key: string]: Order;
+};
+const OrderMap: OrderMapType = {
+	initial: "az",
+	az: "za",
+	za: "initial",
+};
 
 type PropTypes = {
-	type?: order;
+	type?: Order;
 	items: any[];
-	compareFn: (a: any, b: any, ordering: order) => number;
+	compareFn: (a: any, b: any, ordering: Order) => number;
 };
 
 export const useSorting = ({
 	items,
 	compareFn,
-	type = order.initial,
+	type = "initial",
 }: PropTypes) => {
 	const [ordering, setOrdering] = useState(type);
 	const [sortedItems, setSortedItems] = useState(items);
@@ -32,16 +36,7 @@ export const useSorting = ({
 	}, [ordering, compareFn, items]);
 
 	const changeOrdering = () => {
-		setOrdering((current) => {
-			switch (current) {
-				case order.initial:
-					return order.az;
-				case order.az:
-					return order.za;
-				case order.za:
-					return order.initial;
-			}
-		});
+		setOrdering((current) => OrderMap[current]);
 	};
 
 	return {
@@ -53,20 +48,19 @@ export const useSorting = ({
 	};
 };
 
-export const sortInsegnamenti = (
+export const sortTeachings = (
 	a: Insegnamento,
 	b: Insegnamento,
-	ordering: order = order.initial
+	ordering: Order = "initial"
 ): number => {
 	switch (ordering) {
-		case order.initial:
+		case "initial":
 			return a.createdAt.localeCompare(b.createdAt);
-			break;
-		case order.az:
+
+		case "az":
 			return a.nome.localeCompare(b.nome);
-			break;
-		case order.za:
+
+		case "za":
 			return -a.nome.localeCompare(b.nome);
-			break;
 	}
 };
