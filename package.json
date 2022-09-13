@@ -25,7 +25,7 @@
 		"@next-auth/prisma-adapter": "0.5.2-next.19",
 		"@nexus/schema": "0.20.1",
 		"@prisma/client": "3.10.0",
-		"@supabase/supabase-js": "1.28.4",
+		"@supabase/supabase-js": "1.35.6",
 		"@types/prismjs": "1.26.0",
 		"apollo-server-micro": "^3.5.0",
 		"graphql": "16.3.0",
