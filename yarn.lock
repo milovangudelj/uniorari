@@ -272,10 +272,10 @@
   resolved "https://registry.yarnpkg.com/@jsdevtools/ono/-/ono-7.1.3.tgz#9df03bbd7c696a5c58885c34aa06da41c8543796"
   integrity sha512-4JQNk+3mVzK3xh2rqd6RB4J46qUR19azEHBneZyTZM+c456qOrbbM/5xcR8huNCCcbVt7+UmizG6GuUvPvKUYg==
 
-"@next-auth/prisma-adapter@0.5.2-next.19":
-  version "0.5.2-next.19"
-  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-0.5.2-next.19.tgz#404ba40d2b6e1c4b0e9cb6f6fe0934a9202ce060"
-  integrity sha512-146DWE4PEbgVKF6W0CjJSxeP2rrw2T2s8zX1GQzbQsMK8trRSzheURJRphCn6ZGhVSpHJhU4NZe7F0kwRL5lwQ==
+"@next-auth/prisma-adapter@0.5.4":
+  version "0.5.4"
+  resolved "https://registry.yarnpkg.com/@next-auth/prisma-adapter/-/prisma-adapter-0.5.4.tgz#af787a6a49ee9b9e38cedec761c9b7ab4cd99153"
+  integrity sha512-e3rIRNc/1A8puvzxVdlPOaV1NjAWIil2aE+kr51MHmg9uCrvJWf8ruNvLPU3I0QG187AG4i5eePXHkXEbgordQ==
 
 "@next/env@12.1.0":
   version "12.1.0"
@@ -2502,7 +2502,7 @@ node-fetch@2.6.1:
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.1.tgz#045bd323631f76ed2e2b55573394416b639a0052"
   integrity sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw==
 
-node-fetch@^2.6.7:
+node-fetch@2.6.7, node-fetch@^2.6.7:
   version "2.6.7"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.6.7.tgz#24de9fba827e3b4ae44dc8b20256a379160052ad"
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
