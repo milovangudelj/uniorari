@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import ReCAPTCHA from "react-google-recaptcha";
 import { gql } from "@apollo/client";
 
@@ -124,7 +124,7 @@ export const SignInForm = () => {
 					/>
 					{errors.email && (
 						<span className="text-label-l text-error-500 dark:text-error-400">
-							{errors.email.message}
+							{errors.email.message as React.ReactNode}
 						</span>
 					)}
 				</div>
@@ -152,7 +152,7 @@ export const SignInForm = () => {
 					/>
 					{errors.password && (
 						<span className="text-label-l text-error-500 dark:text-error-400">
-							{errors.password.message}
+							{errors.password.message as React.ReactNode}
 						</span>
 					)}
 				</div>

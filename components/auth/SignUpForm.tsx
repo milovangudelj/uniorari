@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup/dist/yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import ReCAPTCHA from "react-google-recaptcha";
 
 import { useAuth } from "../../lib/auth";
@@ -131,7 +131,7 @@ export const SignUpForm = () => {
 						/>
 						{errors.name && (
 							<span className="text-label-l text-error-500 dark:text-error-400">
-								{errors.name.message}
+								{errors.name.message as React.ReactNode}
 							</span>
 						)}
 					</div>
@@ -160,7 +160,7 @@ export const SignUpForm = () => {
 						/>
 						{errors.username && (
 							<span className="text-label-l text-error-500 dark:text-error-400">
-								{errors.username.message}
+								{errors.username.message as React.ReactNode}
 							</span>
 						)}
 					</div>
@@ -187,7 +187,7 @@ export const SignUpForm = () => {
 					/>
 					{errors.email && (
 						<span className="text-label-l text-error-500 dark:text-error-400">
-							{errors.email.message}
+							{errors.email.message as React.ReactNode}
 						</span>
 					)}
 				</div>
@@ -216,7 +216,7 @@ export const SignUpForm = () => {
 					/>
 					{errors.password && (
 						<span className="text-label-l text-error-500 dark:text-error-400">
-							{errors.password.message}
+							{errors.password.message as React.ReactNode}
 						</span>
 					)}
 				</div>
