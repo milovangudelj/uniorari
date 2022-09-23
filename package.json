@@ -25,7 +25,7 @@
 		"@next-auth/prisma-adapter": "0.5.4",
 		"@nexus/schema": "0.20.1",
 		"@prisma/client": "3.15.2",
-		"@supabase/supabase-js": "1.35.6",
+		"@supabase/supabase-js": "1.35.7",
 		"@types/prismjs": "1.26.0",
 		"apollo-server-micro": "3.10.2",
 		"graphql": "16.6.0",
@@ -37,7 +37,7 @@
 		"micro-cors": "0.1.1",
 		"next": "12.3.1",
 		"next-auth": "4.10.3",
-		"next-themes": "0.1.1",
+		"next-themes": "0.2.1",
 		"nexus": "1.3.0",
 		"nexus-prisma": "0.35.0",
 		"nodemailer": "6.7.8",
@@ -59,7 +59,7 @@
 		"postcss": "8.4.16",
 		"prisma": "3.15.2",
 		"tailwindcss": "3.1.8",
-		"ts-node": "10.5.0",
+		"ts-node": "10.9.1",
 		"typescript": "4.8.3"
 	}
 }
