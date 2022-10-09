@@ -22,7 +22,7 @@
 		"@headlessui/react": "1.7.3",
 		"@heroicons/react": "2.0.12",
 		"@hookform/resolvers": "2.9.8",
-		"@next-auth/prisma-adapter": "1.0.4",
+		"@next-auth/prisma-adapter": "1.0.5",
 		"@nexus/schema": "0.20.1",
 		"@prisma/client": "4.4.0",
 		"@supabase/supabase-js": "1.35.7",
