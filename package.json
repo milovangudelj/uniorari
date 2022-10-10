@@ -29,7 +29,7 @@
 		"@types/prismjs": "1.26.0",
 		"apollo-server-micro": "3.10.3",
 		"graphql": "16.6.0",
-		"graphql-scalars": "1.18.0",
+		"graphql-scalars": "1.19.0",
 		"highlight.js": "11.6.0",
 		"immutable": "4.1.0",
 		"json-stringify-pretty-compact": "4.0.0",
