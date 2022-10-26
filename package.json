@@ -18,7 +18,7 @@
 		"seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
 	},
 	"dependencies": {
-		"@apollo/client": "3.7.0",
+		"@apollo/client": "3.7.1",
 		"@headlessui/react": "1.7.3",
 		"@heroicons/react": "2.0.12",
 		"@hookform/resolvers": "2.9.10",
