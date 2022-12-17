@@ -54,7 +54,7 @@
 		"@types/node": "18.11.16",
 		"@types/react": "18.0.26",
 		"autoprefixer": "10.4.13",
-		"eslint": "8.29.0",
+		"eslint": "8.30.0",
 		"eslint-config-next": "13.0.7",
 		"postcss": "8.4.20",
 		"prisma": "4.7.1",
