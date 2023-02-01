@@ -966,10 +966,10 @@
   dependencies:
     cross-fetch "^3.1.5"
 
-"@supabase/supabase-js@2.6.0":
-  version "2.6.0"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.6.0.tgz#917bcacb8e99342e34353fea3ff9b842ef27dcde"
-  integrity sha512-ufCpXqqsJF/+zvqZCHosRK1NMmPNmYysOqWJWgw3WZG0CCmSjmBlHyiyaMVsSALB9UThN8IDHtB0SX7YfRveYQ==
+"@supabase/supabase-js@2.7.0":
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.7.0.tgz#ac3a770fc3e2fdebb38d2b59fce7a111e27c6388"
+  integrity sha512-0Ry6rcxeya0VRbPh6fHfgPcmH7X9gMILon7/PWoVJSjYsQntv7EGUNNeHtLutBlm8St74s5Q4sjsqJOPslDG4Q==
   dependencies:
     "@supabase/functions-js" "^2.0.0"
     "@supabase/gotrue-js" "^2.10.2"
