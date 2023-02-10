@@ -12,9 +12,6 @@ export const getServerSideProps = async (ctx) => {
 	const accessToken = ctx.req.cookies["uo-access-token"];
 
 	if (refreshToken && accessToken) {
-		console.log("refreshToken", refreshToken);
-		console.log("accessToken", accessToken);
-
 		await supabase.auth.setSession({
 			refresh_token: refreshToken,
 			access_token: accessToken,
