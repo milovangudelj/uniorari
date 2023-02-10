@@ -8,10 +8,23 @@ import { useSavedCourses } from "../../lib/hooks";
 import { CardCorso, CardInsegnamentoSkeleton, Layout } from "../../components";
 
 export const getServerSideProps = async (ctx) => {
+	const refreshToken = ctx.req.cookies["uo-refresh-token"];
+	const accessToken = ctx.req.cookies["uo-access-token"];
+
+	if (refreshToken && accessToken) {
+		console.log("refreshToken", refreshToken);
+		console.log("accessToken", accessToken);
+
+		await supabase.auth.setSession({
+			refresh_token: refreshToken,
+			access_token: accessToken,
+		});
+	}
+
 	const {
 		data: { user },
 		error,
-	} = await supabase.auth.getUser();
+	} = await supabase.auth.getUser(accessToken);
 
 	if (error) console.log(error);
 

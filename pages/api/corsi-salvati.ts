@@ -15,7 +15,7 @@ export default async function handler(req, res) {
 
 	const {
 		data: { user },
-	} = await supabase.auth.getUser();
+	} = await supabase.auth.getUser(accessToken);
 	const { idProfilo } = req.query;
 
 	if (!user || user.id !== idProfilo) {
