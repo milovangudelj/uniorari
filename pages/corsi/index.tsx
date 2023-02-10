@@ -4,7 +4,7 @@ import {
 	FilterIcon,
 	SortAscendingIcon,
 	SortDescendingIcon,
-} from "@heroicons/react/solid";
+} from "@heroicons/react/24/solid";
 
 import {
 	CardInsegnamento,

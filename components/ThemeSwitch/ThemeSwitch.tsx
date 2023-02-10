@@ -1,4 +1,4 @@
-import { ChevronDownIcon, SunIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, SunIcon } from "@heroicons/react/24/solid";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useTheme } from "next-themes";
 

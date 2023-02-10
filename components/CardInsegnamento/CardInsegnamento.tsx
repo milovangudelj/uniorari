@@ -1,4 +1,4 @@
-import { CheckIcon, PlusCircleIcon } from "@heroicons/react/solid";
+import { CheckIcon, PlusCircleIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 
 import { Button, ChipGroup, Lezione, TabellaOrario } from "..";

@@ -3,7 +3,7 @@ import {
 	BookOpenIcon,
 	CollectionIcon,
 	UserGroupIcon,
-} from "@heroicons/react/solid";
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

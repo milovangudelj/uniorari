@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { ExclamationIcon } from "@heroicons/react/solid";
+import { ExclamationIcon } from "@heroicons/react/24/solid";
 
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../lib/auth";

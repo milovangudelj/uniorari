@@ -1,4 +1,4 @@
-import { LoginIcon, SearchIcon, UserIcon } from "@heroicons/react/solid";
+import { LoginIcon, SearchIcon, UserIcon } from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 

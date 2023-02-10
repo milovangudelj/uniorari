@@ -1,4 +1,4 @@
-import { MinusCircleIcon } from "@heroicons/react/solid";
+import { MinusCircleIcon } from "@heroicons/react/24/solid";
 import { useEffect, useState } from "react";
 import { Button, ChipGroup, TabellaOrario } from "..";
 import { Corso } from "../../graphql/types/ts";
