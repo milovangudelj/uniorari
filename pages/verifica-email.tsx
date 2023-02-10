@@ -17,7 +17,7 @@ const VerificaEmail = ({ baseUrl }) => {
 						mail.
 					</p>
 
-					<Button as={Link} passHref href="/">
+					<Button as={Link} href="/">
 						Torna alla Home
 					</Button>
 				</main>

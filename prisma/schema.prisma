@@ -107,10 +107,10 @@ model Corso {
    // Relations
    idInsegnamento String       @db.Uuid
    insegnamento   Insegnamento @relation(fields: [idInsegnamento], references: [id])
-   idCanale       String?       @db.Uuid
-   canale         Canale?       @relation(fields: [idCanale], references: [id])
+   idCanale       String?      @db.Uuid
+   canale         Canale?      @relation(fields: [idCanale], references: [id])
    lezioni        Lezione[]
-   idResponsabile String       @db.Uuid
+   idResponsabile String       @unique @db.Uuid
    responsabile   Docente      @relation(name: "responsabile", fields: [idResponsabile], references: [id])
    docenti        Docente[]    @relation(name: "docenti")
    studenti       Profilo[]
@@ -138,10 +138,10 @@ model Docente {
    createdAt DateTime @default(now())
    updatedAt DateTime @default(now()) @updatedAt
 
-   nome    String
-   cognome String
-   email   String @unique
-   immagine   String?
+   nome     String
+   cognome  String
+   email    String  @unique
+   immagine String?
 
    // Relations
    corsi          Corso[]   @relation(name: "docenti")
@@ -165,8 +165,8 @@ model Lezione {
    // Relations
    docenti Docente[]
    aule    Aula[]
-   idCorso String @db.Uuid
-   corso   Corso @relation(fields: [idCorso], references: [id])
+   idCorso String    @db.Uuid
+   corso   Corso     @relation(fields: [idCorso], references: [id])
 
    @@map("lezioni")
 }
@@ -195,7 +195,7 @@ model Profilo {
 
    nome     String?
    email    String  @unique
-   username String?  @unique
+   username String? @unique
    immagine String?
 
    // Relations

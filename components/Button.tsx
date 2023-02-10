@@ -15,7 +15,6 @@ interface ButtonProps<T extends ElementType> {
 	as?: T;
 	children?: ReactNode;
 	href?: string;
-	passHref?: boolean;
 	external?: boolean;
 	pill?: boolean;
 	loading?: boolean;
@@ -84,7 +83,6 @@ const classes = {
 export const Button = <T extends ElementType = "button">({
 	as,
 	href,
-	passHref,
 	external = false,
 	variant = "contained",
 	color = "primary",
@@ -175,19 +173,7 @@ export const Button = <T extends ElementType = "button">({
 		</>
 	);
 
-	return passHref ? (
-		<Component
-			{...props}
-			href={href}
-			passHref={passHref}
-			disabled={disabled || loading}
-			className={style}
-		>
-			<a {...props} className={style}>
-				{content}
-			</a>
-		</Component>
-	) : (
+	return (
 		<Component
 			{...props}
 			href={href}

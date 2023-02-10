@@ -3,7 +3,9 @@ import apolloClient from "../../lib/apollo";
 import { queryCorsiSalvati } from "../../graphql/queries";
 
 export default async function handler(req, res) {
-	const { user } = await supabase.auth.api.getUserByCookie(req);
+	const {
+		data: { user },
+	} = await supabase.auth.getUser();
 	const { idProfilo } = req.query;
 
 	if (!user || user.id !== idProfilo) {

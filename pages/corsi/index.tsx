@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import Head from "next/head";
 import {
-	FilterIcon,
-	SortAscendingIcon,
-	SortDescendingIcon,
+	FunnelIcon,
+	BarsArrowUpIcon,
+	BarsArrowDownIcon,
 } from "@heroicons/react/24/solid";
 
 import {
@@ -63,11 +63,11 @@ const Corsi = () => {
 							className="text-on-surface-me hover:text-on-surface-he dark:text-on-primary-me dark:hover:text-on-primary-he transition"
 						>
 							{ordering === "initial" ? (
-								<FilterIcon className="w-5 h-5 cursor-pointer" />
+								<FunnelIcon className="w-5 h-5 cursor-pointer" />
 							) : ordering === "az" ? (
-								<SortAscendingIcon className="w-5 h-5 cursor-pointer" />
+								<BarsArrowUpIcon className="w-5 h-5 cursor-pointer" />
 							) : (
-								<SortDescendingIcon className="w-5 h-5 cursor-pointer" />
+								<BarsArrowDownIcon className="w-5 h-5 cursor-pointer" />
 							)}
 						</span>
 					</div>

@@ -1,4 +1,8 @@
-import { LoginIcon, SearchIcon, UserIcon } from "@heroicons/react/24/solid";
+import {
+	ArrowLeftOnRectangleIcon,
+	MagnifyingGlassIcon,
+	UserIcon,
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -18,17 +22,15 @@ export const Navbar = (props) => {
 			className={`flex justify-between items-center bg-grey-50 dark:bg-grey-800 py-4 px-10 shadow-sm dark:shadow-md ${props.className}`}
 		>
 			<div className="flex items-center">
-				<Link href="/" passHref>
-					<a className="mr-8">
-						<Logo className="h-6" variant="full" />
-					</a>
+				<Link href="/" className="mr-8">
+					<Logo className="h-6" variant="full" />
 				</Link>
 				<form
 					action=""
 					className="hidden lg:flex group p-2 shadow-sm w-max transition text-on-surface-le dark:text-on-primary-le rounded-lg bg-grey-100 dark:bg-grey-700"
 				>
 					<span>
-						<SearchIcon
+						<MagnifyingGlassIcon
 							className={`w-5 mr-3 transition ${
 								inputFocused &&
 								"text-on-surface-me dark:text-on-primary-me"
@@ -53,8 +55,7 @@ export const Navbar = (props) => {
 				<Button
 					as={Link}
 					href="/accedi"
-					passHref
-					endIcon={<LoginIcon className="w-4 h-4" />}
+					endIcon={<ArrowLeftOnRectangleIcon className="w-4 h-4" />}
 				>
 					Accedi
 				</Button>

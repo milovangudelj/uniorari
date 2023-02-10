@@ -1,6 +1,6 @@
 import router from "next/router";
 import { createContext, useContext, useState, useEffect } from "react";
-import { ApiError, Session } from "@supabase/supabase-js";
+import { AuthApiError, AuthError, Session } from "@supabase/supabase-js";
 import { gql } from "@apollo/client";
 
 import { supabase } from "./supabase";
@@ -15,7 +15,7 @@ type AuthProviderValue = {
 	loading: boolean;
 	signOut: () => Promise<void>;
 	signInWithMagic: (email: any) => Promise<{
-		error: ApiError;
+		error: AuthApiError;
 	}>;
 	signInWithGoogle: () => Promise<void>;
 	signInWithPassword: ({
@@ -25,7 +25,7 @@ type AuthProviderValue = {
 		email: any;
 		password: any;
 	}) => Promise<{
-		error: ApiError;
+		error: AuthApiError;
 	}>;
 	signUpWithPassword: (userData: {
 		name: string;
@@ -52,27 +52,37 @@ function useProvideAuth() {
 
 	useEffect(() => {
 		// Get session and user
-		setSession(supabase.auth.session());
-		handleUser(supabase.auth.user());
+		const fetchUser = async () => {
+			const authSession = (await supabase.auth.getSession()).data.session;
+			const authUser = (await supabase.auth.getUser()).data.user;
+
+			setSession(authSession);
+			handleUser(authUser);
+		};
+		fetchUser();
 
 		// Listen for changes on auth state (logged in, signed out, etc.)
 		const { data: authListener } = supabase.auth.onAuthStateChange(
 			async (event, session) => {
 				setSession(session);
-				await fetch("/api/auth", {
-					method: "POST",
-					body: JSON.stringify({ event, session }),
-					headers: {
-						"Content-Type": "application/json",
-					},
-				});
+
+				if (event === "SIGNED_OUT" || event === "USER_DELETED") {
+					// delete cookies on sign out
+					const expires = new Date(0).toUTCString();
+					document.cookie = `uo-access-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
+					document.cookie = `uo-refresh-token=; path=/; expires=${expires}; SameSite=Lax; secure`;
+				} else if (event === "SIGNED_IN" || event === "TOKEN_REFRESHED") {
+					const maxAge = 30 * 24 * 60 * 60; // 100 years, never expires
+					document.cookie = `uo-access-token=${session.access_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
+					document.cookie = `uo-refresh-token=${session.refresh_token}; path=/; max-age=${maxAge}; SameSite=Lax; secure`;
+				}
 
 				await handleUser(session?.user ?? null);
 			}
 		);
 
 		return () => {
-			authListener.unsubscribe();
+			authListener.subscription.unsubscribe();
 		};
 	}, []);
 
@@ -100,18 +110,16 @@ function useProvideAuth() {
 			redirectTo?: string;
 		}
 	) => {
-		const { error } = await supabase.auth.signUp(
-			{
-				email: userData.email,
-				password: userData.password,
-			},
-			{
+		const { error } = await supabase.auth.signUp({
+			email: userData.email,
+			password: userData.password,
+			options: {
 				data: {
 					name: userData.name,
 					username: userData.username,
 				},
-			}
-		);
+			},
+		});
 		if (error) return { error };
 
 		router.push(options?.redirectTo ?? "/verifica-email");
@@ -124,8 +132,8 @@ function useProvideAuth() {
 	 */
 	const signInWithMagic = async (
 		email: string
-	): Promise<void | { error: ApiError }> => {
-		let { error } = await supabase.auth.signIn({
+	): Promise<void | { error: AuthError }> => {
+		let { error } = await supabase.auth.signInWithOtp({
 			email,
 		});
 		if (error) return { error };
@@ -139,15 +147,19 @@ function useProvideAuth() {
 		options?: {
 			redirectTo?: string;
 		}
-	): Promise<void | { error: ApiError }> => {
-		let { error } = await supabase.auth.signIn(credentials, options);
+	): Promise<void | { error: AuthError }> => {
+		let { error } = await supabase.auth.signInWithPassword({
+			...credentials,
+		});
 		if (error) return { error };
 
 		router.push(options?.redirectTo ?? "/");
 	};
 
-	const signInWithGoogle = async (): Promise<void | { error: ApiError }> => {
-		let { error } = await supabase.auth.signIn({
+	const signInWithGoogle = async (): Promise<void | {
+		error: AuthError;
+	}> => {
+		let { error } = await supabase.auth.signInWithOAuth({
 			provider: "google",
 		});
 		if (error) return { error };

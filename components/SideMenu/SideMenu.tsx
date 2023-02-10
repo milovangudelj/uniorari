@@ -1,7 +1,7 @@
 import {
 	AcademicCapIcon,
 	BookOpenIcon,
-	CollectionIcon,
+	Square3Stack3DIcon,
 	UserGroupIcon,
 } from "@heroicons/react/24/solid";
 import Link from "next/link";
@@ -15,7 +15,7 @@ export const SideMenu = (props) => {
 			name: "Corsi",
 			href: "/corsi",
 			current: false,
-			icon: <CollectionIcon className="w-5 mr-3" />,
+			icon: <Square3Stack3DIcon className="w-5 mr-3" />,
 		},
 		{
 			name: "Lezioni",
@@ -49,17 +49,16 @@ export const SideMenu = (props) => {
 							{current && (
 								<span className="block absolute left-0 top-1 bottom-1 rounded-tr-full rounded-br-full w-1 bg-primary-500 dark:bg-primary-400"></span>
 							)}
-							<Link href={page.href}>
-								<a
-									className={`flex px-2 py-1 w-full items-center relative ${
-										current
-											? "text-on-surface-he dark:text-on-primary-he"
-											: "text-on-surface-me dark:text-on-primary-me"
-									} hover:text-on-surface-he dark:hover:text-on-primary-he hover:bg-grey-100 dark:hover:bg-grey-700 transition rounded-lg`}
-								>
-									<span>{page.icon}</span>
-									<span>{page.name}</span>
-								</a>
+							<Link
+								href={page.href}
+								className={`flex px-2 py-1 w-full items-center relative ${
+									current
+										? "text-on-surface-he dark:text-on-primary-he"
+										: "text-on-surface-me dark:text-on-primary-me"
+								} hover:text-on-surface-he dark:hover:text-on-primary-he hover:bg-grey-100 dark:hover:bg-grey-700 transition rounded-lg`}
+							>
+								<span>{page.icon}</span>
+								<span>{page.name}</span>
 							</Link>
 						</li>
 					);

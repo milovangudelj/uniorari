@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { ExclamationIcon } from "@heroicons/react/24/solid";
+import { ExclamationTriangleIcon } from "@heroicons/react/24/solid";
 
 import { supabase } from "../../lib/supabase";
 import { useAuth } from "../../lib/auth";
@@ -8,7 +8,10 @@ import { useSavedCourses } from "../../lib/hooks";
 import { CardCorso, CardInsegnamentoSkeleton, Layout } from "../../components";
 
 export const getServerSideProps = async (ctx) => {
-	const { user, error } = await supabase.auth.api.getUserByCookie(ctx.req);
+	const {
+		data: { user },
+		error,
+	} = await supabase.auth.getUser();
 
 	if (error) console.log(error);
 
@@ -49,7 +52,7 @@ const Salvati = () => {
 				{isError && (
 					<span className="inline-flex gap-3 items-center px-4 py-2 h-min bg-red-50 text-red-900 border border-red-900 rounded-lg dark:bg-red-500/10 dark:text-red-400 dark:border-red-400">
 						<span>
-							<ExclamationIcon className="h-5 w-5" />
+							<ExclamationTriangleIcon className="h-5 w-5" />
 						</span>
 						<span>
 							C&apos;è stato un errore durante il recupero dei tuoi
@@ -80,10 +83,11 @@ const Salvati = () => {
 						<span className="text-on-surface-me dark:text-on-primary-me">
 							Non hai ancora salvato nessun corso. Puoi farlo dalla
 							pagina dei{" "}
-							<Link href="/corsi" passHref>
-								<a className="text-primary-500 dark:text-primary-400">
-									corsi
-								</a>
+							<Link
+								href="/corsi"
+								className="text-primary-500 dark:text-primary-400"
+							>
+								corsi
 							</Link>
 							.
 						</span>
