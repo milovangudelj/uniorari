@@ -48,7 +48,7 @@
 		"react-hook-form": "7.43.2",
 		"swr": "2.0.4",
 		"uuid": "9.0.0",
-		"yup": "1.0.1"
+		"yup": "1.0.2"
 	},
 	"devDependencies": {
 		"@types/node": "18.14.2",
