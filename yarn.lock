@@ -935,10 +935,10 @@
     lodash "^4.17.4"
     read-pkg-up "^7.0.0"
 
-"@supabase/functions-js@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@supabase/functions-js/-/functions-js-2.0.0.tgz#4ba0c9e6dff031e17666bef6779c48eff290a8a0"
-  integrity sha512-ozb7bds2yvf5k7NM2ZzUkxvsx4S4i2eRKFSJetdTADV91T65g4gCzEs9L3LUXSrghcGIkUaon03VPzOrFredqg==
+"@supabase/functions-js@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@supabase/functions-js/-/functions-js-2.1.0.tgz#60e304c6f56b2a56f051277e00b0c9eb5453cfcb"
+  integrity sha512-vRziB+AqRXRaGHjEFHwBo0kuNDTuAxI7VUeqU24Fe86ISoD8YEQm0dGdpleJEcqgDGWaO6pxT1tfj1BRY5PwMg==
   dependencies:
     cross-fetch "^3.1.5"
 
@@ -971,12 +971,12 @@
   dependencies:
     cross-fetch "^3.1.5"
 
-"@supabase/supabase-js@2.8.0":
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.8.0.tgz#c825961bef50df1d208b24204b2fb080e8cc9e54"
-  integrity sha512-uzf4J+qAKdUMhB2tnJl6BrQRUQBinwjJ2eWo2ZsDw9EUUP5JcHsxTamiq6p91DpqzmTIRg3xRAT+bItTzbfa0w==
+"@supabase/supabase-js@2.9.0":
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/@supabase/supabase-js/-/supabase-js-2.9.0.tgz#a136e8da5d8d5de2349dd6bf462bbab9c18080e3"
+  integrity sha512-ESnbi+0L6PRtfzNwuEs4bqirHBzCc4Gcicd+3diUdi2/N7kkd5cdjmZTUs0HyyWxOMenJvHjjLkFfQXUpPm4pg==
   dependencies:
-    "@supabase/functions-js" "^2.0.0"
+    "@supabase/functions-js" "^2.1.0"
     "@supabase/gotrue-js" "^2.12.0"
     "@supabase/postgrest-js" "^1.1.1"
     "@supabase/realtime-js" "^2.4.0"
