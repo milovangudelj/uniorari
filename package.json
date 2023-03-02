@@ -51,7 +51,7 @@
 		"yup": "1.0.2"
 	},
 	"devDependencies": {
-		"@types/node": "18.14.3",
+		"@types/node": "18.14.4",
 		"@types/react": "18.0.28",
 		"autoprefixer": "10.4.13",
 		"eslint": "8.35.0",
