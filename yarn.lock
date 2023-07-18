@@ -4396,10 +4396,10 @@ nerf-dart@^1.0.0:
   resolved "https://registry.yarnpkg.com/nerf-dart/-/nerf-dart-1.0.0.tgz#e6dab7febf5ad816ea81cf5c629c5a0ebde72c1a"
   integrity sha512-EZSPZB70jiVsivaBLYDCyntd5eH8NTSMOn3rB+HxwdmKThGELLdYv8qVIMWvZEFy9w8ZZpW9h9OB32l1rGtj7g==
 
-next-auth@4.22.1:
-  version "4.22.1"
-  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.22.1.tgz#1ea5084e38867966dc6492a71c6729c8f5cfa96b"
-  integrity sha512-NTR3f6W7/AWXKw8GSsgSyQcDW6jkslZLH8AiZa5PQ09w1kR8uHtR9rez/E9gAq/o17+p0JYHE8QjF3RoniiObA==
+next-auth@4.22.2:
+  version "4.22.2"
+  resolved "https://registry.yarnpkg.com/next-auth/-/next-auth-4.22.2.tgz#579218abd70dbb27cf6ee7817eb0d9ce2f7a7af2"
+  integrity sha512-5JO3onTI0gogG+FkTelBpmZi3inXtfSZvQ4VzS1mxx6LswA42/NPC9qFahjy455AEUCY0hdU4yM5Znf6o3wZPQ==
   dependencies:
     "@babel/runtime" "^7.20.13"
     "@panva/hkdf" "^1.0.2"
