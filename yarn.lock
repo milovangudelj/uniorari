@@ -4445,10 +4445,10 @@ next@13.4.12:
     "@next/swc-win32-ia32-msvc" "13.4.12"
     "@next/swc-win32-x64-msvc" "13.4.12"
 
-nexus-prisma@1.0.12:
-  version "1.0.12"
-  resolved "https://registry.yarnpkg.com/nexus-prisma/-/nexus-prisma-1.0.12.tgz#291212c0d427495a2786e82897aebc0af71c95f2"
-  integrity sha512-C5fHoya/7HvF4Z6tIwOmtql3HQr19/dNn03JjeuhMiSlcJdl8DG6+ZAp/Cie2nL3pKladyRgsNGvqqW6UA7IEQ==
+nexus-prisma@1.0.17:
+  version "1.0.17"
+  resolved "https://registry.yarnpkg.com/nexus-prisma/-/nexus-prisma-1.0.17.tgz#3170f5718946b2161dbd16f738c4e5bf0d44e415"
+  integrity sha512-E4tj+fySBsh1mXEmlQeiSSg7DHMMvXgYRo3+Ce63mSWDamaR+N5sJiV0f1BRzElocC39DQb+zeKyYduQUXk6DA==
   dependencies:
     "@prisma/generator-helper" "^4.0"
     debug "^4.3.4"
