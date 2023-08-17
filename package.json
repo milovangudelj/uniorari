@@ -19,7 +19,7 @@
 	},
 	"dependencies": {
 		"@apollo/client": "3.8.1",
-		"@headlessui/react": "1.7.16",
+		"@headlessui/react": "1.7.17",
 		"@heroicons/react": "2.0.18",
 		"@hookform/resolvers": "3.2.0",
 		"@next-auth/prisma-adapter": "1.0.7",
