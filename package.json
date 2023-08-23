@@ -31,7 +31,7 @@
 		"graphql": "16.8.0",
 		"graphql-scalars": "1.22.2",
 		"highlight.js": "11.8.0",
-		"immutable": "4.3.2",
+		"immutable": "4.3.3",
 		"json-stringify-pretty-compact": "4.0.0",
 		"micro": "10.0.1",
 		"micro-cors": "0.1.1",
