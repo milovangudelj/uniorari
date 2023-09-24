@@ -26,7 +26,7 @@
 		"@nexus/schema": "0.20.1",
 		"@prisma/client": "5.3.1",
 		"@supabase/supabase-js": "2.16.0",
-		"@types/prismjs": "1.26.0",
+		"@types/prismjs": "1.26.1",
 		"apollo-server-micro": "3.12.1",
 		"graphql": "16.8.1",
 		"graphql-scalars": "1.22.2",
