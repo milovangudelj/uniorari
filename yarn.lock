@@ -329,10 +329,10 @@
   dependencies:
     client-only "^0.0.1"
 
-"@heroicons/react@2.0.18":
-  version "2.0.18"
-  resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.0.18.tgz#f80301907c243df03c7e9fd76c0286e95361f7c1"
-  integrity sha512-7TyMjRrZZMBPa+/5Y8lN0iyvUU/01PeMGX2+RE7cQWpEUIcb4QotzUObFkJDejj/HUH4qjP/eQ0gzzKs2f+6Yw==
+"@heroicons/react@2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@heroicons/react/-/react-2.1.0.tgz#5cb1b50e21f5ca36071906a5f09eea9637d33bbf"
+  integrity sha512-e9Ktx48XMw6fsDzuT8Akv/eWFbV1Zleme/P3trw15KtDr5ppCxnHiCbBpKlR7z8VuZvGw4JIJWP1qktfhT/2xw==
 
 "@hookform/resolvers@3.3.2":
   version "3.3.2"
