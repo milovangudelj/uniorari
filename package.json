@@ -30,7 +30,7 @@
 		"apollo-server-micro": "3.13.0",
 		"graphql": "16.9.0",
 		"graphql-scalars": "1.23.0",
-		"highlight.js": "11.9.0",
+		"highlight.js": "11.10.0",
 		"immutable": "4.3.6",
 		"json-stringify-pretty-compact": "4.0.0",
 		"micro": "10.0.1",
